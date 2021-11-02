@@ -1,3 +1,5 @@
 /.idea/
 /quick-order-management/target/
 /quick-order-portal/target/
+/quick-order-common/target/
+/quick-order-pojo/target/

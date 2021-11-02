@@ -1,0 +1,11 @@
+后台管理
+1.超管登录接口
+POST 'http://localhost:7010/admin/login'
+--header 'Content-Type: application/json'
+--data-raw '{"uname":"admin","pwd":"111111"}'
+
+2.超管修改密码接口
+PUT 'http://localhost:7010/admin/1/update'
+--header 'Content-Type: application/json'
+--header 'Cookie: JSESSIONID=F3A291EFFA892E44E0AB8B4F6D801D6F'  // sessionid通过登录接口获取
+--data-raw '{"pwd":"111111"}'

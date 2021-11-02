@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.management.admin.mapper.ManagementAdminMapper">
+    <resultMap id="ManagementAdminMap" type="com.chengdu.management.pojo.ManagementAdmin">
+        <id column="id" property="id"></id>
+        <result column="uname" property="uname"></result>
+        <result column="pwd" property="pwd"></result>
+    </resultMap>
+
+    <select id="selAdminByUnameAndPwd" resultMap="ManagementAdminMap">
+        select id,uname,pwd from management_admin where uname = #{uname} and pwd = #{pwd};
+    </select>
+
+    <update id="updPwdById">
+        update management_admin set pwd = #{pwd} where id = #{id};
+    </update>
+</mapper>
