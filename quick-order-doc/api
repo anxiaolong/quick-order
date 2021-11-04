@@ -9,3 +9,31 @@ PUT 'http://localhost:7010/admin/1/update'
 --header 'Content-Type: application/json'
 --header 'Cookie: JSESSIONID=F3A291EFFA892E44E0AB8B4F6D801D6F'  // sessionid通过登录接口获取
 --data-raw '{"pwd":"111111"}'
+
+3.添加供应商接口
+curl --location --request POST 'http://localhost:7010/supplier/add' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=07D31576F195BE3EC4BF55369DCDFFE5' \
+--data-raw '{
+    "supplier_code": "914403007576325701",
+    "supplier_name": "大家的食堂",
+    "link_man": "张天易",
+    "phone_number": "13288889999",
+    "bank_name": "招商银行",
+    "bank_account": "6576543234567898",
+    "address": "成都市武侯区天华二路219号"
+}'
+
+4.修改供应商接口
+curl --location --request PUT 'http://localhost:7010/supplier/update/914403007576325799' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=07D31576F195BE3EC4BF55369DCDFFE5' \
+--data-raw '{
+    "supplier_code": "914403007576325701",
+    "supplier_name": "update修改后的大家的食堂",
+    "link_man": "修改后-张天易",
+    "phone_number": "13288889999",
+    "bank_name": "update招商银行",
+    "bank_account": "6576543234567898",
+    "address": "update成都市武侯区天华二路219号"
+}'

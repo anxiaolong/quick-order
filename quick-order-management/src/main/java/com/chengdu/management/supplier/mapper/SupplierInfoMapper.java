@@ -6,4 +6,6 @@ public interface SupplierInfoMapper {
 
     int insertSupplier(SupplierInfo supplierInfo);
 
+    int updateSupplier(SupplierInfo supplierInfo);
+
 }

@@ -51,7 +51,7 @@ CREATE TABLE `qo_supplier_info` (
   `supplier_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '供应商id',
   `supplier_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '供应商编码',
   `supplier_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '供应商名',
-  `supplier_type` tinyint(4) NOT NULL COMMENT '供应商类型',
+  `supplier_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '供应商类型（1：三方 0：自营）',
   `link_man` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系人',
   `phone_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话',
   `bank_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行',
@@ -61,7 +61,7 @@ CREATE TABLE `qo_supplier_info` (
   `modified_time` datetime NOT NULL COMMENT '最后修改时间',
   PRIMARY KEY (`supplier_id`),
   UNIQUE KEY `supplier_code_unique` (`supplier_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,7 @@ CREATE TABLE `qo_supplier_info` (
 
 LOCK TABLES `qo_supplier_info` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_info` DISABLE KEYS */;
+INSERT INTO `qo_supplier_info` VALUES (1,'914403007576325798','大家的食堂',1,'张天易','13288889999','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2021-11-04 16:13:31'),(4,'914403007576325799','update修改后的大家的食堂',1,'修改后-张天易','13288889999','update招商银行','6576543234567898','update成都市武侯区天华二路219号',1,'2021-11-04 17:17:22'),(7,'914403007576325701','大家的食堂',1,'张天易','13288889999','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2021-11-04 17:14:46');
 /*!40000 ALTER TABLE `qo_supplier_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,4 +87,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-03 17:33:41
+-- Dump completed on 2021-11-04 17:19:59

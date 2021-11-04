@@ -17,7 +17,25 @@
     </resultMap>
 
     <insert id="insertSupplier">
-
+        insert into qo_supplier_info
+            (supplier_code,supplier_name,link_man,phone_number,bank_name,bank_account,address,modified_time)
+            value
+            (#{supplier_code},#{supplier_name},#{link_man},#{phone_number},#{bank_name},#{bank_account},#{address},current_timestamp);
     </insert>
+
+    <update id="updateSupplier" parameterType="com.chengdu.management.pojo.SupplierInfo">
+        update qo_supplier_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="supplier_name!=null and supplier_name!=''">supplier_name=#{supplier_name},</if>
+            <if test="supplier_type!=null and supplier_type!=''">supplier_type=#{supplier_type},</if>
+            <if test="link_man!=null and link_man!=''">link_man=#{link_man},</if>
+            <if test="phone_number!=null and phone_number!=''">phone_number=#{phone_number},</if>
+            <if test="bank_name!=null and bank_name!=''">bank_name=#{bank_name},</if>
+            <if test="bank_account!=null and bank_account!=''">bank_account=#{bank_account},</if>
+            <if test="address!=null and address!=''">address=#{address},</if>
+            modified_time=current_timestamp
+        </trim>
+        where supplier_code = #{supplier_code}
+    </update>
 
 </mapper>
