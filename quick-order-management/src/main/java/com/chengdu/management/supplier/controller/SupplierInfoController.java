@@ -3,12 +3,18 @@ package com.chengdu.management.supplier.controller;
 import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.SupplierInfo;
+import com.chengdu.management.pojo.SupplierInfo_QO;
 import com.chengdu.management.supplier.service.SupplierInfoService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/supplier",produces = "application/json")
@@ -21,13 +27,8 @@ public class SupplierInfoController {
         if (result.hasErrors()){
             return new CommonResponse(CommonResponseEnum.Fail,result.getFieldError().getDefaultMessage());
         }
-        try {
-            if (supplierInfoService.addSupplierInfo(supplierInfo)==1){
-                return new CommonResponse(CommonResponseEnum.Success,null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResponse(CommonResponseEnum.Fail,"录入数据失败，请联系管理员处理");
+        if (supplierInfoService.addSupplierInfo(supplierInfo)==1){
+            return new CommonResponse(CommonResponseEnum.Success,null);
         }
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
@@ -42,4 +43,32 @@ public class SupplierInfoController {
         }
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
+
+    @RequestMapping(value = "/disable/{supplier_code}",method = RequestMethod.PUT)
+    public CommonResponse disableSupplier(@RequestBody Map<String,String> map,
+                                          @PathVariable("supplier_code") String supplier_code){
+        String isDisable = map.get("isDisable");
+        int updateStatus = 0;
+        if ("true".equals(isDisable)){
+            updateStatus = supplierInfoService.updateSupplierStatus(0,supplier_code);
+        }
+        if ("false".equals(isDisable)){
+            updateStatus = supplierInfoService.updateSupplierStatus(1,supplier_code);
+        }
+        if (updateStatus==1){
+            return new CommonResponse(CommonResponseEnum.Success,null);
+        }
+        return new CommonResponse(CommonResponseEnum.Fail,null);
+    }
+
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    public CommonResponse searchSupplierInfo(@RequestBody SupplierInfo_QO supplierInfo_qo){
+        supplierInfo_qo.setPageIndex((supplierInfo_qo.getPageIndex()-1)*supplierInfo_qo.getPageSize());
+        SupplierInfo_QO supplierInfo_qo1 = supplierInfoService.selSupplierInfo(supplierInfo_qo);
+        Map<String,Object> map = new HashMap<>();
+        map.put("supplierInfos",supplierInfo_qo1.getSupplierInfos());
+        map.put("count",supplierInfo_qo1.getCount());
+        return new CommonResponse(CommonResponseEnum.Success,map);
+    }
+
 }

@@ -37,3 +37,24 @@ curl --location --request PUT 'http://localhost:7010/supplier/update/91440300757
     "bank_account": "6576543234567898",
     "address": "update成都市武侯区天华二路219号"
 }'
+
+5.启用/禁用 供应商接口
+curl --location --request PUT 'http://localhost:7010/supplier/disable/914403007576325799' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=922759228E6AFCAFE0CB4AC2C031C917' \
+--data-raw '{
+    "isDisable": "false"
+}'
+
+6.条件查询供应商
+curl --location --request POST 'http://localhost:7010/supplier/search' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=B29188A480B740AA1E0D7D32D3E9E5D3' \
+--data-raw '{
+    "supplier_name": "大家",
+    "link_man": "",
+    "phone_number": "",
+    "address": "",
+    "pageIndex":"3",
+    "pageSize":"1"
+}'

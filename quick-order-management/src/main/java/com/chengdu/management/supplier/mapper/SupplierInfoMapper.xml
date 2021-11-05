@@ -38,4 +38,24 @@
         where supplier_code = #{supplier_code}
     </update>
 
+    <update id="updateSupplierStatus">
+        update qo_supplier_info set supplier_status = #{status},modified_time=current_timestamp
+        where supplier_code = #{supplier_code}
+    </update>
+
+    <select id="selSupplierInfo" resultMap="SupplierInfoMap">
+        select * from qo_supplier_info
+        <where>
+            <if test="supplier_name!=null and supplier_name!=''">supplier_name like concat(#{supplier_name},'%') and </if>
+            <if test="link_man!=null and link_man!=''">link_man like concat(#{link_man},'%') and </if>
+            <if test="phone_number!=null and phone_number!=''">phone_number like concat(#{phone_number},'%') and </if>
+            <if test="address!=null and address!=''">address like concat(#{address},'%') and </if>
+            1=1 limit #{pageIndex},#{pageSize}
+        </where>
+    </select>
+
+    <select id="countSupplier" resultType="java.lang.Integer">
+        select count(*) from qo_supplier_info;
+    </select>
+
 </mapper>
