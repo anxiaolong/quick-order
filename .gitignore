@@ -3,3 +3,8 @@
 /quick-order-portal/target/
 /quick-order-common/target/
 /quick-order-pojo/target/
+quick-order-common/quick-order-common.iml
+quick-order-management/quick-order-management.iml
+quick-order-pojo/quick-order-pojo.iml
+quick-order-portal/quick-order-portal.iml
+quick-order.iml
