@@ -50,7 +50,7 @@
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
         <hashTree>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="清空管理员用户表" enabled="true">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="清空management_admin" enabled="true">
             <stringProp name="dataSource">quick_order</stringProp>
             <stringProp name="queryType">Prepared Update Statement</stringProp>
             <stringProp name="query">truncate management_admin;</stringProp>
@@ -63,12 +63,80 @@
             <stringProp name="resultSetHandler">Store as String</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="插入管理员测试数据" enabled="true">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="插入management_admin" enabled="true">
             <stringProp name="dataSource">quick_order</stringProp>
             <stringProp name="queryType">Callable Statement</stringProp>
             <stringProp name="query">insert into management_admin (uname,pwd) values
 (&apos;anxiaolong&apos;,&apos;123456&apos;),
 (&apos;zhongwei&apos;,&apos;654321&apos;);</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="超级管理后台-供应商数据准备" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="清空qo_supplier_info" enabled="true">
+            <stringProp name="dataSource">quick_order</stringProp>
+            <stringProp name="queryType">Prepared Update Statement</stringProp>
+            <stringProp name="query">truncate qo_supplier_info;</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="插入qo_supplier_info" enabled="true">
+            <stringProp name="dataSource">quick_order</stringProp>
+            <stringProp name="queryType">Callable Statement</stringProp>
+            <stringProp name="query">insert
+	into
+	`qo_supplier_info`
+values 
+(1,
+&apos;914403007576325798&apos;,
+&apos;人民的食堂&apos;,
+1,
+&apos;张天易&apos;,
+&apos;13678767789&apos;,
+&apos;招商银行&apos;,
+&apos;6576543234567898&apos;,
+&apos;成都市武侯区天华二路219号&apos;,
+1,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(2,
+&apos;834373007576326541&apos;,
+&apos;潮汕牛肉小火锅&apos;,
+1,
+&apos;刘德军&apos;,
+&apos;18767441123&apos;,
+&apos;中国工商银行&apos;,
+&apos;6789765456667875&apos;,
+&apos;成都市锦江区海棠路45号&apos;,
+1,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(3,
+&apos;786543456543267876&apos;,
+&apos;万州烤鱼&apos;,
+1,
+&apos;张逸飞&apos;,
+&apos;13677865676&apos;,
+&apos;成都银行&apos;,
+&apos;3456765451890762&apos;,
+&apos;成都市成华区二仙桥西北路17号&apos;,
+1,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;)</stringProp>
             <stringProp name="queryArguments"></stringProp>
             <stringProp name="queryArgumentsTypes"></stringProp>
             <stringProp name="variableNames"></stringProp>
@@ -101,7 +169,7 @@
           <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
           <stringProp name="HTTPSampler.port">7010</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
           <stringProp name="HTTPSampler.path"></stringProp>
           <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
@@ -111,7 +179,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="JSESSIONID" elementType="Cookie" testname="JSESSIONID">
-              <stringProp name="Cookie.value">${__BeanShell(props.get(&quot;managementSession&quot;),)}</stringProp>
+              <stringProp name="Cookie.value">${COOKIE_JSESSIONID}</stringProp>
               <stringProp name="Cookie.domain">127.0.0.1:7010</stringProp>
               <stringProp name="Cookie.path"></stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -229,13 +297,13 @@
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-    &quot;supplier_code&quot;: &quot;914403007576325701&quot;,&#xd;
-    &quot;supplier_name&quot;: &quot;大家的食堂&quot;,&#xd;
-    &quot;link_man&quot;: &quot;张天易&quot;,&#xd;
-    &quot;phone_number&quot;: &quot;13288889999&quot;,&#xd;
-    &quot;bank_name&quot;: &quot;招商银行&quot;,&#xd;
-    &quot;bank_account&quot;: &quot;6576543234567898&quot;,&#xd;
-    &quot;address&quot;: &quot;成都市武侯区天华二路219号&quot;&#xd;
+    &quot;supplier_code&quot;: &quot;123787656789865432&quot;,&#xd;
+    &quot;supplier_name&quot;: &quot;重庆小龙坎火锅&quot;,&#xd;
+    &quot;link_man&quot;: &quot;张皓&quot;,&#xd;
+    &quot;phone_number&quot;: &quot;18699877765&quot;,&#xd;
+    &quot;bank_name&quot;: &quot;中国建设银行&quot;,&#xd;
+    &quot;bank_account&quot;: &quot;5676543657676532&quot;,&#xd;
+    &quot;address&quot;: &quot;成都市青羊区成飞大道南段455号&quot;&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -279,10 +347,9 @@
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-    &quot;supplier_code&quot;: &quot;914403007576325701&quot;,&#xd;
-    &quot;supplier_name&quot;: &quot;大家的食堂&quot;,&#xd;
+    &quot;supplier_name&quot;: &quot;人民的食堂&quot;,&#xd;
     &quot;link_man&quot;: &quot;张天易&quot;,&#xd;
-    &quot;phone_number&quot;: &quot;13288889999&quot;,&#xd;
+    &quot;phone_number&quot;: &quot;13678767789&quot;,&#xd;
     &quot;bank_name&quot;: &quot;招商银行&quot;,&#xd;
     &quot;bank_account&quot;: &quot;6576543234567898&quot;,&#xd;
     &quot;address&quot;: &quot;成都市武侯区天华二路219号&quot;&#xd;
@@ -295,8 +362,139 @@
             <stringProp name="HTTPSampler.port"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/supplier/update/914403007576325799</stringProp>
+            <stringProp name="HTTPSampler.path">/supplier/update/914403007576325798</stringProp>
             <stringProp name="HTTPSampler.method">PUT</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+              <stringProp name="JSON_PATH">$.resCode</stringProp>
+              <stringProp name="EXPECTED_VALUE">0000</stringProp>
+              <boolProp name="JSONVALIDATION">true</boolProp>
+              <boolProp name="EXPECT_NULL">false</boolProp>
+              <boolProp name="INVERT">false</boolProp>
+              <boolProp name="ISREGEX">true</boolProp>
+            </JSONPathAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="用例05:供应商 禁用/启动" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="禁用供应商" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;isDisable&quot;: &quot;true&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/supplier/disable/834373007576326541</stringProp>
+            <stringProp name="HTTPSampler.method">PUT</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+              <stringProp name="JSON_PATH">$.resCode</stringProp>
+              <stringProp name="EXPECTED_VALUE">0000</stringProp>
+              <boolProp name="JSONVALIDATION">true</boolProp>
+              <boolProp name="EXPECT_NULL">false</boolProp>
+              <boolProp name="INVERT">false</boolProp>
+              <boolProp name="ISREGEX">true</boolProp>
+            </JSONPathAssertion>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="启用供应商" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;isDisable&quot;: &quot;false&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/supplier/disable/834373007576326541</stringProp>
+            <stringProp name="HTTPSampler.method">PUT</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+              <stringProp name="JSON_PATH">$.resCode</stringProp>
+              <stringProp name="EXPECTED_VALUE">0000</stringProp>
+              <boolProp name="JSONVALIDATION">true</boolProp>
+              <boolProp name="EXPECT_NULL">false</boolProp>
+              <boolProp name="INVERT">false</boolProp>
+              <boolProp name="ISREGEX">true</boolProp>
+            </JSONPathAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="用例06:条件查询供应商" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询供应商" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+    &quot;supplier_name&quot;: &quot;&quot;,&#xd;
+    &quot;link_man&quot;: &quot;张&quot;,&#xd;
+    &quot;phone_number&quot;: &quot;&quot;,&#xd;
+    &quot;address&quot;: &quot;&quot;,&#xd;
+    &quot;pageIndex&quot;:&quot;1&quot;,&#xd;
+    &quot;pageSize&quot;:&quot;5&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/supplier/search</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
             <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
