@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.supplier.mapper.SupplierMapper">
+    <resultMap id="SupplierInfoMap" type="com.chengdu.management.pojo.SupplierInfo">
+        <id column="supplier_id" property="supplier_id"></id>
+        <result column="supplier_code" property="supplier_code"></result>
+        <result column="supplier_name" property="supplier_name"></result>
+        <result column="supplier_type" property="supplier_type"></result>
+        <result column="link_man" property="link_man"></result>
+        <result column="phone_number" property="phone_number"></result>
+        <result column="bank_name" property="bank_name"></result>
+        <result column="bank_account" property="bank_account"></result>
+        <result column="address" property="address"></result>
+        <result column="supplier_status" property="supplier_status"></result>
+    </resultMap>
+
+    <select id="selSupplierByPhoneNumber" resultType="java.lang.Integer">
+        select count(*) from qo_supplier_info where phone_number = #{phoneNumber}
+    </select>
+
+</mapper>

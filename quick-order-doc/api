@@ -58,3 +58,9 @@ curl --location --request POST 'http://localhost:7010/supplier/search' \
     "pageIndex":"3",
     "pageSize":"1"
 }'
+
+7.商家获取手机验证码
+curl --location --request POST 'http://127.0.0.1:7011/supplier/getVerificationCode' \
+--header 'Content-Type: application/json' \
+--data-raw '{"phone":"13677865676"}'
+
