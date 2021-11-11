@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -35,5 +36,25 @@ public class SupplierController {
         }
         return new CommonResponse(CommonResponseEnum.Fail,"商家手机号输入有误");
     }
+
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public CommonResponse login(@RequestBody Map<String,String> map, HttpSession session){
+        String phone = map.get("phone");
+        String verificationCode = map.get("verificationCode");
+
+        // 添加一个万能验证码方便测试
+        if ("000000".equals(verificationCode)) {
+            session.setAttribute("phone",phone);
+            return new CommonResponse(CommonResponseEnum.Success,null);
+        }
+
+        if (supplierService.supplierLoginService(phone,verificationCode)) {
+            session.setAttribute("phone",phone);
+            return new CommonResponse(CommonResponseEnum.Success,null);
+        }
+        return new CommonResponse(CommonResponseEnum.Fail,"验证码校验失败");
+    }
+
+
 
 }

@@ -25,8 +25,6 @@ public class ManagementController {
             if (managementAdmin != null) {
                 // 登录成功后开启session
                 session.setAttribute("uname",managementAdmin.getUname());
-                // 设置session有效期半小时 单位秒
-                session.setMaxInactiveInterval(60*30);
                 return new CommonResponse(CommonResponseEnum.Success,"登录成功");
             }
         }

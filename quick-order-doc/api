@@ -64,3 +64,11 @@ curl --location --request POST 'http://127.0.0.1:7011/supplier/getVerificationCo
 --header 'Content-Type: application/json' \
 --data-raw '{"phone":"13677865676"}'
 
+8.商家手机验证码登录
+curl --location --request POST 'http://127.0.0.1:7011/supplier/login' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=NGQ5NjhhZTItYTNiZS00YTVkLTlkZWMtYmNiNjczMTg2NmI0' \
+--data-raw '{
+    "phone": "13677865676",
+    "verificationCode": "941068"
+}'
