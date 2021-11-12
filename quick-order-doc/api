@@ -72,3 +72,23 @@ curl --location --request POST 'http://127.0.0.1:7011/supplier/login' \
     "phone": "13677865676",
     "verificationCode": "941068"
 }'
+
+9.商家添加商品接口
+curl --location --request POST 'http://127.0.0.1:7011/supplier/goods/add/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=ZmIzODU5MDMtYjM5ZS00NWE2LWE2MzQtODFkNmRmOTQ3ZGVm' \
+--data-raw '{
+    "goods_name":"麻婆豆腐套饭",
+    "goods_intro":"传统手机，麻辣飘香",
+    "goods_status":"1"
+}'
+
+10.商家修改商品信息
+curl --location --request POST 'http://127.0.0.1:7011/supplier/goods/update/1/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=NWE3ZDJmZDItYWM1MC00ODU3LWFlOTctY2NhZDA1ZmQxOGQ4' \
+--data-raw '{
+    "goods_name":"",
+    "goods_intro":"传统川菜，巴适的板",
+    "goods_status":"1"
+}'

@@ -16,8 +16,8 @@
         <result column="supplier_status" property="supplier_status"></result>
     </resultMap>
 
-    <select id="selSupplierByPhoneNumber" resultType="java.lang.Integer">
-        select count(*) from qo_supplier_info where phone_number = #{phoneNumber}
+    <select id="selSupplierByPhoneNumber" resultMap="SupplierInfoMap">
+        select * from qo_supplier_info where phone_number = #{phoneNumber}
     </select>
 
 </mapper>

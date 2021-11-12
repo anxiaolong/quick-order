@@ -18,7 +18,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public int getLoginVerificationCode(String phoneNumber) {
-        if (supplierMapper.selSupplierByPhoneNumber(phoneNumber) != 0) {
+        if (supplierMapper.selSupplierByPhoneNumber(phoneNumber) != null) {
             return getVerificationCode();
         }
         return 0;
@@ -26,7 +26,11 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public boolean supplierLoginService(String phone, String verificationCode) {
-        return Objects.equals(stringRedisTemplate.opsForValue().get(phone), verificationCode);
+        if (supplierMapper.selSupplierByPhoneNumber(phone) != null &&
+                Objects.equals(stringRedisTemplate.opsForValue().get(phone), verificationCode)) {
+            return true;
+        }
+        return false;
     }
 
     private int getVerificationCode() {
