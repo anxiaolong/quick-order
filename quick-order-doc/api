@@ -92,3 +92,35 @@ curl --location --request POST 'http://127.0.0.1:7011/supplier/goods/update/1/1'
     "goods_intro":"传统川菜，巴适的板",
     "goods_status":"1"
 }'
+
+11.商家查询商品
+curl --location --request POST 'http://127.0.0.1:7011/supplier//goods/list/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=NjEyODIwNWUtZWZkNi00OTNjLWI0YjEtMzIwMDNlNTk4YmY3' \
+--data-raw '{
+    "goods_name":"",
+    "goods_intro":"",
+    "goods_status":"1",
+    "pageIndex":"2",
+    "pageSize":"1"
+}'
+
+12.添加商品库存
+curl --location --request POST 'http://127.0.0.1:7011/goods/stock/add/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=YmZiZjFhM2UtMGU4NS00ZWZjLTg5YTktNzg0OWRjN2FkMzRk' \
+--data-raw '{
+    "goods_price":"1990",
+    "goods_count":"23",
+    "goods_sale_date":"2021-11-16"
+}'
+
+13.修改商品库存
+curl --location --request PUT 'http://127.0.0.1:7011/goods/stock/update/1/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=YmZiZjFhM2UtMGU4NS00ZWZjLTg5YTktNzg0OWRjN2FkMzRk' \
+--data-raw '{
+    "goods_price":"2000",
+    "goods_count":"24",
+    "goods_sale_date":"2021-11-16"
+}'
