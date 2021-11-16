@@ -10,10 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>quick-order-management</module>
-        <module>quick-order-portal</module>
         <module>quick-order-pojo</module>
         <module>quick-order-common</module>
         <module>quick-order-supplier</module>
+        <module>quick-order-internet</module>
     </modules>
 
     <parent>
@@ -41,10 +41,43 @@
         <quick-order-common.version>1.0-SNAPSHOT</quick-order-common.version>
         <!--StringUtils依赖版本-->
         <commons-lang3.version>3.11</commons-lang3.version>
+        <!--internet.interface.version-->
+        <internet.interface.version>1.0-SNAPSHOT</internet.interface.version>
+        <!--dubbo-->
+        <dubbo.version>3.0.4</dubbo.version>
+        <!--curator-framework-->
+        <curator.version>2.12.0</curator.version>
+        <!--curator-x-discovery-->
+        <curator-x-discovery.version>5.1.0</curator-x-discovery.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator-x-discovery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.chengdu</groupId>
+                <artifactId>internet-interface</artifactId>
+                <version>${internet.interface.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.chengdu</groupId>
                 <artifactId>quick-order-common</artifactId>

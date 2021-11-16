@@ -10,3 +10,6 @@ quick-order-pojo/quick-order-pojo.iml
 quick-order-portal/quick-order-portal.iml
 quick-order-supplier/quick-order-supplier.iml
 quick-order.iml
+quick-order-internet/internet-dubbo-provider/target/
+quick-order-internet/internet-interface/target/
+quick-order-internet/internet-order-rest/target/
