@@ -17,4 +17,6 @@ public interface GoodsMapper {
     List<Goods> listGoods(Goods_QO goods_qo);
 
     Integer countGoods(Goods_QO goods_qo);
+
+    Goods selGoodsById(@Param("goodsId") int goodsId);
 }

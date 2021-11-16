@@ -72,4 +72,8 @@
         </where>
     </select>
 
+    <select id="selGoodsById" resultMap="GoodsMap">
+        select * from qo_supplier_goods where goods_id = #{goodsId}
+    </select>
+
 </mapper>
