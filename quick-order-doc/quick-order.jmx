@@ -12,7 +12,7 @@
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
     </TestPlan>
     <hashTree>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp Thread Group" enabled="true">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="测试数据准备" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -252,7 +252,7 @@ values (&apos;酥肉冒菜&apos;,
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="SESSION" elementType="Cookie" testname="SESSION">
-              <stringProp name="Cookie.value">${COOKIE_SESSION}</stringProp>
+              <stringProp name="Cookie.value">${managementSession}</stringProp>
               <stringProp name="Cookie.domain">127.0.0.1:7010</stringProp>
               <stringProp name="Cookie.path"></stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -1088,6 +1088,49 @@ values (&apos;酥肉冒菜&apos;,
         </objProp>
         <stringProp name="filename"></stringProp>
       </ResultCollector>
+      <hashTree/>
+      <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="pre-log" enabled="true">
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <boolProp name="resetInterpreter">false</boolProp>
+        <stringProp name="script">import java.time.LocalDateTime;
+
+String dateTime = LocalDateTime.now().toString();
+String apiName = sampler.getName().toString();
+String url = sampler.toString();
+String headers = sampler.getHeaderManager().getHeaders().toString();
+String arguments = sampler.getArguments().toString();
+
+FileWriter fileW=new FileWriter(&quot;D:/quick-order.log&quot;,true);
+BufferedWriter bufferW=new BufferedWriter(fileW);
+bufferW.write(apiName+&quot;\n&quot;);
+bufferW.write(dateTime+&quot;\n&quot;);
+bufferW.write(url+&quot;\n&quot;);
+bufferW.write(headers+&quot;\n&quot;);
+bufferW.write(arguments+&quot;\n&quot;);
+bufferW.close();
+fileW.close();
+
+//log.info(sampler.getHeaderManager().getHeaders().toString());
+//log.info(sampler.toString());
+//log.info(sampler.getArguments().toString());
+//log.info(sampler.getName().toString());</stringProp>
+      </BeanShellPreProcessor>
+      <hashTree/>
+      <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="post-log" enabled="true">
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <boolProp name="resetInterpreter">false</boolProp>
+        <stringProp name="script">String reslut = prev.getResponseDataAsString();
+
+FileWriter fileW=new FileWriter(&quot;D:/quick-order.log&quot;,true);
+BufferedWriter bufferW=new BufferedWriter(fileW);
+bufferW.write(reslut+&quot;\n&quot;);
+bufferW.write(&quot;**********************************************************************************************\n&quot;);
+bufferW.write(&quot;**********************************************************************************************\n&quot;);
+bufferW.close();
+fileW.close();</stringProp>
+      </BeanShellPostProcessor>
       <hashTree/>
     </hashTree>
   </hashTree>
