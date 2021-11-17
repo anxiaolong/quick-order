@@ -43,35 +43,23 @@
         <commons-lang3.version>3.11</commons-lang3.version>
         <!--internet.interface.version-->
         <internet.interface.version>1.0-SNAPSHOT</internet.interface.version>
-        <!--dubbo-->
-        <dubbo.version>3.0.4</dubbo.version>
-        <!--curator-framework-->
-        <curator.version>2.12.0</curator.version>
-        <!--curator-x-discovery-->
-        <curator-x-discovery.version>5.1.0</curator-x-discovery.version>
+        <!--commons-codec.version-->
+        <commons-codec.version>1.15</commons-codec.version>
+        <!--fastjson.version-->
+        <fastjson.version>1.2.9</fastjson.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-x-discovery</artifactId>
-                <version>${curator-x-discovery.version}</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
-                <version>${curator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.curator</groupId>
-                <artifactId>curator-recipes</artifactId>
-                <version>${curator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo.version}</version>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.chengdu</groupId>

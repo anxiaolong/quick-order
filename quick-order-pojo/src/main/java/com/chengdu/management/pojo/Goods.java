@@ -2,8 +2,10 @@ package com.chengdu.management.pojo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Goods {
+public class Goods implements Serializable {
     private int goods_id;
     private String goods_name;
     private String goods_intro;

@@ -3,9 +3,10 @@ package com.chengdu.management.pojo;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Data
-public class SupplierInfo {
+public class SupplierInfo implements Serializable {
     private int supplier_id;
 
     @NotBlank(message = "供应商编码不能为空")
