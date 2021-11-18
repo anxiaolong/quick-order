@@ -124,3 +124,21 @@ curl --location --request PUT 'http://127.0.0.1:7011/goods/stock/update/1/1' \
     "goods_count":"24",
     "goods_sale_date":"2021-11-16"
 }'
+
+14.渠道同步用户信息
+curl --location --request POST '127.0.0.1:8888/customer/sync/user' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": {"uid":"wxcvzokok","phone":"13566787732"},
+    "partner": "10011",
+    "sign": "56a8f9fbb31d844b9609946cff89cf24"
+}'
+
+15.查询商家当日可售商品库存
+curl --location --request POST '127.0.0.1:8888/stock/query/today' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": {"date":"2021-11-18","supplierId":"1"},
+    "partner": "10011",
+    "sign": "24388aeeade9b27f6d3d9083eba2dd15"
+}'
