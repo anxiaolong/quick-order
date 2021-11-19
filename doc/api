@@ -142,3 +142,12 @@ curl --location --request POST '127.0.0.1:8888/stock/query/today' \
     "partner": "10011",
     "sign": "24388aeeade9b27f6d3d9083eba2dd15"
 }'
+
+16.用户下单接口
+curl --location --request POST '127.0.0.1:8888/order/create' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "data": {"order_id":"1001120211110160032004","goods_id":"1","goods_count":"1","saleDate":"2021-11-19","total_price":"3600","uid":"wxcvzokok","phone":"13566787732"},
+    "partner": "10011",
+    "sign": "4c083a36fd95312c9f0702212e37c136"
+}'
