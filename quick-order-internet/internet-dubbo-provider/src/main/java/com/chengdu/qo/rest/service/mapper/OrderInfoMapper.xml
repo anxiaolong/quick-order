@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.qo.rest.service.mapper.OrderInfoMapper">
+    <insert id="insertOrderInfo">
+        insert
+        into
+            qo_order_info (order_id,
+                           saleDate,
+                           goods_id,
+                           goods_count,
+                           total_price,
+                           uid,
+                           phone,
+                           status,
+                           create_time,
+                           modified_time)
+        values (#{order_id},#{saleDate},#{goods_id},#{goods_count},#{total_price},#{uid},#{phone},#{status},#{create_time},#{modified_time});
+    </insert>
+
+    <update id="updateGoodsCount">
+        update
+            qo_supplier_goods_stock qsgs
+        set
+            qsgs.goods_count = qsgs.goods_count - #{goods_count}
+        where
+            qsgs.goods_sale_date = #{saleDate}
+          and qsgs.goods_id = #{goods_id}
+    </update>
+</mapper>

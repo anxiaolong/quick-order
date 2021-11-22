@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.qo.rest.service.mapper.CustomerMapper">
+    <insert id="insertCustomer">
+        insert into qo_internet_customer
+            (uid,phone,modified_time)
+        values
+            (#{uid},#{phone},current_timestamp);
+    </insert>
+
+    <select id="selCustomerByUidAndPhone" resultType="com.chengdu.management.pojo.Customer">
+        select * from qo_internet_customer qic where qic.uid = #{uid} and qic.phone = #{phone};
+    </select>
+</mapper>
