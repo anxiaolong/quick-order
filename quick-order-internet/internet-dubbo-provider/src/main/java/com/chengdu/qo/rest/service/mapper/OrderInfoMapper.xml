@@ -23,9 +23,31 @@
         update
             qo_supplier_goods_stock qsgs
         set
-            qsgs.goods_count = qsgs.goods_count - #{goods_count}
+            qsgs.goods_count = qsgs.goods_count - #{goods_count},
+            modified_time = current_timestamp
         where
             qsgs.goods_sale_date = #{saleDate}
           and qsgs.goods_id = #{goods_id}
     </update>
+
+    <select id="selTimeOutOrder" resultType="com.chengdu.management.pojo.OrderInfo">
+        select
+            *
+        from
+            qo_order_info qoi
+        where
+            (unix_timestamp(now())-60*5) > unix_timestamp(qoi.create_time)
+          and qoi.status = 0;
+    </select>
+
+    <update id="updateOrderStatus">
+        update
+            qo_order_info
+        set
+            status = #{status},
+            modified_time = current_timestamp
+        where
+            order_id = #{order_id};
+    </update>
+
 </mapper>

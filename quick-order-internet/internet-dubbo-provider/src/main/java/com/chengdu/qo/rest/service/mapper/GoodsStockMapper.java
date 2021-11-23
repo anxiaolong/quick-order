@@ -14,4 +14,6 @@ public interface GoodsStockMapper {
             " qsgs.goods_id = #{goodsId} and qsgs.goods_sale_date = #{saleDate}")
     Integer selCountByGoodsIdAndSaleDate(
             @Param("goodsId") int goodsId,@Param("saleDate") String saleDate);
+
+
 }

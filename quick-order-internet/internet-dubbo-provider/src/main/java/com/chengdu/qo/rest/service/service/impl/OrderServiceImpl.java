@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Component
 @Service
@@ -25,4 +26,18 @@ public class OrderServiceImpl implements OrderService {
         }
         return 0;
     }
+
+    @Transactional
+    @Override
+    public void orderTimeoutService() {
+        List<OrderInfo> orderInfos = orderInfoMapper.selTimeOutOrder();
+        for (OrderInfo orderInfo : orderInfos) {
+            orderInfo.setStatus(1);
+            orderInfo.setGoods_count(-orderInfo.getGoods_count());
+
+            orderInfoMapper.updateOrderStatus(orderInfo);
+            orderInfoMapper.updateGoodsCount(orderInfo);
+        }
+    }
+
 }

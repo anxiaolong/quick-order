@@ -47,10 +47,17 @@
         <commons-codec.version>1.15</commons-codec.version>
         <!--fastjson.version-->
         <fastjson.version>1.2.9</fastjson.version>
+        <!--spring-context-support.version-->
+        <spring-context-support.version>5.3.9</spring-context-support.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring-context-support.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
