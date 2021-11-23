@@ -3,6 +3,7 @@ package com.chengdu.qo.rest.service.filter;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.chengdu.common.util.CommonSignUtils;
 import com.chengdu.qo.rest.service.PartnerKeyService;
 import org.apache.commons.io.IOUtils;
@@ -26,7 +27,7 @@ public class OrderRestFilter implements Filter {
         String bodyString = IOUtils.toString(bodyReaderWrapper.getInputStream(), "UTF-8");
         // System.out.println(bodyString);
 
-        JSONObject requestJson = JSON.parseObject(bodyString);
+        JSONObject requestJson = JSON.parseObject(bodyString, Feature.OrderedField);
         Integer partner = requestJson.getInteger("partner");
         String key = partnerKeyService.getKeyByPartnerId(partner);
         String sign = requestJson.getString("sign");

@@ -1181,7 +1181,7 @@ now());</stringProp>
                   <stringProp name="Argument.value">{&#xd;
     &quot;data&quot;: {&quot;order_id&quot;:&quot;1001120211110160032001&quot;,&quot;goods_id&quot;:&quot;1&quot;,&quot;goods_count&quot;:&quot;3&quot;,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;,&quot;total_price&quot;:&quot;3600&quot;,&quot;uid&quot;:&quot;wxcvzokok&quot;,&quot;phone&quot;:&quot;13566787732&quot;},&#xd;
     &quot;partner&quot;: &quot;10011&quot;,&#xd;
-    &quot;sign&quot;: &quot;b4d92d355ee4ebb5c41bacf08ffc7cbc&quot;&#xd;
+    &quot;sign&quot;: &quot;${__digest(md5,{&quot;order_id&quot;:&quot;1001120211110160032001&quot;\,&quot;goods_id&quot;:&quot;1&quot;\,&quot;goods_count&quot;:&quot;3&quot;\,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;\,&quot;total_price&quot;:&quot;3600&quot;\,&quot;uid&quot;:&quot;wxcvzokok&quot;\,&quot;phone&quot;:&quot;13566787732&quot;}&amp;key=817d285681a34b3794461ab4b0396d73,,,)}&quot;&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
