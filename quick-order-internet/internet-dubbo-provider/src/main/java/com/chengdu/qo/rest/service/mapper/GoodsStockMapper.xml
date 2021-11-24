@@ -37,4 +37,15 @@
         and
             qsi.supplier_id = #{supplierId}
     </select>
+
+    <update id="updateGoodsCount">
+        update
+            qo_supplier_goods_stock qsgs
+        set
+            qsgs.goods_count = qsgs.goods_count - #{goods_count},
+            modified_time = current_timestamp
+        where
+            qsgs.goods_sale_date = #{saleDate}
+          and qsgs.goods_id = #{goods_id}
+    </update>
 </mapper>

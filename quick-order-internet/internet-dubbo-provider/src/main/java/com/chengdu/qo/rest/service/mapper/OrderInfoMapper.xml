@@ -19,17 +19,6 @@
         values (#{order_id},#{saleDate},#{goods_id},#{goods_count},#{total_price},#{uid},#{phone},#{status},#{create_time},#{modified_time});
     </insert>
 
-    <update id="updateGoodsCount">
-        update
-            qo_supplier_goods_stock qsgs
-        set
-            qsgs.goods_count = qsgs.goods_count - #{goods_count},
-            modified_time = current_timestamp
-        where
-            qsgs.goods_sale_date = #{saleDate}
-          and qsgs.goods_id = #{goods_id}
-    </update>
-
     <select id="selTimeOutOrder" resultType="com.chengdu.management.pojo.OrderInfo">
         select
             *

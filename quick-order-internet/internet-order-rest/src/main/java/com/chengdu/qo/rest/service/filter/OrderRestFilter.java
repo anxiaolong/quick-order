@@ -19,6 +19,13 @@ public class OrderRestFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        // 释放特定接口
+        String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
+        if ("/order/notify".equals(requestURI)){
+            filterChain.doFilter(servletRequest,servletResponse);
+            return;
+        }
+
         servletResponse.setCharacterEncoding("UTF-8");
         servletResponse.setContentType("application/json");
 

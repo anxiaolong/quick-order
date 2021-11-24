@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.qo.rest.service.mapper.OrderNotifyMapper">
+
+    <insert id="insertOrderNotify">
+        insert
+        into
+            qo_order_notify (transaction_id,
+                             order_id,
+                             pay_date,
+                             pay_amount,
+                             pay_status,
+                             create_time)
+        values (#{transaction_id},#{order_id},#{pay_date},#{pay_amount},#{pay_status},current_timestamp);
+    </insert>
+
+</mapper>

@@ -1,5 +1,6 @@
 package com.chengdu.qo.rest.service.mapper;
 
+import com.chengdu.management.pojo.OrderInfo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,5 +16,5 @@ public interface GoodsStockMapper {
     Integer selCountByGoodsIdAndSaleDate(
             @Param("goodsId") int goodsId,@Param("saleDate") String saleDate);
 
-
+    Integer updateGoodsCount(OrderInfo orderInfo);
 }

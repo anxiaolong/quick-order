@@ -38,20 +38,24 @@ public class OrderController {
         Integer stock = goodsStockService.selCountByGoodsIdAndSaleDate(goods_id, saleDate);
         Customer customer = customerService.selCustomerByUidAndPhone(uid, phone);
 
-        boolean flag =
-                customer != null &&
-                stock != 0 &&
-                stock >= goods_count;
-        if (flag) {
-            OrderInfo orderInfo = requestJson.getObject("data", OrderInfo.class);
-            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            orderInfo.setCreate_time(dateTime);
-            orderInfo.setModified_time(dateTime);
-            if (orderService.createOrder(orderInfo) == 1){
-                return new CommonResponse(CommonResponseEnum.Success,null);
-            }
+        if (customer == null){
+            return new CommonResponse(CommonResponseEnum.Fail,"未授权手机号，不能下单");
+        }
+        if (stock == 0){
+            return new CommonResponse(CommonResponseEnum.Fail,"已售罄");
+        }
+        if (stock < goods_count){
+            return new CommonResponse(CommonResponseEnum.Fail,"库存不足");
         }
 
-        return new CommonResponse(CommonResponseEnum.Fail,null);
+        OrderInfo orderInfo = requestJson.getObject("data", OrderInfo.class);
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        orderInfo.setCreate_time(dateTime);
+        orderInfo.setModified_time(dateTime);
+        if (orderService.createOrder(orderInfo) == 1){
+            return new CommonResponse(CommonResponseEnum.Success,"下单成功");
+        }
+
+        return new CommonResponse(CommonResponseEnum.Fail,"下单失败");
     }
 }
