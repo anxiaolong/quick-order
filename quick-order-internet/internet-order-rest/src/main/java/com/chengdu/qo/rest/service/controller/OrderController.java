@@ -9,6 +9,7 @@ import com.chengdu.management.pojo.OrderInfo;
 import com.chengdu.qo.rest.service.CustomerService;
 import com.chengdu.qo.rest.service.GoodsStockService;
 import com.chengdu.qo.rest.service.OrderService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,7 @@ public class OrderController {
     private CustomerService customerService;
 
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public CommonResponse syncUser(@RequestBody JSONObject requestJson){
+    public CommonResponse createOrder(@RequestBody JSONObject requestJson){
         String uid = requestJson.getJSONObject("data").getString("uid");
         String phone = requestJson.getJSONObject("data").getString("phone");
         String saleDate = requestJson.getJSONObject("data").getString("saleDate");
@@ -58,4 +59,16 @@ public class OrderController {
 
         return new CommonResponse(CommonResponseEnum.Fail,"下单失败");
     }
+
+    @RequestMapping(value = "/cancel",method = RequestMethod.POST)
+    public CommonResponse cancelOrder(@RequestBody JSONObject requestJson){
+        String orderId = requestJson.getJSONObject("data").getString("order_id");
+        if (StringUtils.isNotBlank(orderId)){
+            if (orderService.cancelOrder(orderId)){
+                return new CommonResponse(CommonResponseEnum.Success,"取消订单成功！");
+            }
+        }
+        return new CommonResponse(CommonResponseEnum.Fail,"取消订单失败！");
+    }
+
 }

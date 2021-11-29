@@ -17,4 +17,6 @@ public interface OrderInfoMapper {
             " order_id = #{orderId} and status = 0")
     Integer selTotalPriceByOrderId(@Param("orderId") String orderId);
 
+    OrderInfo selOrderInfoByOrderInfo(OrderInfo orderInfo);
+
 }

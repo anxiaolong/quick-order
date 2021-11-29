@@ -162,3 +162,12 @@ curl --location --request POST '127.0.0.1:8888/order/notify' \
     "pay_amount":"1900",
     "pay_status":"0"
 }'
+
+18.取消订单接口
+curl --location --request POST '127.0.0.1:8888/order/cancel' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"data":{"order_id":"1001120211129141125003"},
+	"partner":"10011",
+	"sign":"e2176fd010c9af33539b29a3a9e46239"
+}'

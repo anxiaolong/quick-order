@@ -43,4 +43,20 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public boolean cancelOrder(String orderId) {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrder_id(orderId);
+        OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfo);
+        if (orderInfo1 != null) {
+            orderInfo1.setStatus(3);
+            orderInfo1.setGoods_count(-orderInfo1.getGoods_count());
+            if (orderInfoMapper.updateOrderStatus(orderInfo1) == 1 &&
+                    goodsStockMapper.updateGoodsCount(orderInfo1) == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
