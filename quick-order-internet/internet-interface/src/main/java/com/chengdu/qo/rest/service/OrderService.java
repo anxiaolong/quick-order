@@ -9,4 +9,6 @@ public interface OrderService {
     void orderTimeoutService();
 
     boolean cancelOrder(String orderId);
+
+    boolean orderRefund(String orderId);
 }

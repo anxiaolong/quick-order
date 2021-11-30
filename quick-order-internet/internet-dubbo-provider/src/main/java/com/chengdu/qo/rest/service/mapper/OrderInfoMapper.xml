@@ -39,12 +39,12 @@
             order_id = #{order_id};
     </update>
 
-    <select id="selOrderInfoByOrderInfo" resultType="com.chengdu.management.pojo.OrderInfo">
+    <select id="selOrderInfoByOrderInfo" resultType="com.chengdu.management.pojo.OrderInfo" parameterType="com.chengdu.management.pojo.OrderInfo">
         select * from  qo_order_info
         <where><!-- where标签可以自动添加where，同时处理sql语句中第一个and关键字 -->
             <if test="order_id!=null"> and order_id = #{order_id} </if>
             <if test="phone!=null"> and phone = #{phone} </if>
-            and status = 0
+            and status = #{status}
         </where>
     </select>
 

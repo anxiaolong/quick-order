@@ -47,12 +47,30 @@ public class OrderServiceImpl implements OrderService {
     public boolean cancelOrder(String orderId) {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrder_id(orderId);
+        orderInfo.setStatus(0);
+        System.out.println(orderInfo);
         OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfo);
         if (orderInfo1 != null) {
             orderInfo1.setStatus(3);
             orderInfo1.setGoods_count(-orderInfo1.getGoods_count());
             if (orderInfoMapper.updateOrderStatus(orderInfo1) == 1 &&
                     goodsStockMapper.updateGoodsCount(orderInfo1) == 1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean orderRefund(String orderId) {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrder_id(orderId);
+        orderInfo.setStatus(2);
+        System.out.println(orderInfo);
+        OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfo);
+        if (orderInfo1 != null) {
+            orderInfo1.setStatus(4);
+            if (orderInfoMapper.updateOrderStatus(orderInfo1) == 1 ){
                 return true;
             }
         }

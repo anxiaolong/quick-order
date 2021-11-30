@@ -71,4 +71,15 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"取消订单失败！");
     }
 
+    @RequestMapping(value = "/refund",method = RequestMethod.POST)
+    public CommonResponse orderRefund(@RequestBody JSONObject requestJson){
+        String orderId = requestJson.getJSONObject("data").getString("order_id");
+        if (StringUtils.isNotBlank(orderId)){
+            if (orderService.orderRefund(orderId)){
+                return new CommonResponse(CommonResponseEnum.Success,"退款已发起，预计3个工作日到账");
+            }
+        }
+        return new CommonResponse(CommonResponseEnum.Fail,"订单退款失败！");
+    }
+
 }
