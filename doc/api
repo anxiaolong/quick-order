@@ -171,3 +171,12 @@ curl --location --request POST '127.0.0.1:8888/order/cancel' \
 	"partner":"10011",
 	"sign":"e2176fd010c9af33539b29a3a9e46239"
 }'
+
+19.订单退款发起接口
+curl --location --request POST '127.0.0.1:8888/order/refund' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"data":{"order_id":"1001120211201101222001"},
+	"partner":"10011",
+	"sign":"d525e77b2b2412a801942d94392a437e"
+}'
