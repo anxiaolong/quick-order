@@ -43,12 +43,13 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Transactional
     @Override
     public boolean cancelOrder(String orderId) {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrder_id(orderId);
         orderInfo.setStatus(0);
-        System.out.println(orderInfo);
+
         OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfo);
         if (orderInfo1 != null) {
             orderInfo1.setStatus(3);
@@ -61,13 +62,14 @@ public class OrderServiceImpl implements OrderService {
         return false;
     }
 
+    @Transactional
     @Override
     public boolean orderRefund(String orderId) {
-        OrderInfo orderInfo = new OrderInfo();
-        orderInfo.setOrder_id(orderId);
-        orderInfo.setStatus(2);
-        System.out.println(orderInfo);
-        OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfo);
+        OrderInfo orderInfoQO = new OrderInfo();
+        orderInfoQO.setOrder_id(orderId);
+        orderInfoQO.setStatus(2);
+
+        OrderInfo orderInfo1 = orderInfoMapper.selOrderInfoByOrderInfo(orderInfoQO);
         if (orderInfo1 != null) {
             orderInfo1.setStatus(4);
             if (orderInfoMapper.updateOrderStatus(orderInfo1) == 1 ){
