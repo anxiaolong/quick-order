@@ -7,6 +7,6 @@ public interface OrderNotifyMapper {
     Integer insertOrderNotify(OrderNotify orderNotify);
 
     @Select("select sum(qon.pay_amount) from qo_order_notify qon where" +
-            " qon.order_id = #{order_id} and qon.pay_status = 0;")
+            " qon.order_id = #{order_id};")
     Integer selPayAmountAll(OrderNotify orderNotify);
 }

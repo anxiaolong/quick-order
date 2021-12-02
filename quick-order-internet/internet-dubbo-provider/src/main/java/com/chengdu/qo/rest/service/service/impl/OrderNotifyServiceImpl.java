@@ -20,13 +20,27 @@ public class OrderNotifyServiceImpl implements OrderNotifyService {
     @Override
     public boolean saveOrderNotify(OrderNotify orderNotify) {
         if (orderNotifyMapper.insertOrderNotify(orderNotify) == 1){
-            if (orderNotifyMapper.selPayAmountAll(orderNotify) >=
-                    orderInfoMapper.selTotalPriceByOrderId(orderNotify.getOrder_id())){
-                OrderInfo orderInfo = new OrderInfo();
-                orderInfo.setStatus(2);
-                orderInfo.setOrder_id(orderNotify.getOrder_id());
-                orderInfoMapper.updateOrderStatus(orderInfo);
+            Integer totalPrice = orderInfoMapper.selTotalPriceByOrderId(orderNotify.getOrder_id());
+
+            // 支付成功的通知逻辑处理
+            if (orderNotify.getPay_status() == 0){
+                if (orderNotifyMapper.selPayAmountAll(orderNotify) >= totalPrice){
+                    OrderInfo orderInfo = new OrderInfo();
+                    orderInfo.setStatus(2);
+                    orderInfo.setOrder_id(orderNotify.getOrder_id());
+                    orderInfoMapper.updateOrderStatus(orderInfo);
+                }
             }
+            // 退款通知逻辑处理
+            if (orderNotify.getPay_status() == 1){
+                if (orderNotifyMapper.selPayAmountAll(orderNotify) <= 0){
+                    OrderInfo orderInfo = new OrderInfo();
+                    orderInfo.setStatus(5);
+                    orderInfo.setOrder_id(orderNotify.getOrder_id());
+                    orderInfoMapper.updateOrderStatus(orderInfo);
+                }
+            }
+
             return true;
         }
         return false;
