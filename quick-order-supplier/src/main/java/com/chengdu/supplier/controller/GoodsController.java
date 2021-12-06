@@ -5,7 +5,6 @@ import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.Goods;
 import com.chengdu.management.pojo.Goods_QO;
 import com.chengdu.supplier.service.GoodsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

@@ -191,3 +191,11 @@ curl --location --request POST '127.0.0.1:8888/order/notify' \
     "pay_amount":"-3600",
     "pay_status":"1"
 }'
+
+21.商家按日期查询订单
+curl --location --request POST 'http://127.0.0.1:7011/order/query/1' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: SESSION=NjczOTMyZGItMWQ2YS00YzQ5LWEwODAtODAyN2RhN2MwZDMz' \
+--data-raw '{
+    "date":"2021-12-02"
+}'

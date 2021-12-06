@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengdu.supplier.mapper.OrderInfoMapper">
+
+    <select id="selOrderInfoByDateAndSupplierId" resultType="com.chengdu.management.pojo.OrderInfo">
+        select
+            qoi.*
+        from
+            qo_supplier_info qsi
+                left join qo_supplier_goods qsg on
+                qsi.supplier_id = qsg.goods_supplier_id
+                left join qo_order_info qoi on
+                qoi.goods_id = qsg.goods_id
+        where qoi.saleDate = #{date} and qsi.supplier_id = #{supplierId}
+    </select>
+
+
+</mapper>
