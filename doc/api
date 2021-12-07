@@ -192,10 +192,14 @@ curl --location --request POST '127.0.0.1:8888/order/notify' \
     "pay_status":"1"
 }'
 
-21.商家按日期查询订单
+21.商家查询订单
 curl --location --request POST 'http://127.0.0.1:7011/order/query/1' \
 --header 'Content-Type: application/json' \
---header 'Cookie: SESSION=NjczOTMyZGItMWQ2YS00YzQ5LWEwODAtODAyN2RhN2MwZDMz' \
+--header 'Cookie: SESSION=ZDA1ZGRhNTYtNWZmYy00MDRiLWJiYzQtYWJiYjhkYTc4NDNh' \
 --data-raw '{
-    "date":"2021-12-02"
+    "saleDate":"2021-12-07",
+    "order_id":"1001120211207101218001",
+    "phone":"13566787732",
+    "pageIndex":1,
+    "pageSize":10
 }'

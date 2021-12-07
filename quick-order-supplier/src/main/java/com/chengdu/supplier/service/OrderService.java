@@ -1,9 +1,7 @@
 package com.chengdu.supplier.service;
 
-import com.chengdu.management.pojo.OrderInfo;
-
-import java.util.List;
+import com.chengdu.management.pojo.OrderInfo_QO;
 
 public interface OrderService {
-    List<OrderInfo> getOrderInfoList(int supplierId,String date);
+    OrderInfo_QO getOrderInfoList(OrderInfo_QO orderInfo_qo);
 }

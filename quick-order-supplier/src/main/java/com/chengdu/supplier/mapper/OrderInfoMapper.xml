@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chengdu.supplier.mapper.OrderInfoMapper">
 
-    <select id="selOrderInfoByDateAndSupplierId" resultType="com.chengdu.management.pojo.OrderInfo">
+    <select id="selOrderInfo" resultType="com.chengdu.management.pojo.OrderInfo">
         select
             qoi.*
         from
@@ -13,7 +13,30 @@
                 qsi.supplier_id = qsg.goods_supplier_id
                 left join qo_order_info qoi on
                 qoi.goods_id = qsg.goods_id
-        where qoi.saleDate = #{date} and qsi.supplier_id = #{supplierId}
+        <where>
+            <if test="saleDate!=null and saleDate!=''">qoi.saleDate = #{saleDate} and </if>
+            <if test="order_id!=null and order_id!=''">qoi.order_id = #{order_id} and </if>
+            <if test="phone!=null and phone!=''">qoi.phone = #{phone} and </if>
+            qsi.supplier_id = #{supplierId} and
+            1=1 limit #{pageIndex},#{pageSize}
+        </where>
+    </select>
+
+    <select id="countSelOrderInfo" resultType="java.lang.Integer">
+        select
+            count(*)
+        from
+        qo_supplier_info qsi
+        left join qo_supplier_goods qsg on
+        qsi.supplier_id = qsg.goods_supplier_id
+        left join qo_order_info qoi on
+        qoi.goods_id = qsg.goods_id
+        <where>
+            <if test="saleDate!=null and saleDate!=''">qoi.saleDate = #{saleDate} and </if>
+            <if test="order_id!=null and order_id!=''">qoi.order_id = #{order_id} and </if>
+            <if test="phone!=null and phone!=''">qoi.phone = #{phone} and </if>
+            qsi.supplier_id = #{supplierId}
+        </where>
     </select>
 
 
