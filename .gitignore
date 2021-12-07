@@ -13,3 +13,7 @@ quick-order.iml
 quick-order-internet/internet-dubbo-provider/target/
 quick-order-internet/internet-interface/target/
 quick-order-internet/internet-order-rest/target/
+quick-order-internet/internet-dubbo-provider/internet-dubbo-provider.iml
+quick-order-internet/internet-interface/internet-interface.iml
+quick-order-internet/internet-order-rest/internet-order-rest.iml
+quick-order-internet/quick-order-internet.iml
