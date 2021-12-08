@@ -7,6 +7,7 @@ import com.chengdu.qo.rest.service.OrderNotifyService;
 import com.chengdu.qo.rest.service.mapper.OrderInfoMapper;
 import com.chengdu.qo.rest.service.mapper.OrderNotifyMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 @Component
@@ -17,6 +18,7 @@ public class OrderNotifyServiceImpl implements OrderNotifyService {
     @Resource
     private OrderInfoMapper orderInfoMapper;
 
+    @Transactional
     @Override
     public boolean saveOrderNotify(OrderNotify orderNotify) {
         if (orderNotifyMapper.insertOrderNotify(orderNotify) == 1){
