@@ -1,6 +1,7 @@
 package com.chengdu.supplier.service.impl;
 
 import com.chengdu.management.pojo.OrderInfo_QO;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.OrderInfoMapper;
 import com.chengdu.supplier.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderInfoMapper orderInfoMapper;
 
 
+    @SysLog
     @Override
     public OrderInfo_QO getOrderInfoList(OrderInfo_QO orderInfo_qo) {
 

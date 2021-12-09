@@ -5,6 +5,7 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.OrderNotify;
 import com.chengdu.qo.rest.service.OrderNotifyService;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ public class OrderNotifyController {
     @Reference
     private OrderNotifyService orderNotifyService;
 
+    @SysLog
     @RequestMapping(value = "/notify",method = RequestMethod.POST)
     public CommonResponse syncUser(@RequestBody OrderNotify orderNotify){
         if (orderNotifyService.saveOrderNotify(orderNotify)){

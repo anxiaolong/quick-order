@@ -3,6 +3,7 @@ package com.chengdu.supplier.controller;
 import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.GoodsStock;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.GoodsStockService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ public class GoodsStockController {
     @Resource
     private GoodsStockService goodsStockService;
 
+    @SysLog
     @RequestMapping(value = "/update/{goodsId}/{id}",method = RequestMethod.PUT)
     public CommonResponse updateGoodsStock(@RequestBody GoodsStock goodsStock,
                                            @PathVariable("goodsId") int goodsId,@PathVariable("id") int id){
@@ -25,6 +27,7 @@ public class GoodsStockController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/add/{goodsId}",method = RequestMethod.POST)
     public CommonResponse addGoodsStock(@RequestBody GoodsStock goodsStock,
                                            @PathVariable("goodsId") int goodsId){

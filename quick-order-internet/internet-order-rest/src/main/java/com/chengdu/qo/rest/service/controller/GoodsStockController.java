@@ -6,6 +6,7 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.qo.rest.service.GoodsStockService;
 import com.chengdu.qo.rest.service.PartnerKeyService;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class GoodsStockController {
     @Reference
     private PartnerKeyService partnerKeyService;
 
+    @SysLog
     @RequestMapping(value = "/query/today",method = RequestMethod.POST)
     public CommonResponse queryStockToday(@RequestBody JSONObject requestJson){
         String date = requestJson.getJSONObject("data").getString("date");

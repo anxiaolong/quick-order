@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.chengdu.management.pojo.OrderInfo;
 import com.chengdu.management.pojo.OrderNotify;
 import com.chengdu.qo.rest.service.OrderNotifyService;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import com.chengdu.qo.rest.service.mapper.OrderInfoMapper;
 import com.chengdu.qo.rest.service.mapper.OrderNotifyMapper;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ public class OrderNotifyServiceImpl implements OrderNotifyService {
     @Resource
     private OrderInfoMapper orderInfoMapper;
 
+    @SysLog
     @Transactional
     @Override
     public boolean saveOrderNotify(OrderNotify orderNotify) {

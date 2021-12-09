@@ -1,6 +1,7 @@
 package com.chengdu.supplier.service.impl;
 
 import com.chengdu.management.pojo.GoodsStock;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.GoodsMapper;
 import com.chengdu.supplier.mapper.GoodsStockMapper;
 import com.chengdu.supplier.service.GoodsStockService;
@@ -15,11 +16,13 @@ public class GoodsStockServiceImpl implements GoodsStockService {
     @Resource
     private GoodsMapper goodsMapper;
 
+    @SysLog
     @Override
     public int updateGoodsStock(GoodsStock goodsStock) {
         return goodsStockMapper.updateGoodsStock(goodsStock);
     }
 
+    @SysLog
     @Override
     public int addGoodsStock(GoodsStock goodsStock) {
         if (goodsMapper.selGoodsById(goodsStock.getGoods_id()) != null){

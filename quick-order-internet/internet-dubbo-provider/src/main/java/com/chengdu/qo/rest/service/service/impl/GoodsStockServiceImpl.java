@@ -1,6 +1,7 @@
 package com.chengdu.qo.rest.service.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import com.chengdu.qo.rest.service.mapper.GoodsStockMapper;
 import com.chengdu.qo.rest.service.GoodsStockService;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,13 @@ public class GoodsStockServiceImpl implements GoodsStockService {
     @Resource
     private GoodsStockMapper goodsStockMapper;
 
+    @SysLog
     @Override
     public List<HashMap<String, String>> queryStockByDate(String date, int supplierId) {
         return goodsStockMapper.selStockByDate(date,supplierId);
     }
 
+    @SysLog
     @Override
     public Integer selCountByGoodsIdAndSaleDate(int goodsId, String saleDate) {
         return goodsStockMapper.selCountByGoodsIdAndSaleDate(goodsId,saleDate);

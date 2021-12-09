@@ -6,6 +6,7 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.Customer;
 import com.chengdu.qo.rest.service.CustomerService;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ public class CustomerController {
     @Reference
     private CustomerService customerService;
 
+    @SysLog
     @RequestMapping(value = "/sync/user",method = RequestMethod.POST)
     public CommonResponse syncUser(@RequestBody JSONObject requestJson){
 

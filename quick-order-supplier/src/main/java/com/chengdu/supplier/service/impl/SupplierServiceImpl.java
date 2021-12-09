@@ -1,5 +1,6 @@
 package com.chengdu.supplier.service.impl;
 
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.SupplierMapper;
 import com.chengdu.supplier.service.SupplierService;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,6 +17,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @SysLog
     @Override
     public int getLoginVerificationCode(String phoneNumber) {
         if (supplierMapper.selSupplierByPhoneNumber(phoneNumber) != null) {
@@ -24,6 +26,7 @@ public class SupplierServiceImpl implements SupplierService {
         return 0;
     }
 
+    @SysLog
     @Override
     public boolean supplierLoginService(String phone, String verificationCode) {
         if (supplierMapper.selSupplierByPhoneNumber(phone) != null &&
@@ -33,6 +36,7 @@ public class SupplierServiceImpl implements SupplierService {
         return false;
     }
 
+    @SysLog
     private int getVerificationCode() {
         Random random = new Random();
         return random.nextInt(900000)+100000;

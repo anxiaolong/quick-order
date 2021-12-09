@@ -4,6 +4,7 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.pojo.Goods;
 import com.chengdu.management.pojo.Goods_QO;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.GoodsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
 
+    @SysLog
     @RequestMapping(value = "/goods/add/{supplierId}",method = RequestMethod.POST)
     public CommonResponse addGoods(@RequestBody Goods goods, @PathVariable("supplierId") int supplierId){
         if (goods != null && supplierId != 0) {
@@ -29,6 +31,7 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/goods/update/{supplierId}/{goodsId}",method = RequestMethod.POST)
     public CommonResponse addUpdate(@RequestBody Goods goods,
                                     @PathVariable("supplierId") int supplierId,@PathVariable("goodsId") int goodsId){
@@ -42,6 +45,7 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/goods/list/{supplierId}",method = RequestMethod.POST)
     public CommonResponse listGoods(@RequestBody Goods_QO goods_qo, @PathVariable("supplierId") int supplierId){
         goods_qo.setGoods_supplier_id(supplierId);

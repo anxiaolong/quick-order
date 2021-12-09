@@ -2,6 +2,7 @@ package com.chengdu.qo.rest.service.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.chengdu.management.pojo.OrderInfo;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import com.chengdu.qo.rest.service.mapper.GoodsStockMapper;
 import com.chengdu.qo.rest.service.mapper.OrderInfoMapper;
 import com.chengdu.qo.rest.service.OrderService;
@@ -19,6 +20,7 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private GoodsStockMapper goodsStockMapper;
 
+    @SysLog
     @Transactional
     @Override
     public int createOrder(OrderInfo orderInfo) {
@@ -30,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
         return 0;
     }
 
+    @SysLog
     @Transactional
     @Override
     public void orderTimeoutService() {
@@ -43,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @SysLog
     @Transactional
     @Override
     public boolean cancelOrder(String orderId) {
@@ -62,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
         return false;
     }
 
+    @SysLog
     @Transactional
     @Override
     public boolean orderRefund(String orderId) {

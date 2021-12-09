@@ -2,6 +2,7 @@ package com.chengdu.supplier.controller;
 
 import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.SupplierService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class SupplierController {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @SysLog
     @RequestMapping(value = "/getVerificationCode",method = RequestMethod.POST)
     public CommonResponse getVerificationCode(@RequestBody Map<String,String> map){
         String phone = map.get("phone");
@@ -37,6 +39,7 @@ public class SupplierController {
         return new CommonResponse(CommonResponseEnum.Fail,"商家手机号输入有误");
     }
 
+    @SysLog
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public CommonResponse login(@RequestBody Map<String,String> map, HttpSession session){
         String phone = map.get("phone");

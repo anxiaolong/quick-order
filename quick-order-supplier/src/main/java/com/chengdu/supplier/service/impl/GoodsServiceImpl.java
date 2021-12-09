@@ -2,6 +2,7 @@ package com.chengdu.supplier.service.impl;
 
 import com.chengdu.management.pojo.Goods;
 import com.chengdu.management.pojo.Goods_QO;
+import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.GoodsMapper;
 import com.chengdu.supplier.service.GoodsService;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsMapper goodsMapper;
 
+    @SysLog
     @Override
     public int addGoodsService(Goods goods, int supplierId) {
         if (goodsMapper.selSupplierById(supplierId) != null) {
@@ -22,11 +24,13 @@ public class GoodsServiceImpl implements GoodsService {
         return 0;
     }
 
+    @SysLog
     @Override
     public int updateGoodsService(Goods goods) {
         return goodsMapper.updateGoods(goods);
     }
 
+    @SysLog
     @Override
     public Goods_QO listGoods(Goods_QO goods_qo) {
         List<Goods> goodsList = goodsMapper.listGoods(goods_qo);

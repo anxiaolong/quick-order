@@ -9,6 +9,7 @@ import com.chengdu.management.pojo.OrderInfo;
 import com.chengdu.qo.rest.service.CustomerService;
 import com.chengdu.qo.rest.service.GoodsStockService;
 import com.chengdu.qo.rest.service.OrderService;
+import com.chengdu.qo.rest.service.aop.SysLog;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class OrderController {
     @Reference
     private CustomerService customerService;
 
+    @SysLog
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public CommonResponse createOrder(@RequestBody JSONObject requestJson){
         String uid = requestJson.getJSONObject("data").getString("uid");
@@ -60,6 +62,7 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"下单失败");
     }
 
+    @SysLog
     @RequestMapping(value = "/cancel",method = RequestMethod.POST)
     public CommonResponse cancelOrder(@RequestBody JSONObject requestJson){
         String orderId = requestJson.getJSONObject("data").getString("order_id");
@@ -71,6 +74,7 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"取消订单失败！");
     }
 
+    @SysLog
     @RequestMapping(value = "/refund",method = RequestMethod.POST)
     public CommonResponse orderRefund(@RequestBody JSONObject requestJson){
         String orderId = requestJson.getJSONObject("data").getString("order_id");
