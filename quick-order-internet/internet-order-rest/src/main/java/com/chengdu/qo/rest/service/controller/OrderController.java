@@ -31,7 +31,7 @@ public class OrderController {
 
     @SysLog
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public CommonResponse createOrder(@RequestBody JSONObject requestJson){
+    public synchronized CommonResponse createOrder(@RequestBody JSONObject requestJson){
         String uid = requestJson.getJSONObject("data").getString("uid");
         String phone = requestJson.getJSONObject("data").getString("phone");
         String saleDate = requestJson.getJSONObject("data").getString("saleDate");
