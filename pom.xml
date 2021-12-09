@@ -49,10 +49,17 @@
         <fastjson.version>1.2.9</fastjson.version>
         <!--spring-context-support.version-->
         <spring-context-support.version>5.3.9</spring-context-support.version>
+        <!--aspectjtools-->
+        <aspectjtools.version>1.8.13</aspectjtools.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectjtools.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context-support</artifactId>

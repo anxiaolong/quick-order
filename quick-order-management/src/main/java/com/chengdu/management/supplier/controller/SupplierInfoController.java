@@ -2,18 +2,16 @@ package com.chengdu.management.supplier.controller;
 
 import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
+import com.chengdu.management.aop.SysLog;
 import com.chengdu.management.pojo.SupplierInfo;
 import com.chengdu.management.pojo.SupplierInfo_QO;
 import com.chengdu.management.supplier.service.SupplierInfoService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,6 +20,7 @@ public class SupplierInfoController {
     @Resource
     private SupplierInfoService supplierInfoService;
 
+    @SysLog
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public CommonResponse addSupplier(@RequestBody @Valid SupplierInfo supplierInfo, BindingResult result){
         if (result.hasErrors()){
@@ -33,6 +32,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/update/{supplier_code}",method = RequestMethod.PUT)
     public CommonResponse updateSupplier(@RequestBody SupplierInfo supplierInfo, @PathVariable("supplier_code") String supplier_code){
         if (supplierInfo != null) {
@@ -44,6 +44,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/disable/{supplier_code}",method = RequestMethod.PUT)
     public CommonResponse disableSupplier(@RequestBody Map<String,String> map,
                                           @PathVariable("supplier_code") String supplier_code){
@@ -61,6 +62,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @SysLog
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public CommonResponse searchSupplierInfo(@RequestBody SupplierInfo_QO supplierInfo_qo){
         supplierInfo_qo.setPageIndex((supplierInfo_qo.getPageIndex()-1)*supplierInfo_qo.getPageSize());
