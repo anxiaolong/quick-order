@@ -13,6 +13,6 @@ public class ManagementConfig implements WebMvcConfigurer {
         //注册TestInterceptor拦截器
         InterceptorRegistration registration = registry.addInterceptor(new ManagementInterceptor());
         registration.addPathPatterns("/**"); 	//所有路径都被拦截
-        registration.excludePathPatterns("/admin/login");
+        registration.excludePathPatterns("/admin/login","/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
     }
 }

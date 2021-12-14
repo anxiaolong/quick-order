@@ -13,6 +13,7 @@ public class SupplierConfig implements WebMvcConfigurer {
         //注册TestInterceptor拦截器
         InterceptorRegistration registration = registry.addInterceptor(new SupplierInterceptor());
         registration.addPathPatterns("/**"); 	//所有路径都被拦截
-        registration.excludePathPatterns("/supplier/login","/supplier/getVerificationCode");
+        registration.excludePathPatterns("/supplier/login","/supplier/getVerificationCode",
+                "/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
     }
 }

@@ -4,6 +4,8 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.SupplierService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
+@Api(tags = "商家服务接口")
 @RestController
 @RequestMapping(value = "/supplier",produces = "application/json")
 public class SupplierController {
@@ -23,6 +25,7 @@ public class SupplierController {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
+    @ApiOperation(value = "获取短信验证码接口",notes = "下发的验证码存redis中，有效期2分钟")
     @SysLog
     @RequestMapping(value = "/getVerificationCode",method = RequestMethod.POST)
     public CommonResponse getVerificationCode(@RequestBody Map<String,String> map){
@@ -39,6 +42,7 @@ public class SupplierController {
         return new CommonResponse(CommonResponseEnum.Fail,"商家手机号输入有误");
     }
 
+    @ApiOperation(value = "商家短信验证码登录接口",notes = "通过短信验证码登录，万能验证码000000")
     @SysLog
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public CommonResponse login(@RequestBody Map<String,String> map, HttpSession session){

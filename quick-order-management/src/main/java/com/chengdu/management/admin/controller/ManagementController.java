@@ -4,18 +4,21 @@ import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
 import com.chengdu.management.admin.service.ManagementAdminService;
 import com.chengdu.management.pojo.ManagementAdmin;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-
+@Api(tags = "超级管理员服务接口")
 @RestController
 @RequestMapping(value = "/admin",produces = "application/json")
 public class ManagementController {
     @Resource
     private ManagementAdminService managementAdminService;
 
+    @ApiOperation(value = "超级管理员登录",notes = "使用用户名和密码登录")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public CommonResponse managementAdminLogin(@RequestBody ManagementAdmin admin, HttpSession session){
         String uname = admin.getUname();
@@ -31,6 +34,7 @@ public class ManagementController {
         return new CommonResponse(CommonResponseEnum.Fail,"用户名或密码错误！");
     }
 
+    @ApiOperation(value = "超级管理员修改密码",notes = "修改密码")
     @RequestMapping(value = "/{id}/update",method = RequestMethod.PUT)
     public CommonResponse managementUpdatePwd(@PathVariable("id") int id,@RequestBody ManagementAdmin admin){
         String pwd = admin.getPwd();

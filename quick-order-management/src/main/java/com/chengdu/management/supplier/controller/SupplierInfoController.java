@@ -6,6 +6,8 @@ import com.chengdu.management.aop.SysLog;
 import com.chengdu.management.pojo.SupplierInfo;
 import com.chengdu.management.pojo.SupplierInfo_QO;
 import com.chengdu.management.supplier.service.SupplierInfoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +15,14 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-
+@Api(tags = "供应商管理接口")
 @RestController
 @RequestMapping(value = "/supplier",produces = "application/json")
 public class SupplierInfoController {
     @Resource
     private SupplierInfoService supplierInfoService;
 
+    @ApiOperation(value = "新增供应商")
     @SysLog
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public CommonResponse addSupplier(@RequestBody @Valid SupplierInfo supplierInfo, BindingResult result){
@@ -32,6 +35,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "更新供应商信息")
     @SysLog
     @RequestMapping(value = "/update/{supplier_code}",method = RequestMethod.PUT)
     public CommonResponse updateSupplier(@RequestBody SupplierInfo supplierInfo, @PathVariable("supplier_code") String supplier_code){
@@ -44,6 +48,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "禁用/启用 供应商")
     @SysLog
     @RequestMapping(value = "/disable/{supplier_code}",method = RequestMethod.PUT)
     public CommonResponse disableSupplier(@RequestBody Map<String,String> map,
@@ -62,6 +67,7 @@ public class SupplierInfoController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "分页查询供应商列表")
     @SysLog
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public CommonResponse searchSupplierInfo(@RequestBody SupplierInfo_QO supplierInfo_qo){

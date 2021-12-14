@@ -6,19 +6,21 @@ import com.chengdu.management.pojo.Goods;
 import com.chengdu.management.pojo.Goods_QO;
 import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.GoodsService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-
+@Api(tags = "商品管理接口")
 @RestController
 @RequestMapping(value = "/supplier",produces = "application/json")
 public class GoodsController {
     @Resource
     private GoodsService goodsService;
 
-
+    @ApiOperation(value = "供应商添加商品",notes = "供应商添加自己的商品")
     @SysLog
     @RequestMapping(value = "/goods/add/{supplierId}",method = RequestMethod.POST)
     public CommonResponse addGoods(@RequestBody Goods goods, @PathVariable("supplierId") int supplierId){
@@ -31,6 +33,7 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "供应商修改商品信息",notes = "修改商品信息")
     @SysLog
     @RequestMapping(value = "/goods/update/{supplierId}/{goodsId}",method = RequestMethod.POST)
     public CommonResponse addUpdate(@RequestBody Goods goods,
@@ -45,6 +48,7 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "供应商分页查询商品信息",notes = "分页查询商品信息")
     @SysLog
     @RequestMapping(value = "/goods/list/{supplierId}",method = RequestMethod.POST)
     public CommonResponse listGoods(@RequestBody Goods_QO goods_qo, @PathVariable("supplierId") int supplierId){

@@ -21,7 +21,15 @@ public class OrderRestFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         // 释放特定接口
         String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
-        if ("/order/notify".equals(requestURI)){
+        // System.out.println(requestURI);
+        if ("/order/notify".equals(requestURI)
+                || requestURI.startsWith("/swagger-resources")
+                || requestURI.startsWith("/webjars")
+                || requestURI.startsWith("/v2")
+                || requestURI.startsWith("/swagger-ui.html")
+                || requestURI.equals("/")
+                || requestURI.equals("/csrf")
+        ){
             filterChain.doFilter(servletRequest,servletResponse);
             return;
         }

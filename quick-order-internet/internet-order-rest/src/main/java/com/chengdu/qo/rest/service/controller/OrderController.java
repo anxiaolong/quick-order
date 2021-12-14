@@ -10,6 +10,8 @@ import com.chengdu.qo.rest.service.CustomerService;
 import com.chengdu.qo.rest.service.GoodsStockService;
 import com.chengdu.qo.rest.service.OrderService;
 import com.chengdu.qo.rest.service.aop.SysLog;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+@Api(tags = "订单相关接口")
 @RestController
 @RequestMapping(value = "/order",produces = "application/json")
 public class OrderController {
@@ -29,6 +31,7 @@ public class OrderController {
     @Reference
     private CustomerService customerService;
 
+    @ApiOperation(value = "下单接口",notes = "对可售商品下单")
     @SysLog
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public synchronized CommonResponse createOrder(@RequestBody JSONObject requestJson){
@@ -62,6 +65,7 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"下单失败");
     }
 
+    @ApiOperation(value = "取消订单接口",notes = "修改订单状态，退还库存")
     @SysLog
     @RequestMapping(value = "/cancel",method = RequestMethod.POST)
     public CommonResponse cancelOrder(@RequestBody JSONObject requestJson){
@@ -74,6 +78,7 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"取消订单失败！");
     }
 
+    @ApiOperation(value = "订单退款申请发起接口",notes = "已完成付款的订单，发起退款")
     @SysLog
     @RequestMapping(value = "/refund",method = RequestMethod.POST)
     public CommonResponse orderRefund(@RequestBody JSONObject requestJson){
