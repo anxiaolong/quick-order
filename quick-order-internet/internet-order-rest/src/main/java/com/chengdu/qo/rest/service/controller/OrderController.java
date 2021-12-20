@@ -13,11 +13,14 @@ import com.chengdu.qo.rest.service.aop.SysLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 @Api(tags = "订单相关接口")
@@ -30,11 +33,18 @@ public class OrderController {
     private GoodsStockService goodsStockService;
     @Reference
     private CustomerService customerService;
+    @Resource
+    private RedissonClient redissonClient;
 
     @ApiOperation(value = "下单接口",notes = "对可售商品下单")
     @SysLog
     @RequestMapping(value = "/create",method = RequestMethod.POST)
     public synchronized CommonResponse createOrder(@RequestBody JSONObject requestJson){
+        // 下单开启锁
+        RLock order_lock = redissonClient.getLock("order_lock");
+        // 锁定操作
+        order_lock.lock();
+
         String uid = requestJson.getJSONObject("data").getString("uid");
         String phone = requestJson.getJSONObject("data").getString("phone");
         String saleDate = requestJson.getJSONObject("data").getString("saleDate");
@@ -45,12 +55,15 @@ public class OrderController {
         Customer customer = customerService.selCustomerByUidAndPhone(uid, phone);
 
         if (customer == null){
+            order_lock.unlock();
             return new CommonResponse(CommonResponseEnum.Fail,"未授权手机号，不能下单");
         }
         if (stock == 0){
+            order_lock.unlock();
             return new CommonResponse(CommonResponseEnum.Fail,"已售罄");
         }
         if (stock < goods_count){
+            order_lock.unlock();
             return new CommonResponse(CommonResponseEnum.Fail,"库存不足");
         }
 
@@ -59,9 +72,11 @@ public class OrderController {
         orderInfo.setCreate_time(dateTime);
         orderInfo.setModified_time(dateTime);
         if (orderService.createOrder(orderInfo) == 1){
+            order_lock.unlock();
             return new CommonResponse(CommonResponseEnum.Success,"下单成功");
         }
 
+        order_lock.unlock();
         return new CommonResponse(CommonResponseEnum.Fail,"下单失败");
     }
 
