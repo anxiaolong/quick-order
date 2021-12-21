@@ -17,3 +17,5 @@ quick-order-internet/internet-dubbo-provider/internet-dubbo-provider.iml
 quick-order-internet/internet-interface/internet-interface.iml
 quick-order-internet/internet-order-rest/internet-order-rest.iml
 quick-order-internet/quick-order-internet.iml
+quick-order-internet/internet-scheduler/internet-scheduler.iml
+quick-order-internet/internet-scheduler/target/

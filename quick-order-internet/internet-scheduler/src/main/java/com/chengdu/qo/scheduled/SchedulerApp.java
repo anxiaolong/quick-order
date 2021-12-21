@@ -1,13 +1,15 @@
-package com.chengdu.qo.rest.service;
+package com.chengdu.qo.scheduled;
 
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableDubbo
-public class RestApp {
+@EnableScheduling
+public class SchedulerApp {
     public static void main(String[] args) {
-        SpringApplication.run(RestApp.class,args);
+        SpringApplication.run(SchedulerApp.class,args);
     }
 }

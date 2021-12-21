@@ -15,6 +15,7 @@
         <module>internet-interface</module>
         <module>internet-dubbo-provider</module>
         <module>internet-order-rest</module>
+        <module>internet-scheduler</module>
     </modules>
 
     <properties>

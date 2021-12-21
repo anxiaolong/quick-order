@@ -1,10 +1,11 @@
-package com.chengdu.qo.rest.service.scheduled;
+package com.chengdu.qo.scheduled;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.chengdu.qo.rest.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 @Slf4j
 @Component
 public class OrderScheduled {
