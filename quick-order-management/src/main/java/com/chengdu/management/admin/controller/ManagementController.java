@@ -28,10 +28,10 @@ public class ManagementController {
             if (managementAdmin != null) {
                 // 登录成功后开启session
                 session.setAttribute("uname",managementAdmin.getUname());
-                return new CommonResponse(CommonResponseEnum.Success,"登录成功");
+                return new CommonResponse(CommonResponseEnum.Success,null);
             }
         }
-        return new CommonResponse(CommonResponseEnum.Fail,"用户名或密码错误！");
+        return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
     @ApiOperation(value = "超级管理员修改密码",notes = "修改密码")
@@ -41,10 +41,10 @@ public class ManagementController {
         if (id != 0 && StringUtils.isNotBlank(pwd)){
             int update = managementAdminService.managementAdminUpdatePwd(id, pwd);
             if (update==1){
-                return new CommonResponse(CommonResponseEnum.Success,"密码修改成功！");
+                return new CommonResponse(CommonResponseEnum.Success,null);
             }
         }
-        return new CommonResponse(CommonResponseEnum.Fail,"找不到用户id或新密码");
+        return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
 }

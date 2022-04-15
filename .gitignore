@@ -19,3 +19,17 @@ quick-order-internet/internet-order-rest/internet-order-rest.iml
 quick-order-internet/quick-order-internet.iml
 quick-order-internet/internet-scheduler/internet-scheduler.iml
 quick-order-internet/internet-scheduler/target/
+
+# management ignore
+management/.DS_Store
+management/node_modules/
+management/dist/
+management/npm-debug.log*
+management/yarn-debug.log*
+management/yarn-error.log*
+management/.idea
+management/.vscode
+management/*.suo
+management/*.ntvs*
+management/*.njsproj
+management/*.sln
