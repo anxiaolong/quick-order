@@ -20,7 +20,7 @@
 import {login} from '../api/adminMG'
 
 export default {
-    name:'Login',
+    name:'login',
 
     data() {
         return {
