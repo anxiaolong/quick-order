@@ -1,73 +1,81 @@
 <template>
     <div class="login-wrap">
-        <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm login-container">
-            <h3 class="title">超管登录</h3>
-            <el-form-item prop="uname">
-                <el-input type="text" v-model="ruleForm.uname" auto-complete="off" placeholder="账号"></el-input>
-            </el-form-item>
-            <el-form-item prop="pwd">
-                <el-input type="password" v-model="ruleForm.pwd" auto-complete="off" placeholder="密码"></el-input>
-            </el-form-item>
-            <el-checkbox class="remember" v-model="rememberpwd">记住密码</el-checkbox>
-            <el-form-item style="width:100%;">
-                <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')" :loading="logining">登录</el-button>
-            </el-form-item>
-        </el-form>
+    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="login-container">
+
+      <h3 class="title">用户登录</h3>
+
+      <el-form-item prop="uname"> 
+        <el-input type="text" v-model="ruleForm.uname" auto-complete="off" placeholder="账号"></el-input>
+      </el-form-item>
+
+      <el-form-item prop="pwd">
+        <el-input type="password" v-model="ruleForm.pwd" auto-complete="off" placeholder="密码"></el-input>
+      </el-form-item>
+
+      <el-form-item style="width:100%;">
+        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')">登录</el-button>
+      </el-form-item>
+
+    </el-form>
     </div>
 </template>
 
 <script>
-import {login} from '../api/adminMG'
-
+// 引入axios发送请求
+import axios from 'axios'
 export default {
     name:'login',
 
     data() {
         return {
-        //定义loading默认为false
         logining: false,
-        // 记住密码
-        rememberpwd: false,
         ruleForm: {
-            //username和password默认为空
             uname: '',
             pwd: ''
         },
         //rules前端验证
         rules: {
-            username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-            password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-            code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+            uname: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+            pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }]
             }
         }
     },
 
+    // vue对象创建后要执行的操作
+    created(){
+        this.$message({
+        type:'success', // alert的类型
+        message:'成功的加载了页面'
+        })
+    },
+
     methods: {
-        // 获取用户名密码
-        getuserpwd() {
-        if (getCookie('uname') != '' && getCookie('pwd') != '') {
-            this.ruleForm.uname = getCookie('uname')
-            this.ruleForm.pwd = getCookie('pwd')
-            this.rememberpwd = true
-        }
+        // 发送请求的通用方法
+        reqDemo(method, url, params){
+        return axios({
+            method:method,
+            url:url,
+            headers:{'Content-Type':'application/json'},
+            data:params
+        }).then(res => res.data); // 使用.then把响应的具体内容返回
         },
-        //获取info列表
-        submitForm(formName) {
+
+        // 提交表单方法
+        submitForm(formName){
         this.$refs[formName].validate(valid => {
-            if (valid) {
-            this.logining = true
-            
-            login(this.ruleForm).then(res => {
-                console.log(res)
-                if (res.resCode === '0000') {
-                this.$router.push({ path: '/index' })
-                } else {
-                this.$message.error(res.resMsg)
-                this.logining = false
-                return false
-                }
-            })
+            const res = this.reqDemo('post','/admin/login',this.ruleForm)
+
+            console.log(res)
+
+            res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
+            console.log(res.resCode)
+
+            if (res.resCode=='0000') {
+                this.$message({type:'success',message:'登录成功'})
+            }else{
+                this.$message({type:'error',message:'登录失败'})
             }
+            })
         })
         }
     }
@@ -101,14 +109,5 @@ export default {
   margin: 0px auto 40px auto;
   text-align: center;
   color: #505458;
-}
-.remember {
-  margin: 0px 0px 35px 0px;
-}
-.code-box {
-  text-align: right;
-}
-.codeimg {
-  height: 40px;
 }
 </style>

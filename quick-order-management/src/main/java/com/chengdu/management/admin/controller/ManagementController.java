@@ -34,6 +34,13 @@ public class ManagementController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "超级管理员登出",notes = "超级管理员登出")
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    public CommonResponse managementAdminLogout(HttpSession session){
+        session.invalidate(); // session直接设置失效即可
+        return new CommonResponse(CommonResponseEnum.Success,null);
+    }
+
     @ApiOperation(value = "超级管理员修改密码",notes = "修改密码")
     @RequestMapping(value = "/{id}/update",method = RequestMethod.PUT)
     public CommonResponse managementUpdatePwd(@PathVariable("id") int id,@RequestBody ManagementAdmin admin){

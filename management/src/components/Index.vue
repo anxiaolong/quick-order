@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h3>这是登录后页面</h3>
+    <h3>这是index</h3>
+    <router-view></router-view>
   </div>
 </template>
 

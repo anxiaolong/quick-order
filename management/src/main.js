@@ -27,5 +27,9 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data:{
+    // 空实例放到根组件下，所有的自组件都能调用
+    Bus: new Vue()
+  }
 })
