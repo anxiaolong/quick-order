@@ -72,6 +72,7 @@ export default {
 
             if (res.resCode=='0000') {
                 this.$message({type:'success',message:'登录成功'})
+                this.$router.push('/index')
             }else{
                 this.$message({type:'error',message:'登录失败'})
             }

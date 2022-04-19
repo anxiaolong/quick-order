@@ -3,13 +3,16 @@ import Router from 'vue-router'
 import Login from '@/components/login'
 import Index from '@/components/index'
 import Navcon from '@/components/navcon'
+import Leftnav from '@/components/leftnav'
+import Password from '@/components/password'
+
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: Login,
       meta:{
@@ -21,7 +24,7 @@ export default new Router({
       name: 'index',
       component: Index,
       meta:{
-        title:'超级管理服务'
+        title:'超级后台管理'
       },
       children:[
         {
@@ -29,7 +32,23 @@ export default new Router({
           name: 'navcon',
           component: Navcon,
           meta:{
-            title:'头部菜单'
+           title:'index'
+          }
+        },
+        {
+          path: '/leftnav',
+          name: 'leftnav',
+          component: Leftnav,
+          meta:{
+           title:'index'
+          }
+        },
+        {
+          path: '/user/password',
+          name: 'password',
+          component: Password,
+          meta:{
+           title:'修改密码'
           }
         }
       ]
