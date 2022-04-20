@@ -22,7 +22,7 @@
 
 <script>
 // 引入axios发送请求
-import axios from 'axios'
+import axios from '../ajax/axios'
 export default {
     name:'login',
 
@@ -43,10 +43,7 @@ export default {
 
     // vue对象创建后要执行的操作
     created(){
-        this.$message({
-        type:'success', // alert的类型
-        message:'成功的加载了页面'
-        })
+      
     },
 
     methods: {
@@ -65,14 +62,16 @@ export default {
         this.$refs[formName].validate(valid => {
             const res = this.reqDemo('post','/admin/login',this.ruleForm)
 
-            console.log(res)
+            //console.log(res)
 
             res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
-            console.log(res.resCode)
+            //console.log(res.resCode)
 
             if (res.resCode=='0000') {
-                this.$message({type:'success',message:'登录成功'})
-                this.$router.push('/index')
+               setTimeout(()=>{
+                 this.$message({type:'success',message:'登录成功'})
+                  this.$router.push('/index')
+               },1000)
             }else{
                 this.$message({type:'error',message:'登录失败'})
             }

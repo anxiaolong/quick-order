@@ -8,12 +8,10 @@
     </div>
     <el-submenu v-for="menu in allmenu" :key="menu.menuid" :index="menu.menuname">
       <template slot="title">
-        <i class="iconfont" :class="menu.icon"></i>
         <span>{{menu.menuname}}</span>
       </template>
       <el-menu-item-group>
         <el-menu-item v-for="chmenu in menu.menus" :index="'/'+chmenu.url" :key="chmenu.menuid">
-          <i class="iconfont" :class="chmenu.icon"></i>
           <span>{{chmenu.menuname}}</span>
         </el-menu-item>
       </el-menu-item-group>
@@ -37,17 +35,26 @@ export default {
       data: [
         {
           menuid: 1,
-          icon: 'li-icon-xiangmuguanli',
           menuname: '超级用户管理',
-          hasThird: null,
           url: null,
           menus: [
             {
-              menuid: 2,
-              icon: 'icon-cat-skuQuery',
-              menuname: '修改密码',
-              hasThird: 'N',
-              url: 'user/password',
+              menuid: 11,
+              menuname: '用户管理',
+              url: 'index/managementadmin',
+              menus: null
+            }
+          ]
+        },
+        {
+          menuid: 2,
+          menuname: '供应商管理',
+          url: null,
+          menus: [
+            {
+              menuid: 21,
+              menuname: '供应商管理',
+              url: 'index/supplier',
               menus: null
             }
           ]

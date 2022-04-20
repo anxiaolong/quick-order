@@ -4,15 +4,25 @@ import Login from '@/components/login'
 import Index from '@/components/index'
 import Navcon from '@/components/navcon'
 import Leftnav from '@/components/leftnav'
-import Password from '@/components/password'
+import Managementadmin from '@/components/managementadmin'
+import Supplier from '@/components/supplier'
 
 
 Vue.use(Router)
 
 export default new Router({
+  mode:'history', // 去掉路由中的#号
   routes: [
     {
       path: '/login',
+      name: 'login',
+      component: Login,
+      meta:{
+        title:'超管登录'
+      }
+    },
+    {
+      path: '/',
       name: 'login',
       component: Login,
       meta:{
@@ -24,7 +34,7 @@ export default new Router({
       name: 'index',
       component: Index,
       meta:{
-        title:'超级后台管理'
+        title:'首页'
       },
       children:[
         {
@@ -32,7 +42,7 @@ export default new Router({
           name: 'navcon',
           component: Navcon,
           meta:{
-           title:'index'
+           title:'navcon'
           }
         },
         {
@@ -40,15 +50,23 @@ export default new Router({
           name: 'leftnav',
           component: Leftnav,
           meta:{
-           title:'index'
+           title:'leftnav'
           }
         },
         {
-          path: '/user/password',
-          name: 'password',
-          component: Password,
+          path: '/index/managementadmin',
+          name: 'managementadmin',
+          component: Managementadmin,
           meta:{
-           title:'修改密码'
+           title:'用户管理'
+          }
+        },
+        {
+          path: '/index/supplier',
+          name: 'supplier',
+          component: Supplier,
+          meta:{
+           title:'供应商管理'
           }
         }
       ]

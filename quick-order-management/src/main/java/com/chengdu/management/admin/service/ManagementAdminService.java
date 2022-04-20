@@ -2,6 +2,8 @@ package com.chengdu.management.admin.service;
 
 import com.chengdu.management.pojo.ManagementAdmin;
 
+import java.util.List;
+
 public interface ManagementAdminService {
     /**
      * 超管登录
@@ -16,4 +18,6 @@ public interface ManagementAdminService {
      * @return
      */
     int managementAdminUpdatePwd(int id,String pwd);
+
+    List<ManagementAdmin> getManagementAdminList();
 }

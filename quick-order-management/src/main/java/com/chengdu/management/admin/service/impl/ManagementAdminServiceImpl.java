@@ -7,6 +7,7 @@ import com.chengdu.management.pojo.ManagementAdmin;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ManagementAdminServiceImpl implements ManagementAdminService {
@@ -23,5 +24,10 @@ public class ManagementAdminServiceImpl implements ManagementAdminService {
     @Override
     public int managementAdminUpdatePwd(int id, String pwd) {
         return managementAdminMapper.updPwdById(id,pwd);
+    }
+
+    @Override
+    public List<ManagementAdmin> getManagementAdminList() {
+        return managementAdminMapper.selManagementAdminList();
     }
 }

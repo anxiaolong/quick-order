@@ -16,4 +16,8 @@
     <update id="updPwdById">
         update management_admin set pwd = #{pwd} where id = #{id};
     </update>
+
+    <select id="selManagementAdminList" resultMap="ManagementAdminMap">
+        SELECT id,uname,pwd FROM management_admin;
+    </select>
 </mapper>

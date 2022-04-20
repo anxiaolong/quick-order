@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+
 @Api(tags = "超级管理员服务接口")
 @RestController
 @RequestMapping(value = "/admin",produces = "application/json")
@@ -52,6 +54,13 @@ public class ManagementController {
             }
         }
         return new CommonResponse(CommonResponseEnum.Fail,null);
+    }
+
+    @ApiOperation(value = "获取超级管理员列表",notes = "获取管理员列表")
+    @RequestMapping(value = "/list/get",method = RequestMethod.POST)
+    public CommonResponse getAminList(){
+        List<ManagementAdmin> managementAdminList = managementAdminService.getManagementAdminList();
+        return new CommonResponse(CommonResponseEnum.Success,managementAdminList);
     }
 
 }
