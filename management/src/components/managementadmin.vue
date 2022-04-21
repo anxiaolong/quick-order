@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from '../ajax/axios'
+import {req} from '../api/axiosFun'
 export default {
     name:'managementadmin',
     data(){
@@ -58,7 +58,7 @@ export default {
                 pwd: ''
             },
             rules: {
-                pwd: [{ required: true, message: '请输入新密码', trigger: 'blur' }]
+                pwd: [{ required: true,pattern:'^[0-9A-Za-z]{6,12}$',message: '请输入新密码', trigger: 'blur' }]
             }
         }
     },
@@ -68,14 +68,9 @@ export default {
 
     methods:{
         loadManagemenAdminList(){
-            axios({
-                method:'POST',
-                url:'/admin/list/get',
-                headers:{'Content-Type':'application/json'},
-                data:""
-            }).then(res => {
+            req('post','/api/admin/list/get','').then(res => {
                 // console.log(res.data.data)
-                this.listData = res.data.data
+                this.listData = res.data
             })
         },
 
@@ -87,17 +82,11 @@ export default {
             })
             .then(() => {
             setTimeout(() => {
-
-                axios({
-                    method:'put',
-                    url:'/admin/'+this.editForm.id+'/update',
-                    headers:{'Content-Type':'application/json'},
-                    data:{'pwd':this.editForm.pwd}
-                }).then(res => {
+                req('put','/api/admin/'+this.editForm.id+'/update',{'pwd':this.editForm.pwd}).then(res => {
                     // console.log(res)
                     this.$message({
                     type: 'success',
-                    message: res.data.resMsg
+                    message: res.resMsg
                     })
                     this.closeDialog()
                     this.loadManagemenAdminList()

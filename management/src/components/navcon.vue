@@ -5,17 +5,18 @@
     </el-button>
     <el-submenu index="2" class="submenu">
       <!-- <template slot="title">{{user.userRealName}}</template> -->
-      <template slot="title">超级管理员</template>
+      <template slot="title">{{uname}}</template>
       <el-menu-item @click="exit()" index="2-3">退出</el-menu-item>
     </el-submenu>
   </el-menu>
 </template>
 <script>
-import axios from '../ajax/axios'
+import {req} from '../api/axiosFun'
 export default {
   name: 'navcon',
   data() {
     return {
+      uname: localStorage.getItem('uname'),
       collapsed: true,
       imgshow: require('../assets/img/show.png'),
       imgsq: require('../assets/img/sq.png'),
@@ -29,12 +30,7 @@ export default {
   methods: {
     // 调用后台接口退出登录
     logout(){
-      axios({
-            method:'post',
-            url:'/admin/logout',
-            headers:{'Content-Type':'application/json'},
-            data:''
-        })
+      req('post','/api/admin/logout','')
     },
 
     // 退出登录

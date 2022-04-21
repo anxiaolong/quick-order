@@ -22,7 +22,7 @@
 
 <script>
 // 引入axios发送请求
-import axios from '../ajax/axios'
+import {req} from '../api/axiosFun'
 export default {
     name:'login',
 
@@ -47,20 +47,10 @@ export default {
     },
 
     methods: {
-        // 发送请求的通用方法
-        reqDemo(method, url, params){
-        return axios({
-            method:method,
-            url:url,
-            headers:{'Content-Type':'application/json'},
-            data:params
-        }).then(res => res.data); // 使用.then把响应的具体内容返回
-        },
-
         // 提交表单方法
         submitForm(formName){
         this.$refs[formName].validate(valid => {
-            const res = this.reqDemo('post','/admin/login',this.ruleForm)
+            const res = req('post','/api/admin/login',this.ruleForm)
 
             //console.log(res)
 
@@ -68,6 +58,7 @@ export default {
             //console.log(res.resCode)
 
             if (res.resCode=='0000') {
+              localStorage.setItem('uname',this.ruleForm.uname)
                setTimeout(()=>{
                  this.$message({type:'success',message:'登录成功'})
                   this.$router.push('/index')
