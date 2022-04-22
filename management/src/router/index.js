@@ -23,7 +23,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'login',
+      name: '跳转登录',
       component: Login,
       meta:{
         title:'超管登录'

@@ -17,7 +17,7 @@
         </el-table-column>
         <el-table-column align="center" label="操作" min-width="300">
             <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">修改密码</el-button>
+            <el-button plain type="primary" size="mini" @click="handleEdit(scope.$index, scope.row)">修改密码</el-button>
             </template>
         </el-table-column>
         </el-table>
