@@ -27,7 +27,7 @@
         update qo_supplier_info
         <trim prefix="set" suffixOverrides=",">
             <if test="supplier_name!=null and supplier_name!=''">supplier_name=#{supplier_name},</if>
-            <if test="supplier_type!=null and supplier_type!=''">supplier_type=#{supplier_type},</if>
+            <if test="supplier_type!=null">supplier_type=#{supplier_type},</if>
             <if test="link_man!=null and link_man!=''">link_man=#{link_man},</if>
             <if test="phone_number!=null and phone_number!=''">phone_number=#{phone_number},</if>
             <if test="bank_name!=null and bank_name!=''">bank_name=#{bank_name},</if>
@@ -50,19 +50,13 @@
             <if test="link_man!=null and link_man!=''">link_man like concat(#{link_man},'%') and </if>
             <if test="phone_number!=null and phone_number!=''">phone_number like concat(#{phone_number},'%') and </if>
             <if test="address!=null and address!=''">address like concat(#{address},'%') and </if>
-            1=1 limit #{pageIndex},#{pageSize}
+            1=1
         </where>
+        order by supplier_id desc limit #{pageIndex},#{pageSize}
     </select>
 
     <select id="countSupplier" resultType="java.lang.Integer">
         select count(*) from qo_supplier_info
-        <where>
-            <if test="supplier_name!=null and supplier_name!=''">supplier_name like concat(#{supplier_name},'%') and </if>
-            <if test="link_man!=null and link_man!=''">link_man like concat(#{link_man},'%') and </if>
-            <if test="phone_number!=null and phone_number!=''">phone_number like concat(#{phone_number},'%') and </if>
-            <if test="address!=null and address!=''">address like concat(#{address},'%') and </if>
-            1=1
-        </where>
     </select>
 
 </mapper>

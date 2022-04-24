@@ -11,6 +11,7 @@ import Supplier from '@/components/supplier'
 Vue.use(Router)
 
 export default new Router({
+  base:'/management/', // tomcat需要部署到management文件加中
   mode:'history', // 去掉路由中的#号
   routes: [
     {

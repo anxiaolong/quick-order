@@ -37,9 +37,7 @@ public class SupplierInfoServiceImpl implements SupplierInfoService {
     @Override
     public SupplierInfo_QO selSupplierInfo(SupplierInfo_QO supplierInfo_qo) {
         List<SupplierInfo> supplierInfos = supplierInfoMapper.selSupplierInfo(supplierInfo_qo);
-        int count = supplierInfoMapper.countSupplier(supplierInfo_qo)%supplierInfo_qo.getPageSize()==0
-                ?supplierInfoMapper.countSupplier(supplierInfo_qo)/supplierInfo_qo.getPageSize()
-                :supplierInfoMapper.countSupplier(supplierInfo_qo)/supplierInfo_qo.getPageSize()+1;
+        int count = supplierInfoMapper.countSupplier();
         supplierInfo_qo.setCount(count);
         supplierInfo_qo.setSupplierInfos(supplierInfos);
         return supplierInfo_qo;

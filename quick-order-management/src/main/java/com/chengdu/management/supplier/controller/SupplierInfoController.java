@@ -51,16 +51,16 @@ public class SupplierInfoController {
     @ApiOperation(value = "禁用/启用 供应商")
     @SysLog
     @RequestMapping(value = "/disable/{supplier_code}",method = RequestMethod.PUT)
-    public CommonResponse disableSupplier(@RequestBody Map<String,String> map,
+    public CommonResponse disableSupplier(@RequestBody Map<String,Boolean> map,
                                           @PathVariable("supplier_code") String supplier_code){
-        String isDisable = map.get("isDisable");
+        boolean isDisable = map.get("isDisable");
         int updateStatus = 0;
-        if ("true".equals(isDisable)){
+        if (isDisable){
             updateStatus = supplierInfoService.updateSupplierStatus(0,supplier_code);
-        }
-        if ("false".equals(isDisable)){
+        }else {
             updateStatus = supplierInfoService.updateSupplierStatus(1,supplier_code);
         }
+
         if (updateStatus==1){
             return new CommonResponse(CommonResponseEnum.Success,null);
         }

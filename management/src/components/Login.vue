@@ -61,7 +61,7 @@ export default {
               localStorage.setItem('uname',this.ruleForm.uname)
                setTimeout(()=>{
                  this.$message({type:'success',message:'登录成功'})
-                  this.$router.push('/index')
+                  this.$router.push('/index/supplier')
                },1000)
             }else{
                 this.$message({type:'error',message:'登录失败'})

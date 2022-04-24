@@ -16,6 +16,6 @@ public interface SupplierInfoMapper {
 
     List<SupplierInfo> selSupplierInfo(SupplierInfo_QO supplierInfo_qo);
 
-    Integer countSupplier(SupplierInfo_QO supplierInfo_qo);
+    Integer countSupplier();
 
 }
