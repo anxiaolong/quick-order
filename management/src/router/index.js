@@ -12,7 +12,7 @@ Vue.use(Router)
 
 export default new Router({
   base:'/management/', // tomcat需要部署到management文件加中
-  mode:'history', // 去掉路由中的#号
+  // mode:'history', // 去掉路由中的#号,使用history模式会引发刷新页面404问题
   routes: [
     {
       path: '/login',

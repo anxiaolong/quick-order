@@ -50,7 +50,7 @@ export default {
   }
 }
 </script>
-<style >
+<style scoped>
 .index-con {
   height: 100%;
   width: 100%;
@@ -69,7 +69,10 @@ export default {
   background-color: #334157;
   margin: 0px;
 }
-.index-header,
+.index-header {
+    padding: 0px;
+    border-left: 2px solid #333;
+}
 .index-main {
   padding: 0px;
   border-left: 2px solid #333;
