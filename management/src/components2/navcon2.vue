@@ -9,7 +9,7 @@
 <script>
 import {req} from '../api/axiosFun'
 export default {
-  name: 'navcon',
+  name: 'navcon2',
   data() {
     return {
       uname: localStorage.getItem('uname'),
@@ -36,7 +36,7 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.logout()
-            this.$router.push({ path: '/management/login' })
+            this.$router.push({ path: '/supplier/login' })
             this.$message({
               type: 'success',
               message: '已退出登录!'
