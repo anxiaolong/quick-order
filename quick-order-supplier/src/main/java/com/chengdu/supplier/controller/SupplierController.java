@@ -52,12 +52,12 @@ public class SupplierController {
         // 添加一个万能验证码方便测试
         if ("000000".equals(verificationCode)) {
             session.setAttribute("phone",phone);
-            return new CommonResponse(CommonResponseEnum.Success,null);
+            return new CommonResponse(CommonResponseEnum.Success,supplierService.getSullpierInfoByPhone(phone));
         }
 
         if (supplierService.supplierLoginService(phone,verificationCode)) {
             session.setAttribute("phone",phone);
-            return new CommonResponse(CommonResponseEnum.Success,null);
+            return new CommonResponse(CommonResponseEnum.Success,supplierService.getSullpierInfoByPhone(phone));
         }
         return new CommonResponse(CommonResponseEnum.Fail,"验证码校验失败");
     }

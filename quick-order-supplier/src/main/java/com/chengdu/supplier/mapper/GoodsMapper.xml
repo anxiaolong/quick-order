@@ -36,7 +36,7 @@
                                goods_supplier_id,
                                goods_status,
                                modified_time)
-        values (#{goods_name},#{goods_intro},#{goods_supplier_id},#{goods_status},current_timestamp);
+        values (#{goods_name},#{goods_intro},#{goods_supplier_id},0,current_timestamp);
     </insert>
 
     <update id="updateGoods">
@@ -56,8 +56,7 @@
             <if test="goods_name!=null and goods_name!=''">goods_name like concat(#{goods_name},'%') and </if>
             <if test="goods_intro!=null and goods_intro!=''">goods_intro like concat(#{goods_intro},'%') and </if>
             goods_supplier_id = #{goods_supplier_id} and
-            goods_status = #{goods_status} and
-            1=1 limit #{pageIndex},#{pageSize}
+            1=1 order by goods_id desc limit #{pageIndex},#{pageSize}
         </where>
     </select>
 

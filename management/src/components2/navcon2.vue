@@ -1,7 +1,7 @@
 <template>
   <el-menu mode="horizontal" background-color="#334157" text-color="#fff" active-text-color="#fff">
     <el-submenu index='1' class="submenu2">
-      <template slot="title">{{uname}}</template>
+      <template slot="title">{{supplierInfo.supplier_name}}</template>
       <el-menu-item @click="exit">退出</el-menu-item>
     </el-submenu>
   </el-menu>
@@ -12,7 +12,7 @@ export default {
   name: 'navcon2',
   data() {
     return {
-      uname: localStorage.getItem('uname'),
+      supplierInfo: JSON.parse(localStorage.getItem('supplierInfo')),
       user: {}
     }
   },

@@ -1,5 +1,6 @@
 package com.chengdu.supplier.service.impl;
 
+import com.chengdu.management.pojo.SupplierInfo;
 import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.SupplierMapper;
 import com.chengdu.supplier.service.SupplierService;
@@ -34,6 +35,12 @@ public class SupplierServiceImpl implements SupplierService {
             return true;
         }
         return false;
+    }
+
+    @SysLog
+    @Override
+    public SupplierInfo getSullpierInfoByPhone(String phone) {
+        return supplierMapper.selSupplierByPhoneNumber(phone);
     }
 
     @SysLog

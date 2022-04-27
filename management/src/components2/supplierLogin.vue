@@ -57,6 +57,7 @@ export default {
             res.then(res=>{ 
             if (res.resCode=='0000') {
               localStorage.setItem('uname',this.ruleForm.phone)
+              localStorage.setItem('supplierInfo',JSON.stringify(res.data))
                setTimeout(()=>{
                  this.$message({type:'success',message:'登录成功'})
                   this.$router.push('/index2')

@@ -17,7 +17,16 @@
     </resultMap>
 
     <select id="selSupplierByPhoneNumber" resultMap="SupplierInfoMap">
-        select * from qo_supplier_info where phone_number = #{phoneNumber}
+        select
+               supplier_id,
+               supplier_code,
+               supplier_name,
+               supplier_type,
+               link_man,
+               phone_number,
+               address,
+               supplier_status
+        from qo_supplier_info where phone_number = #{phoneNumber}
     </select>
 
 </mapper>

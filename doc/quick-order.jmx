@@ -180,6 +180,31 @@ values (&apos;酥肉冒菜&apos;,
 1,
 1,
 &apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(&apos;2酥肉冒菜&apos;,
+&apos;油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性&apos;,
+1,
+1,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(&apos;3酥肉冒菜&apos;,
+&apos;油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性&apos;,
+1,
+0,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(&apos;一道测试菜&apos;,
+&apos;测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性&apos;,
+1,
+0,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(&apos;测试道测试菜&apos;,
+&apos;test测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性&apos;,
+1,
+0,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
+(&apos;红烧牛肉面&apos;,
+&apos;堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐&apos;,
+1,
+1,
+&apos;${__time(YYYY-MM-dd HH:MM:ss,)}&apos;),
 (&apos;红烧牛肉面&apos;,
 &apos;堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐&apos;,
 2,
@@ -977,8 +1002,7 @@ current_timestamp);</stringProp>
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
     &quot;goods_name&quot;:&quot;麻婆豆腐套饭&quot;,&#xd;
-    &quot;goods_intro&quot;:&quot;传统手艺，麻辣飘香&quot;,&#xd;
-    &quot;goods_status&quot;:&quot;1&quot;&#xd;
+    &quot;goods_intro&quot;:&quot;传统手艺，麻辣飘香&quot;&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
@@ -1070,7 +1094,6 @@ current_timestamp);</stringProp>
                   <stringProp name="Argument.value">{&#xd;
     &quot;goods_name&quot;:&quot;&quot;,&#xd;
     &quot;goods_intro&quot;:&quot;&quot;,&#xd;
-    &quot;goods_status&quot;:&quot;1&quot;,&#xd;
     &quot;pageIndex&quot;:&quot;1&quot;,&#xd;
     &quot;pageSize&quot;:&quot;5&quot;&#xd;
 }</stringProp>

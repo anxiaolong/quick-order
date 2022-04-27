@@ -40,13 +40,13 @@ export default {
           menus: [
             {
               menuid: 11,
-              menuname: '商品信息管理',
+              menuname: '商品管理',
               url: 'index2/goods',
               menus: null
             },
             {
               menuid: 12,
-              menuname: '商品库存管理',
+              menuname: '库存管理',
               url: '',
               menus: null
             },
