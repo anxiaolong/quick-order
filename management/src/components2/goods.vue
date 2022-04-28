@@ -47,19 +47,19 @@
     <el-table size="small" :data="goodsListInfo.goodsInfos" highlight-current-row border style="margin: 10px">
     <el-table-column sortable prop="goods_id" label="商品编号" width="100px">
     </el-table-column>
-    <el-table-column sortable prop="goods_name" label="商品名称" >
+    <el-table-column sortable prop="goods_name" label="商品名称" width="200px">
     </el-table-column>
     <el-table-column sortable prop="goods_intro" label="商品简介">
     </el-table-column>
-    <el-table-column sortable prop="goods_status" label="商品状态">
+    <el-table-column sortable prop="goods_status" label="商品状态" width="200px">
       <template slot-scope="scope">
             {{ scope.row.goods_status == 1 ? "上架" : "下架" }}
       </template> 
     </el-table-column>
-    <el-table-column align="center" label="操作" min-width="">
+    <el-table-column align="center" label="操作" width="300px">
         <template slot-scope="scope">
         <el-button plain type="primary" size="mini" @click="">修改</el-button>
-        <el-button plain type="danger" size="mini" @click="">上架/下架</el-button>
+        <el-button plain type="danger" size="mini" @click="isDisableGoods(scope.row)">上架/下架</el-button>
         </template>
     </el-table-column>
     </el-table>
@@ -132,6 +132,34 @@ export default {
           .catch(()=>{
             this.$message.error('添加失败')
           })
+      },
+      isDisableGoods(row){
+        this.$confirm('确定要 上架/下架 商品？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+          })
+          .then(() => {
+            req("post","/api2/supplier/goods/isDisable/"+row.goods_id,{"isDisable" : row.goods_status==1?true:false })
+            .then((res)=>{
+              if (res.resCode=='0000') {
+                this.$message.success("操作成功！")
+                this.loadGoodsList()
+              }else{
+                this.$message.error("操作失败！")
+              }
+            })
+            .catch(()=>{
+              this.$message.error("操作失败！")
+            })
+          })
+          .catch(() => {
+          this.$message({
+              type: 'info',
+              message: '已取消'
+          })
+          })
+        
       }
     }
 

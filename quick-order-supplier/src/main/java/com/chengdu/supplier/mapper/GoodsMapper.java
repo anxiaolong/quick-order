@@ -3,6 +3,7 @@ package com.chengdu.supplier.mapper;
 import com.chengdu.management.pojo.Goods;
 import com.chengdu.management.pojo.Goods_QO;
 import com.chengdu.management.pojo.SupplierInfo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface GoodsMapper {
     Integer countGoods(Goods_QO goods_qo);
 
     Goods selGoodsById(@Param("goodsId") int goodsId);
+
+    Integer updateGoodsStatus(@Param("goods_id") int goods_id,@Param("goods_status") int goods_status);
 }

@@ -75,4 +75,8 @@
         select * from qo_supplier_goods where goods_id = #{goodsId}
     </select>
 
+    <update id="updateGoodsStatus">
+        update qo_supplier_goods set goods_status = #{goods_status} where goods_id = #{goods_id};
+    </update>
+
 </mapper>

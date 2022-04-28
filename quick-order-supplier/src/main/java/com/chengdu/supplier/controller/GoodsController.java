@@ -61,5 +61,23 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Success,map);
     }
 
+    @ApiOperation(value = "上架/下架商品",notes = "上架/下架商品")
+    @SysLog
+    @RequestMapping(value = "/goods/isDisable/{goodsId}",method = RequestMethod.POST)
+    public CommonResponse updateGoodsStatus(@RequestBody Map<String,Boolean> map, @PathVariable("goodsId") int goodsId){
+        int update = 0;
+
+        if (map.get("isDisable")){
+            update = goodsService.updateGoodsStatus(goodsId,0);
+        }else {
+            update = goodsService.updateGoodsStatus(goodsId,1);
+        }
+
+        if (update==1){
+            return new CommonResponse(CommonResponseEnum.Success,null);
+        }
+        return new CommonResponse(CommonResponseEnum.Fail,null);
+    }
+
 
 }

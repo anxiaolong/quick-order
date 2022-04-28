@@ -39,4 +39,9 @@ public class GoodsServiceImpl implements GoodsService {
         goods_qo.setCount(count);
         return goods_qo;
     }
+
+    @Override
+    public int updateGoodsStatus(int goods_id, int goods_status) {
+        return goodsMapper.updateGoodsStatus(goods_id,goods_status);
+    }
 }
