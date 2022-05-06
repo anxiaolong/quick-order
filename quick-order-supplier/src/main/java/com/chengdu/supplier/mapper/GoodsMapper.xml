@@ -63,11 +63,7 @@
     <select id="countGoods" resultType="java.lang.Integer">
         select count(*) from qo_supplier_goods
         <where>
-            <if test="goods_name!=null and goods_name!=''">goods_name like concat(#{goods_name},'%') and </if>
-            <if test="goods_intro!=null and goods_intro!=''">goods_intro like concat(#{goods_intro},'%') and </if>
-            goods_supplier_id = #{goods_supplier_id} and
-            goods_status = #{goods_status} and
-            1=1
+            goods_supplier_id = #{goods_supplier_id}
         </where>
     </select>
 

@@ -45,24 +45,38 @@
 
     <!-- 商品列表 -->
     <el-table size="small" :data="goodsListInfo.goodsInfos" highlight-current-row border style="margin: 10px">
-    <el-table-column sortable prop="goods_id" label="商品编号" width="100px">
-    </el-table-column>
-    <el-table-column sortable prop="goods_name" label="商品名称" width="200px">
-    </el-table-column>
-    <el-table-column sortable prop="goods_intro" label="商品简介">
-    </el-table-column>
-    <el-table-column sortable prop="goods_status" label="商品状态" width="200px">
-      <template slot-scope="scope">
-            {{ scope.row.goods_status == 1 ? "上架" : "下架" }}
-      </template> 
-    </el-table-column>
-    <el-table-column align="center" label="操作" width="300px">
+      <el-table-column sortable prop="goods_id" label="商品编号" width="100px">
+      </el-table-column>
+      <el-table-column sortable prop="goods_name" label="商品名称" width="200px">
+      </el-table-column>
+      <el-table-column sortable prop="goods_intro" label="商品简介">
+      </el-table-column>
+      <el-table-column sortable prop="goods_status" label="商品状态" width="200px">
         <template slot-scope="scope">
-        <el-button plain type="primary" size="mini" @click="">修改</el-button>
-        <el-button plain type="danger" size="mini" @click="isDisableGoods(scope.row)">上架/下架</el-button>
-        </template>
-    </el-table-column>
+              {{ scope.row.goods_status == 1 ? "上架" : "下架" }}
+        </template> 
+      </el-table-column>
+      <el-table-column align="center" label="操作" width="300px">
+          <template slot-scope="scope">
+          <el-button plain type="primary" size="mini" @click="">修改</el-button>
+          <el-button plain type="danger" size="mini" @click="isDisableGoods(scope.row)">上架/下架</el-button>
+          </template>
+      </el-table-column>
     </el-table>
+
+     <!-- 分页组件 -->
+    <el-pagination
+      background
+      layout="prev, pager, next,total,jumper,sizes"
+      :current-page="reqJson.pageIndex"
+      :page-size="reqJson.pageSize"
+      :page-sizes= "[5,10,20]"
+      @size-change='pageSizeChange'
+      :total="goodsListInfo.count"
+      @current-change='currentChangeAfter'
+      style="margin:20px"
+      >
+    </el-pagination>
 
   </div>
 </template>
@@ -80,7 +94,7 @@ export default {
             goods_name:"",
             goods_intro:"",
             pageIndex:"1",
-            pageSize:"10"
+            pageSize:"5"
           },
           addGoodsJson:{
             goods_name:"",
@@ -159,8 +173,15 @@ export default {
               message: '已取消'
           })
           })
-        
-      }
+      },
+      pageSizeChange(val){
+        this.reqJson.pageSize = val
+        this.loadGoodsList()
+      },
+      currentChangeAfter(val){
+        this.reqJson.pageIndex = val
+        this.loadGoodsList()
+      },
     }
 
 }
