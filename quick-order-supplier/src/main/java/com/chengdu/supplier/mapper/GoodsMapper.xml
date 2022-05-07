@@ -44,7 +44,6 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="goods_name!=null and goods_name!=''">goods_name=#{goods_name},</if>
             <if test="goods_intro!=null and goods_intro!=''">goods_intro=#{goods_intro},</if>
-            goods_status=#{goods_status},
             modified_time=current_timestamp
         </trim>
         where goods_id = #{goods_id} and goods_supplier_id = #{goods_supplier_id}

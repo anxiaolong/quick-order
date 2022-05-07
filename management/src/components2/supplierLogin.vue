@@ -14,7 +14,7 @@
             <el-input type="text" v-model="ruleForm.verificationCode" auto-complete="off" placeholder="输入验证码"></el-input>
           </el-form-item>
         </el-col>
-        <el-button style="margin-left:30px"   type="primary">获取短信验证码</el-button>
+        <el-button style="margin-left:30px" type="primary" :disabled='isDisableButton' @click="sendMsgCode">{{buttonName}}</el-button>
       </el-row>
 
       <el-form-item style="width:100%;">
@@ -33,6 +33,8 @@ export default {
 
     data() {
         return {
+          buttonName:'发送短信验证码',
+          isDisableButton:false, // 发送验证码按钮状态
           ruleForm:{
             phone:'',
             verificationCode:''
@@ -67,6 +69,35 @@ export default {
             }
             })
         })
+        },
+
+        // 发送短信验证码
+        sendMsgCode(){
+          req('post','/api2/supplier/getVerificationCode',{"phone":this.ruleForm.phone})
+            .then((res)=>{
+              if (res.resCode=='0000') {
+                this.$message.success('发送成功！')
+              }else{
+                this.$message.error(res.resMsg);
+              }
+
+              this.isDisableButton=true
+              var i = 120
+              const sh = setInterval(()=>{
+                i--
+                this.buttonName = i + '秒后可重试'
+                if (i==0) {
+                  clearInterval(sh)
+                  this.isDisableButton=false
+                  this.buttonName = '发送短信验证码'
+                }
+              },1000)
+            })
+            .catch(()=>{
+              this.$message.error('服务异常！');
+            })
+
+          
         }
     }
 

@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作" width="300px">
           <template slot-scope="scope">
-          <el-button plain type="primary" size="mini" @click="">修改</el-button>
+          <el-button plain type="primary" size="mini" @click="updateGoodsInfo(scope.row)">修改</el-button>
           <el-button plain type="danger" size="mini" @click="isDisableGoods(scope.row)">上架/下架</el-button>
           </template>
       </el-table-column>
@@ -78,6 +78,22 @@
       >
     </el-pagination>
 
+    <!-- 修改弹窗 -->
+    <el-dialog :title="updateGoodsInfoData.goods_id+''" :visible.sync="updateGoodsVisible" width="60%" @click="closeDialog">
+      <el-form label-width="120px" :model="updateGoodsInfoData" :rules="rules">
+        <el-form-item label="商品名称" prop="goods_name">
+          <el-input size="small" v-model="updateGoodsInfoData.goods_name" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" prop="goods_intro">
+          <el-input type="textarea" size="small" v-model="updateGoodsInfoData.goods_intro" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="updateGoodsInfoSubmit(updateGoodsInfoData.goods_id)">提交</el-button>
+        <el-button size="small" @click="closeDialog">关闭</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -88,13 +104,15 @@ export default {
     data(){
         return {
           addGoodsVisible:false, // 添加商品弹窗状态
+          updateGoodsVisible:false, // 修改商品信息弹窗
           goodsListInfo:{}, // 商品列表数据
+          updateGoodsInfoData:{}, // 修改商品信息行数据
           supplierInfo:JSON.parse(localStorage.getItem('supplierInfo')), //供应商信息
           reqJson:{ // 查询商品列表参数
             goods_name:"",
             goods_intro:"",
-            pageIndex:"1",
-            pageSize:"5"
+            pageIndex:1,
+            pageSize:5
           },
           addGoodsJson:{
             goods_name:"",
@@ -129,8 +147,17 @@ export default {
       addGoods(){
         this.addGoodsVisible=true
       },
+      updateGoodsInfo(row){
+        this.updateGoodsVisible=true
+        this.updateGoodsInfoData = row
+      },
       closeDialog(){
         this.addGoodsVisible=false
+        this.updateGoodsVisible = false
+
+        setTimeout(()=>{
+          this.loadGoodsList()
+        },500)
       },
       addGoodsSubmit(){
         req('POST','/api2/supplier/goods/add/'+this.supplierInfo.supplier_id,this.addGoodsJson)
@@ -182,6 +209,21 @@ export default {
         this.reqJson.pageIndex = val
         this.loadGoodsList()
       },
+      updateGoodsInfoSubmit(goodsId){
+        req("post",'/api2/supplier/goods/update/'+JSON.parse(localStorage.getItem('supplierInfo')).supplier_id+'/'+goodsId,this.updateGoodsInfoData)
+          .then((res)=>{
+            if (res.resCode=='0000') {
+              this.$message.success('操作成功！')
+            }else{
+              this.$message.error('操作失败！')
+            }
+          })
+          .catch(()=>{
+            this.$message.error('操作失败！')
+          })
+
+          this.closeDialog()
+      }
     }
 
 }

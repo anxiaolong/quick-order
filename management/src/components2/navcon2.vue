@@ -24,6 +24,8 @@ export default {
     // 调用后台接口退出登录
     logout(){
       req('post','/api/admin/logout','')
+      localStorage.removeItem('uname')
+      localStorage.removeItem('supplierInfo')
     },
 
     // 退出登录
