@@ -13,7 +13,7 @@
       </el-form-item>
 
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')">登录</el-button>
+        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')" :loading="loading">登录</el-button>
       </el-form-item>
 
     </el-form>
@@ -28,6 +28,7 @@ export default {
 
     data() {
         return {
+        loading:false, // 登录加载动效
         logining: false,
         ruleForm: {
             uname: '',
@@ -49,6 +50,7 @@ export default {
     methods: {
         // 提交表单方法
         submitForm(formName){
+        this.loading=true
         this.$refs[formName].validate(valid => {
             const res = req('post','/api/admin/login',this.ruleForm)
 
@@ -65,9 +67,12 @@ export default {
                },1000)
             }else{
                 this.$message({type:'error',message:'登录失败'})
+                this.loading = false
             }
             })
         })
+
+
         }
     }
 

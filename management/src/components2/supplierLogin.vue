@@ -60,10 +60,10 @@ export default {
             if (res.resCode=='0000') {
               localStorage.setItem('uname',this.ruleForm.phone)
               localStorage.setItem('supplierInfo',JSON.stringify(res.data))
-               setTimeout(()=>{
-                 this.$message({type:'success',message:'登录成功'})
-                  this.$router.push('/index2')
-               },1000)
+                setTimeout(()=>{
+                  this.$message({type:'success',message:'登录成功'})
+                    this.$router.push('/index2')
+                },1000)
             }else{
                 this.$message({type:'error',message:'登录失败'})
             }
