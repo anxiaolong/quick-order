@@ -10,6 +10,7 @@ import Supplier from '@/components/supplier'
 import SupplierLogin from '@/components2/SupplierLogin'
 import Index2 from '@/components2/index2'
 import Goods from '@/components2/goods'
+import Stock from '@/components2/stock'
 
 
 Vue.use(Router)
@@ -98,6 +99,14 @@ export default new Router({
           component: Goods,
           meta:{
            title:'商品管理'
+          }
+        },
+        {
+          path: '/index2/stock',
+          name: 'stock',
+          component: Stock,
+          meta:{
+           title:'库存管理'
           }
         }
       ]

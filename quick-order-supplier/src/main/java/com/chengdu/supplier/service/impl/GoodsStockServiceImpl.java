@@ -1,6 +1,7 @@
 package com.chengdu.supplier.service.impl;
 
 import com.chengdu.management.pojo.GoodsStock;
+import com.chengdu.management.pojo.GoodsStock_QO;
 import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.mapper.GoodsMapper;
 import com.chengdu.supplier.mapper.GoodsStockMapper;
@@ -29,5 +30,12 @@ public class GoodsStockServiceImpl implements GoodsStockService {
             return goodsStockMapper.insertGoodsStock(goodsStock);
         }
         return 0;
+    }
+
+    @Override
+    public GoodsStock_QO getGoodsStockListPage(GoodsStock_QO goodsStock_qo) {
+        goodsStock_qo.setGoodsStockList(goodsStockMapper.getGoodsStockListPage(goodsStock_qo));
+        goodsStock_qo.setCount(goodsStockMapper.countGoodsStock(goodsStock_qo));
+        return goodsStock_qo;
     }
 }

@@ -36,19 +36,16 @@ export default {
         {
           menuid: 1,
           menuname: '商品管理',
-          url: null,
           menus: [
             {
               menuid: 11,
               menuname: '商品管理',
-              url: 'index2/goods',
-              menus: null
+              url: 'index2/goods'
             },
             {
               menuid: 12,
               menuname: '库存管理',
-              url: '',
-              menus: null
+              url: 'index2/stock'
             },
           ]
         }

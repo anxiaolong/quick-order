@@ -62,7 +62,7 @@ export default {
               localStorage.setItem('supplierInfo',JSON.stringify(res.data))
                 setTimeout(()=>{
                   this.$message({type:'success',message:'登录成功'})
-                    this.$router.push('/index2')
+                    this.$router.push('index2/goods')
                 },1000)
             }else{
                 this.$message({type:'error',message:'登录失败'})

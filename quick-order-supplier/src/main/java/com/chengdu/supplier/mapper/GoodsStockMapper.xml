@@ -20,4 +20,41 @@
             values
             (#{goods_id},#{goods_price},#{goods_count},#{goods_sale_date},current_timestamp);
     </insert>
+
+    <select id="getGoodsStockListPage" resultType="com.chengdu.management.pojo.GoodsStock_VO">
+        SELECT
+            qsi.supplier_id,
+            qsgs.id,
+            qsg.goods_id,
+            qsg.goods_name,
+            qsgs.goods_count,
+            qsgs.goods_price,
+            qsgs.goods_sale_date
+        FROM
+            qo_supplier_goods qsg
+            right join qo_supplier_goods_stock qsgs on
+            qsg.goods_id = qsgs.goods_id
+            right join qo_supplier_info qsi on qsi.supplier_id = qsg.goods_supplier_id
+        <where>
+            <if test="goods_name!=null and goods_name!=''">qsg.goods_name like concat(#{goods_name},'%') and </if>
+            <if test="goods_sale_date!=null and goods_sale_date!=''">qsgs.goods_sale_date = #{goods_sale_date} and </if>
+            qsi.supplier_id = #{supplier_id}
+        </where>
+            LIMIT #{pageIndex},#{pageSize}
+    </select>
+
+    <select id="countGoodsStock" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+        qo_supplier_goods qsg
+        right join qo_supplier_goods_stock qsgs on
+        qsg.goods_id = qsgs.goods_id
+        right join qo_supplier_info qsi on qsi.supplier_id = qsg.goods_supplier_id
+        <where>
+            <if test="goods_name!=null and goods_name!=''">qsg.goods_name like concat(#{goods_name},'%') and </if>
+            <if test="goods_sale_date!=null and goods_sale_date!=''">qsgs.goods_sale_date = #{goods_sale_date} and </if>
+            qsi.supplier_id = #{supplier_id}
+        </where>
+    </select>
 </mapper>
