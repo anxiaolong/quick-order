@@ -48,7 +48,7 @@
       <el-table-column align="center" label="操作" width="">
           <template slot-scope="scope">
           <el-button plain type="primary" size="mini" 
-            @click="updateGoodsInfo(scope.row)" 
+            @click="showUpdateDilog(scope.row)" 
             :disabled='scope.row.goods_sale_date==today?false:true'>修改</el-button>
           </template>
       </el-table-column>
@@ -67,6 +67,22 @@
       style="margin:20px">
     </el-pagination>
 
+    <!-- 修改弹窗 -->
+    <el-dialog :title="updateGoodsStockOBJ.id+'-'+updateGoodsStockOBJ.goods_name" :visible.sync="updateGoodsStockVisible" width="60%" @click="closeDialog">
+      <el-form label-width="120px" :model="updateGoodsStockOBJ" :rules="rules">
+        <el-form-item label="商品单价(分)" prop="goods_price">
+          <el-input size="small" v-model="updateGoodsStockOBJ.goods_price" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="库存数量" prop="goods_count">
+          <el-input size="small" v-model="updateGoodsStockOBJ.goods_count" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="updateGoodsStockInfoSubmit(updateGoodsStockOBJ)">提交</el-button>
+        <el-button size="small" @click="closeDialog">关闭</el-button>
+      </div>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -76,6 +92,8 @@ export default {
     name:'stock',
     data(){
         return {
+            updateGoodsStockVisible:false, //修改弹窗显示
+            updateGoodsStockOBJ:{},
             today:'',
             goodsStockInfo:{},
             reqParam:{
@@ -83,11 +101,13 @@ export default {
                 goods_name: "",
                 pageIndex:1,
                 pageSize:5
-            }
+            },
+            rules:{}
         }
     },
     mounted(){
         this.today = this.dateFormat()
+        this.reqParam.goods_sale_date = this.today
         this.loadGoodsStockInfo()
     },
     methods:{
@@ -125,6 +145,28 @@ export default {
             // var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
             // var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
             return year + '-' +month + '-' + day
+        },
+        closeDialog(){
+            this.updateGoodsStockVisible = false
+            this.loadGoodsStockInfo()
+        },
+        updateGoodsStockInfoSubmit(updateGoodsStockOBJ){
+            req('put','/api2/goods/stock/update/'+updateGoodsStockOBJ.goods_id+'/'+updateGoodsStockOBJ.id,
+            {goods_price:updateGoodsStockOBJ.goods_price,goods_count:updateGoodsStockOBJ.goods_count})
+                .then((res)=>{
+                    if (res.resCode=='0000') {
+                        this.closeDialog()
+                        this.$message.success('修改成功！')
+                        this.loadGoodsStockInfo()
+                    }else{
+                        this.$message.error('修改失败！')
+                        this.loadGoodsStockInfo()
+                    }
+                })
+        },
+        showUpdateDilog(row){
+            this.updateGoodsStockOBJ = row
+            this.updateGoodsStockVisible = true
         }
     }
 }

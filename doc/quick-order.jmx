@@ -1229,8 +1229,7 @@ current_timestamp);</stringProp>
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
     &quot;goods_price&quot;:&quot;2000&quot;,&#xd;
-    &quot;goods_count&quot;:&quot;24&quot;,&#xd;
-    &quot;goods_sale_date&quot;:&quot;2021-11-16&quot;&#xd;
+    &quot;goods_count&quot;:&quot;24&quot;&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>

@@ -8,7 +8,6 @@
         <trim prefix="set" suffixOverrides=",">
             <if test="goods_price!=null and goods_price!=''">goods_price=#{goods_price},</if>
             <if test="goods_count!=null and goods_count!=''">goods_count=#{goods_count},</if>
-            <if test="goods_sale_date!=null and goods_sale_date!=''">goods_sale_date=#{goods_sale_date},</if>
             modified_time=current_timestamp
         </trim>
         where goods_id = #{goods_id} and id = #{id}
