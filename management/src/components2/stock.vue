@@ -24,7 +24,7 @@
       <el-form-item>
         <el-button size="small" type="primary" icon="el-icon-search" @click="loadGoodsStockInfo">搜索</el-button>
         <el-button size="small" type="primary" icon="el-icon-refresh" @click="cleanSearchData">清空条件</el-button>
-        <el-button size="small" type="primary" icon="el-icon-plus" @click="">添加</el-button>
+        <el-button size="small" type="primary" icon="el-icon-plus" @click="addGoodsStockMethod">添加</el-button>
       </el-form-item>
     </el-form>
 
@@ -83,6 +83,46 @@
       </div>
     </el-dialog>
 
+    <!-- 添加弹窗 -->
+    <el-dialog title="添加库存" :visible.sync="addGoodsStockVisible" width="40%" @click="closeDialog">
+      <el-form label-width="120px" :model="addGoodsStockOBJ" :rules="rules" width='50px'>
+        <el-form-item label="销售日期" prop="goods_sale_date">
+          <el-input size="small" v-model="addGoodsStockOBJ.goods_sale_date=today" auto-complete="off" disabled></el-input>
+        </el-form-item>
+
+        <el-form-item label="商品" prop="goods_id">
+          <el-select
+            v-model="addGoodsStockOBJ.goods_name"
+            size="small"
+            :multiple="false"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="搜索商品"
+            :remote-method="inputSearchGoods"
+            :loading="false">
+            <el-option
+              v-for="item in goodsList"
+              :key="item.goods_id"
+              :label="item.goods_id+'-'+item.goods_name"
+              :value="item.goods_id+'-'+item.goods_name">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="单位（分）" prop="goods_price">
+          <el-input size="small" v-model="addGoodsStockOBJ.goods_price" auto-complete="off" placeholder="输入整数"></el-input>
+        </el-form-item>
+        <el-form-item label="库存数量" prop="goods_count">
+          <el-input size="small" v-model="addGoodsStockOBJ.goods_count" auto-complete="off" placeholder="输入整数"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="addGoodsStockInfoSubmit(addGoodsStockOBJ)">提交</el-button>
+        <el-button size="small" @click="closeDialog">关闭</el-button>
+      </div>
+    </el-dialog>
+
 </div>
 </template>
 
@@ -92,6 +132,7 @@ export default {
     name:'stock',
     data(){
         return {
+            addGoodsStockVisible:false, //添加库存弹窗
             updateGoodsStockVisible:false, //修改弹窗显示
             updateGoodsStockOBJ:{},
             today:'',
@@ -102,6 +143,13 @@ export default {
                 pageIndex:1,
                 pageSize:5
             },
+            addGoodsStockOBJ:{
+              goods_name:"",
+              goods_price:"",
+              goods_count:"",
+              goods_sale_date:""
+            },
+            goodsList:{},//商品列表数据
             rules:{}
         }
     },
@@ -148,7 +196,11 @@ export default {
         },
         closeDialog(){
             this.updateGoodsStockVisible = false
+            this.addGoodsStockVisible = false
             this.loadGoodsStockInfo()
+        },
+        addGoodsStockMethod(){
+          this.addGoodsStockVisible = true
         },
         updateGoodsStockInfoSubmit(updateGoodsStockOBJ){
             req('put','/api2/goods/stock/update/'+updateGoodsStockOBJ.goods_id+'/'+updateGoodsStockOBJ.id,
@@ -167,6 +219,35 @@ export default {
         showUpdateDilog(row){
             this.updateGoodsStockOBJ = row
             this.updateGoodsStockVisible = true
+        },
+        inputSearchGoods(value){
+          // alert(value)
+          // alert(this.addGoodsStockOBJ.goods_name)
+          const reqJson = {goods_name:value,pageIndex:1,pageSize:10}
+           req('post','/api2/supplier/goods/list/'+JSON.parse(localStorage.getItem('supplierInfo')).supplier_id,reqJson)
+            .then((res)=>{
+              if (res.resCode == '0000') {
+                this.goodsList = res.data.goodsInfos
+              }else{
+                this.$message.error('查询商品失败！')
+              }
+            })
+        },
+        addGoodsStockInfoSubmit(addGoodsStockOBJ){
+          const goods_id = addGoodsStockOBJ.goods_name.split('-')[0]
+          // alert(goods_id)
+          req('post','/api2/goods/stock/add/'+goods_id,addGoodsStockOBJ)
+            .then((res)=>{
+              if (res.resCode == '0000') {
+                this.$message.success('添加成功！')
+              }else{
+                this.$message.error(res.data)
+              }
+              this.closeDialog()
+            })
+            .catch(()=>{
+              this.$message.error('添加失败！')
+            })
         }
     }
 }

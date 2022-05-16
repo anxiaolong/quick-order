@@ -52,6 +52,7 @@ public class GoodsController {
     @SysLog
     @RequestMapping(value = "/goods/list/{supplierId}",method = RequestMethod.POST)
     public CommonResponse listGoods(@RequestBody Goods_QO goods_qo, @PathVariable("supplierId") int supplierId){
+        goods_qo.setGoods_name(goods_qo.getGoods_name().trim()); // 商品名去空格，便于给模糊搜索位置调用
         goods_qo.setGoods_supplier_id(supplierId);
         goods_qo.setPageIndex((goods_qo.getPageIndex()-1)*goods_qo.getPageSize());
         Goods_QO goods_qo1 = goodsService.listGoods(goods_qo);
