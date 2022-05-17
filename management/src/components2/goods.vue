@@ -24,11 +24,11 @@
 
     <!-- 新增窗口 -->
     <el-dialog title="添加商品" :visible.sync="addGoodsVisible" width="30%" @click="closeDialog">
-      <el-form label-width="120px" :model="addGoodsJson" :rules="rules" ref="addGoodsJson">
+      <el-form label-width="120px" :model="addGoodsJson" :rules="rules" ref="addGoodsForm">
         <el-form-item label="商品名称" prop="goods_name">
           <el-input size="small" v-model="addGoodsJson.goods_name" auto-complete="off" placeholder="请输入商品名称"></el-input>
         </el-form-item>
-        <el-form-item label="商品简介" prop="goods_name">
+        <el-form-item label="商品简介" prop="goods_intro">
           <el-input
             type="textarea"
             :rows="2"
@@ -39,7 +39,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeDialog">取消</el-button>
-        <el-button size="small" type="primary" class="title" @click="addGoodsSubmit">保存</el-button>
+        <el-button size="small" type="primary" class="title" @click="addGoodsSubmit('addGoodsForm')">保存</el-button>
       </div>
     </el-dialog>
 
@@ -80,7 +80,7 @@
 
     <!-- 修改弹窗 -->
     <el-dialog :title="updateGoodsInfoData.goods_id+''" :visible.sync="updateGoodsVisible" width="60%" @click="closeDialog">
-      <el-form label-width="120px" :model="updateGoodsInfoData" :rules="rules">
+      <el-form label-width="120px" :model="updateGoodsInfoData" :rules="rules" ref="updateGoodsForm">
         <el-form-item label="商品名称" prop="goods_name">
           <el-input size="small" v-model="updateGoodsInfoData.goods_name" auto-complete="off"></el-input>
         </el-form-item>
@@ -89,7 +89,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="updateGoodsInfoSubmit(updateGoodsInfoData.goods_id)">提交</el-button>
+        <el-button size="small" @click="updateGoodsInfoSubmit(updateGoodsInfoData.goods_id,'updateGoodsForm')">提交</el-button>
         <el-button size="small" @click="closeDialog">关闭</el-button>
       </div>
     </el-dialog>
@@ -118,7 +118,10 @@ export default {
             goods_name:"",
             goods_intro:""
           },
-          rules:{}
+          rules:{
+            goods_name:[{required: true, message: '请输入正确的商品名称', trigger: 'blur'}],
+            goods_intro:[{required: true, message: '请输入商品简介', trigger: 'blur'}]
+            }
         }
     },
     created(){
@@ -159,20 +162,28 @@ export default {
           this.loadGoodsList()
         },500)
       },
-      addGoodsSubmit(){
-        req('POST','/api2/supplier/goods/add/'+this.supplierInfo.supplier_id,this.addGoodsJson)
-          .then(res=>{
-            if (res.resCode == '0000') {
-              this.closeDialog()
-              this.$message.success('添加成功')
-              this.loadGoodsList()
-            }else{
+      addGoodsSubmit(addGoodsForm){
+        this.$refs[addGoodsForm].validate((valid) =>{
+          if(valid){
+            req('POST','/api2/supplier/goods/add/'+this.supplierInfo.supplier_id,this.addGoodsJson)
+            .then(res=>{
+              if (res.resCode == '0000') {
+                this.closeDialog()
+                this.$message.success('添加成功')
+                this.loadGoodsList()
+              }else{
+                this.$message.error('添加失败')
+              }
+            })
+            .catch(()=>{
               this.$message.error('添加失败')
-            }
-          })
-          .catch(()=>{
-            this.$message.error('添加失败')
-          })
+            })
+          }else{
+            this.$message.error('表单填写有误！')
+          }
+        })
+
+        
       },
       isDisableGoods(row){
         this.$confirm('确定要 上架/下架 商品？', '提示', {
@@ -209,20 +220,26 @@ export default {
         this.reqJson.pageIndex = val
         this.loadGoodsList()
       },
-      updateGoodsInfoSubmit(goodsId){
-        req("post",'/api2/supplier/goods/update/'+JSON.parse(localStorage.getItem('supplierInfo')).supplier_id+'/'+goodsId,this.updateGoodsInfoData)
-          .then((res)=>{
-            if (res.resCode=='0000') {
-              this.$message.success('操作成功！')
-            }else{
+      updateGoodsInfoSubmit(goodsId,updateGoodsForm){
+        this.$refs[updateGoodsForm].validate((valid) =>{
+          if (valid) {
+            req("post",'/api2/supplier/goods/update/'+JSON.parse(localStorage.getItem('supplierInfo')).supplier_id+'/'+goodsId,this.updateGoodsInfoData)
+            .then((res)=>{
+              if (res.resCode=='0000') {
+                this.$message.success('操作成功！')
+              }else{
+                this.$message.error('操作失败！')
+              }
+            })
+            .catch(()=>{
               this.$message.error('操作失败！')
-            }
-          })
-          .catch(()=>{
-            this.$message.error('操作失败！')
-          })
-
-          this.closeDialog()
+            })
+            this.closeDialog()
+          }else{
+            this.$message.error('表单填写有误！')
+          }
+        })
+        
       }
     }
 

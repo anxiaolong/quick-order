@@ -8,6 +8,7 @@ import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.GoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ public class GoodsController {
     @ApiOperation(value = "供应商添加商品",notes = "供应商添加自己的商品")
     @SysLog
     @RequestMapping(value = "/goods/add/{supplierId}",method = RequestMethod.POST)
-    public CommonResponse addGoods(@RequestBody Goods goods, @PathVariable("supplierId") int supplierId){
+    public CommonResponse addGoods(@Validated @RequestBody Goods goods, @PathVariable("supplierId") int supplierId){
         if (goods != null && supplierId != 0) {
             goods.setGoods_supplier_id(supplierId);
             if (goodsService.addGoodsService(goods,supplierId) == 1){
