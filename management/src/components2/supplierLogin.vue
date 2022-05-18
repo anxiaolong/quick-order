@@ -1,16 +1,16 @@
 <template>
     <div class="login-wrap">
-    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="login-container">
+    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="loginForm" label-width="0px" class="login-container">
 
       <h3 class="title">供应商-登录</h3>
 
-      <el-form-item prop="uname"> 
+      <el-form-item prop="phone"> 
         <el-input type="text" v-model="ruleForm.phone" auto-complete="off" placeholder="手机号"></el-input>
       </el-form-item>
 
       <el-row>
         <el-col :span="12">
-          <el-form-item prop="code">
+          <el-form-item prop="verificationCode">
             <el-input type="text" v-model="ruleForm.verificationCode" auto-complete="off" placeholder="输入验证码"></el-input>
           </el-form-item>
         </el-col>
@@ -18,7 +18,7 @@
       </el-row>
 
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')">登录</el-button>
+        <el-button type="primary" style="width:100%;" @click="submitForm('loginForm')">登录</el-button>
       </el-form-item>
 
     </el-form>
@@ -39,7 +39,10 @@ export default {
             phone:'',
             verificationCode:''
           },
-          rules:{}
+          rules:{
+            phone:[{required: true, message:'请输入手机号码', trigger:'blur',pattern:/^1[3456789]\d{9}$/}], //11位符合规则的手机号
+            verificationCode:[{required: true, message:'请输入验证码', trigger: 'blur',pattern:/^\d{6}$/}] //6位数字验证码
+            }
         }
     },
 
@@ -52,10 +55,10 @@ export default {
 
     methods: {
         // 提交表单方法
-        submitForm(formName){
-        this.$refs[formName].validate(valid => {
+        submitForm(loginForm){
+        this.$refs[loginForm].validate((valid) => {
+          if (valid) {
             const res = req('post','/api2/supplier/login',this.ruleForm)
-
             res.then(res=>{ 
             if (res.resCode=='0000') {
               localStorage.setItem('uname',this.ruleForm.phone)
@@ -68,12 +71,16 @@ export default {
                 this.$message({type:'error',message:'登录失败'})
             }
             })
+          }else{
+            this.$message.error('请核对手机号和验证码！')
+          } 
         })
         },
 
         // 发送短信验证码
         sendMsgCode(){
-          req('post','/api2/supplier/getVerificationCode',{"phone":this.ruleForm.phone})
+          if (/^1[3456789]\d{9}$/.test(this.ruleForm.phone)) {
+            req('post','/api2/supplier/getVerificationCode',{"phone":this.ruleForm.phone})
             .then((res)=>{
               if (res.resCode=='0000') {
                 this.$message.success('发送成功！')
@@ -96,7 +103,9 @@ export default {
             .catch(()=>{
               this.$message.error('服务异常！');
             })
-
+          }else{
+            this.$message.error('请输入正确的手机号！')
+          }
           
         }
     }

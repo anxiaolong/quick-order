@@ -68,8 +68,8 @@
     </el-pagination>
 
     <!-- 修改弹窗 -->
-    <el-dialog :title="updateGoodsStockOBJ.id+'-'+updateGoodsStockOBJ.goods_name" :visible.sync="updateGoodsStockVisible" width="60%" @click="closeDialog">
-      <el-form label-width="120px" :model="updateGoodsStockOBJ" :rules="rules">
+    <el-dialog :title="updateGoodsStockOBJ.id+'-'+updateGoodsStockOBJ.goods_name" :visible.sync="updateGoodsStockVisible" width="60%" @close="closeDialog">
+      <el-form label-width="120px" :model="updateGoodsStockOBJ" :rules="rules" ref="updateForm">
         <el-form-item label="商品单价(分)" prop="goods_price">
           <el-input size="small" v-model="updateGoodsStockOBJ.goods_price" auto-complete="off"></el-input>
         </el-form-item>
@@ -78,19 +78,19 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="updateGoodsStockInfoSubmit(updateGoodsStockOBJ)">提交</el-button>
+        <el-button size="small" @click="updateGoodsStockInfoSubmit(updateGoodsStockOBJ,'updateForm')">提交</el-button>
         <el-button size="small" @click="closeDialog">关闭</el-button>
       </div>
     </el-dialog>
 
     <!-- 添加弹窗 -->
-    <el-dialog title="添加库存" :visible.sync="addGoodsStockVisible" width="40%" @click="closeDialog">
-      <el-form label-width="120px" :model="addGoodsStockOBJ" :rules="rules" width='50px'>
+    <el-dialog title="添加库存" :visible.sync="addGoodsStockVisible" width="40%" @close="closeDialog">
+      <el-form label-width="120px" :model="addGoodsStockOBJ" :rules="rules" width='50px' ref="addForm">
         <el-form-item label="销售日期" prop="goods_sale_date">
           <el-input size="small" v-model="addGoodsStockOBJ.goods_sale_date=today" auto-complete="off" disabled></el-input>
         </el-form-item>
 
-        <el-form-item label="商品" prop="goods_id">
+        <el-form-item label="商品" prop="goods_name">
           <el-select
             v-model="addGoodsStockOBJ.goods_name"
             size="small"
@@ -118,7 +118,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="addGoodsStockInfoSubmit(addGoodsStockOBJ)">提交</el-button>
+        <el-button size="small" @click="addGoodsStockInfoSubmit(addGoodsStockOBJ,'addForm')">提交</el-button>
         <el-button size="small" @click="closeDialog">关闭</el-button>
       </div>
     </el-dialog>
@@ -150,7 +150,11 @@ export default {
               goods_sale_date:""
             },
             goodsList:{},//商品列表数据
-            rules:{}
+            rules:{
+              goods_name:[{required: true, message: '请选择需要添加库存的商品'}],
+              goods_price:[{required: true, message: '商品单价为整数(分)',pattern:/^[1-9]\d*$/}], //商品单价为正整数
+              goods_count:[{required: true, message: '库存为整数',pattern:/^[1-9]\d*$/}], //库存为正整数
+              }
         }
     },
     mounted(){
@@ -202,19 +206,27 @@ export default {
         addGoodsStockMethod(){
           this.addGoodsStockVisible = true
         },
-        updateGoodsStockInfoSubmit(updateGoodsStockOBJ){
-            req('put','/api2/goods/stock/update/'+updateGoodsStockOBJ.goods_id+'/'+updateGoodsStockOBJ.id,
-            {goods_price:updateGoodsStockOBJ.goods_price,goods_count:updateGoodsStockOBJ.goods_count})
-                .then((res)=>{
-                    if (res.resCode=='0000') {
-                        this.closeDialog()
-                        this.$message.success('修改成功！')
-                        this.loadGoodsStockInfo()
-                    }else{
-                        this.$message.error('修改失败！')
-                        this.loadGoodsStockInfo()
-                    }
-                })
+        updateGoodsStockInfoSubmit(updateGoodsStockOBJ,updateForm){
+            this.$refs[updateForm].validate((valid)=>{
+              if (valid) {
+                req('put','/api2/goods/stock/update/'+updateGoodsStockOBJ.goods_id+'/'+updateGoodsStockOBJ.id,
+                {goods_price:updateGoodsStockOBJ.goods_price,goods_count:updateGoodsStockOBJ.goods_count})
+                    .then((res)=>{
+                        if (res.resCode=='0000') {
+                            this.closeDialog()
+                            this.$message.success('修改成功！')
+                            this.loadGoodsStockInfo()
+                        }else{
+                            this.$message.error('修改失败！')
+                            this.loadGoodsStockInfo()
+                        }
+                    })
+              }else{
+                this.$message.error('表单填写有误！')
+              }
+            })
+
+            
         },
         showUpdateDilog(row){
             this.updateGoodsStockOBJ = row
@@ -233,21 +245,27 @@ export default {
               }
             })
         },
-        addGoodsStockInfoSubmit(addGoodsStockOBJ){
-          const goods_id = addGoodsStockOBJ.goods_name.split('-')[0]
-          // alert(goods_id)
-          req('post','/api2/goods/stock/add/'+goods_id,addGoodsStockOBJ)
-            .then((res)=>{
-              if (res.resCode == '0000') {
-                this.$message.success('添加成功！')
-              }else{
-                this.$message.error(res.data)
-              }
-              this.closeDialog()
-            })
-            .catch(()=>{
-              this.$message.error('添加失败！')
-            })
+        addGoodsStockInfoSubmit(addGoodsStockOBJ,addForm){
+          this.$refs[addForm].validate((valid)=>{
+            if (valid) {
+              const goods_id = addGoodsStockOBJ.goods_name.split('-')[0]
+              // alert(goods_id)
+              req('post','/api2/goods/stock/add/'+goods_id,addGoodsStockOBJ)
+                .then((res)=>{
+                  if (res.resCode == '0000') {
+                    this.$message.success('添加成功！')
+                  }else{
+                    this.$message.error(res.data)
+                  }
+                  this.closeDialog()
+                })
+                .catch(()=>{
+                  this.$message.error('添加失败！')
+                })
+            }else{
+              this.$message.error('表单填写有误！')
+            }
+          })
         }
     }
 }

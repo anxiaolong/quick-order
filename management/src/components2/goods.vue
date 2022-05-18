@@ -23,7 +23,7 @@
     </el-form>
 
     <!-- 新增窗口 -->
-    <el-dialog title="添加商品" :visible.sync="addGoodsVisible" width="30%" @click="closeDialog">
+    <el-dialog title="添加商品" :visible.sync="addGoodsVisible" width="30%" @close="closeDialog">
       <el-form label-width="120px" :model="addGoodsJson" :rules="rules" ref="addGoodsForm">
         <el-form-item label="商品名称" prop="goods_name">
           <el-input size="small" v-model="addGoodsJson.goods_name" auto-complete="off" placeholder="请输入商品名称"></el-input>
@@ -79,7 +79,7 @@
     </el-pagination>
 
     <!-- 修改弹窗 -->
-    <el-dialog :title="updateGoodsInfoData.goods_id+''" :visible.sync="updateGoodsVisible" width="60%" @click="closeDialog">
+    <el-dialog :title="updateGoodsInfoData.goods_id+''" :visible.sync="updateGoodsVisible" width="60%" @close="closeDialog">
       <el-form label-width="120px" :model="updateGoodsInfoData" :rules="rules" ref="updateGoodsForm">
         <el-form-item label="商品名称" prop="goods_name">
           <el-input size="small" v-model="updateGoodsInfoData.goods_name" auto-complete="off"></el-input>
@@ -119,8 +119,8 @@ export default {
             goods_intro:""
           },
           rules:{
-            goods_name:[{required: true, message: '请输入正确的商品名称', trigger: 'blur'}],
-            goods_intro:[{required: true, message: '请输入商品简介', trigger: 'blur'}]
+            goods_name:[{required: true, message: '请输入正确的商品名称,20个字符以内', trigger: 'blur',max:20}],
+            goods_intro:[{required: true, message: '请输入商品简介,100个字符以内', trigger: 'blur',max:100}]
             }
         }
     },
