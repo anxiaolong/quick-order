@@ -1,6 +1,6 @@
 <template>
-  <el-menu mode="horizontal" background-color="#334157" text-color="#fff" active-text-color="#fff">
-    <el-submenu index='1' class="submenu2">
+  <el-menu mode="horizontal" background-color="#334157" text-color="#fff" active-text-color="#fff" class="submenu2">
+    <el-submenu index='1'>
       <template slot="title">{{supplierInfo.supplier_name}}</template>
       <el-menu-item @click="exit">退出</el-menu-item>
     </el-submenu>
@@ -38,7 +38,7 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.logout()
-            this.$router.push({ path: '/supplier/login' })
+            this.$router.push({ path: '/' })
             this.$message({
               type: 'success',
               message: '已退出登录!'

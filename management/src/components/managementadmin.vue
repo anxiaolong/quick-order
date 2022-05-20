@@ -37,7 +37,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button size="small" @click="closeDialog">取消</el-button>
-            <el-button size="small" type="primary" class="title" @click="updatePwd">保存</el-button>
+            <el-button size="small" type="primary" class="title" @click="updatePwd('editForm')">保存</el-button>
         </div>
         </el-dialog>
     </div>
@@ -58,7 +58,7 @@ export default {
                 pwd: ''
             },
             rules: {
-                pwd: [{ required: true,pattern:'^[0-9A-Za-z]{6,12}$',message: '请输入新密码', trigger: 'blur' }]
+                pwd: [{ required: true,pattern:/^[0-9A-Za-z]{6,18}$/,message: '请输入新密码', trigger: 'blur' }]
             }
         }
     },
@@ -74,32 +74,37 @@ export default {
             })
         },
 
-        updatePwd(){
-           this.$confirm('确定将密码修改为：'+this.editForm.pwd, '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-            })
-            .then(() => {
-            setTimeout(() => {
-                req('put','/api/admin/'+this.editForm.id+'/update',{'pwd':this.editForm.pwd}).then(res => {
-                    // console.log(res)
-                    this.$message({
-                    type: 'success',
-                    message: res.resMsg
+        updatePwd(editForm){
+            this.$refs[editForm].validate((valid)=>{
+                if (valid) {
+                    this.$confirm('确定将密码修改为：'+this.editForm.pwd, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
                     })
-                    this.closeDialog()
-                    this.loadManagemenAdminList()
-                })
-            }, 1000)})
-            .catch(() => {
-            this.$message({
-                type: 'info',
-                message: '已取消'
+                    .then(() => {
+                    setTimeout(() => {
+                        req('put','/api/admin/'+this.editForm.id+'/update',{'pwd':this.editForm.pwd}).then(res => {
+                            // console.log(res)
+                            this.$message({
+                            type: 'success',
+                            message: res.resMsg
+                            })
+                            this.closeDialog()
+                            this.loadManagemenAdminList()
+                        })
+                    }, 1000)})
+                    .catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消'
+                    })
+                    })
+                }else{
+                    this.$message.error('密码必须是6~18位字母或数字！')
+                }
             })
-            })
-            
-        },
+           },
 
         handleEdit: function(index,row){
             this.editFormVisible = true

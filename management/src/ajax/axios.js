@@ -6,7 +6,7 @@ axios.interceptors.response.use(
     (response)=>{ // 响应成功执行，状态码为2开头
         // console.log('响应拦截器执行，响应对象：',response.data.msg)
         if (response.data.msg == '请登录后完成操作') {  // session失效跳转登录页面
-            window.location.href = '/login'
+            window.location.href = '/management'
         }
         return response
     }

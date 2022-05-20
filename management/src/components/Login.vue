@@ -36,8 +36,8 @@ export default {
         },
         //rules前端验证
         rules: {
-            uname: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-            pwd: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+            uname: [{ required: true, message: '请输入6~18位账号', trigger: 'blur',min:6,max:18 }],
+            pwd: [{ required: true, message: '请输入6~18位密码', trigger: 'blur',min:6,max:18,pattern:/^[0-9A-Za-z]{6,18}$/ }]
             }
         }
     },
@@ -50,29 +50,33 @@ export default {
     methods: {
         // 提交表单方法
         submitForm(formName){
-        this.loading=true
-        this.$refs[formName].validate(valid => {
-            const res = req('post','/api/admin/login',this.ruleForm)
+          this.$refs[formName].validate((valid)=>{
+            if (valid) {
+              this.loading=true
+              this.$refs[formName].validate(valid => {
+                  const res = req('post','/api/admin/login',this.ruleForm)
 
-            //console.log(res)
+                  //console.log(res)
 
-            res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
-            //console.log(res.resCode)
+                  res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
+                  //console.log(res.resCode)
 
-            if (res.resCode=='0000') {
-              localStorage.setItem('uname',this.ruleForm.uname)
-               setTimeout(()=>{
-                 this.$message({type:'success',message:'登录成功'})
-                  this.$router.push('/index/supplier')
-               },1000)
+                  if (res.resCode=='0000') {
+                    localStorage.setItem('uname',this.ruleForm.uname)
+                    setTimeout(()=>{
+                      this.$message({type:'success',message:'登录成功'})
+                        this.$router.push('/index/supplier')
+                    },1000)
+                  }else{
+                      this.$message({type:'error',message:'登录失败'})
+                      this.loading = false
+                  }
+                  })
+              })
             }else{
-                this.$message({type:'error',message:'登录失败'})
-                this.loading = false
+              this.$message.error('表单填写有误！');
             }
-            })
-        })
-
-
+          })
         }
     }
 

@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column sortable  label="状态" >
         <template slot-scope="scope">
-            {{ scope.row.supplier_status == 1 ? "已启用" : "已禁用" }}
+            {{ scope.row.supplier_status == 1 ? "正常" : "禁用" }}
         </template> 
       </el-table-column>
       <el-table-column align="center" label="操作" width="350px">
@@ -75,7 +75,19 @@
 
     <!-- 新增窗口 -->
     <el-dialog title="添加供应商" :visible.sync="addFormVisible" width="30%" @click="closeDialog">
-      <el-form label-width="120px" :model="addSupplierJson" :rules="rules" ref="addSupplierJson">
+      <el-form label-width="120px" :model="addSupplierJson" :rules="rules" ref="addSupplierForm">
+        <el-form-item label="供应商类型" prop="supplier_type">
+          <el-select size="small" v-model="addSupplierJson.supplier_type" placeholder="-请选择-">
+            <el-option
+              label="自营"
+              :value="0">
+            </el-option>  <!--:value="0"这种写法可以避免选中后显示0而不是显示自营的问题-->
+            <el-option
+              label="第三方"
+              :value="1">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="供应商编码" prop="supplier_code">
           <el-input size="small" v-model="addSupplierJson.supplier_code" auto-complete="off" placeholder="请输入供应商编码"></el-input>
         </el-form-item>
@@ -100,7 +112,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button size="small" @click="closeDialog">取消</el-button>
-        <el-button size="small" type="primary" class="title" @click="addSupplier">保存</el-button>
+        <el-button size="small" type="primary" class="title" @click="addSupplier('addSupplierForm')">保存</el-button>
       </div>
     </el-dialog>
 
@@ -124,8 +136,8 @@
     </el-dialog>
 
     <!-- 修改窗口 -->
-    <el-dialog :title="detailsData.supplier_name" :visible.sync="updateVisible" width="60%" @click="closeDialog">
-      <el-form label-width="120px" :model="detailsData" :rules="rules">
+    <el-dialog :title="detailsData.supplier_name" :visible.sync="updateVisible" width="60%" @close="closeDialog">
+      <el-form label-width="120px" :model="detailsData" :rules="rules" ref="updateForm">
         <el-form-item label="供应商ID" prop="supplier_id">
           <el-input size="small" v-model="detailsData.supplier_id" auto-complete="off" disabled></el-input>
         </el-form-item>
@@ -133,13 +145,22 @@
           <el-input size="small" v-model="detailsData.supplier_code" auto-complete="off" disabled></el-input>
         </el-form-item>
         <el-form-item label="供应商状态" prop="supplier_status">
-          <el-input size="small" v-model="detailsData.supplier_status== 1 ? '已启用' : '已禁用'" auto-complete="off" disabled></el-input>
+          <el-input size="small" v-model="detailsData.supplier_status== 1 ? '正常' : '禁用'" auto-complete="off" disabled></el-input>
         </el-form-item>
         <el-form-item label="供应商名称" prop="supplier_name">
           <el-input size="small" v-model="detailsData.supplier_name" auto-complete="off" placeholder="请输入供应商名称"></el-input>
         </el-form-item>
         <el-form-item label="供应商类型" prop="supplier_type">
-          <el-input size="small" v-model.number="detailsData.supplier_type" auto-complete="off" placeholder="0：自营，1：第三方"></el-input>
+          <el-select size="small" v-model.number="detailsData.supplier_type" placeholder="请选择">
+            <el-option
+              label="自营"
+              :value="0">
+            </el-option>  <!--:value="0"这种写法可以避免选中后显示0而不是显示自营的问题-->
+            <el-option
+              label="第三方"
+              :value="1">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="联系人" prop="link_man">
           <el-input size="small" v-model="detailsData.link_man" auto-complete="off" placeholder="请输入联系人"></el-input>
@@ -158,7 +179,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" @click="submitUpdate">提交</el-button>
+        <el-button size="small" @click="submitUpdate('updateForm')">提交</el-button>
         <el-button size="small" @click="closeDialog">关闭</el-button>
       </div>
     </el-dialog>
@@ -185,6 +206,7 @@ export default {
         pageSize:5
       },
       addSupplierJson:{ // 添加供应商参数
+        supplier_type: "", 
         supplier_code: "",
         supplier_name: "",
         link_man: "",
@@ -195,7 +217,14 @@ export default {
       },
       detailsData:{}, // 详情页数据
       rules:{ // 新增供应商form校验
-        
+        supplier_type:[{required: true,message: '供应商类型必选', trigger: 'blur' }],
+        supplier_code:[{required: true,message: '18位大写字母或数字',pattern:/^[0-9A-Z]{18}$/, trigger: 'blur' }],
+        supplier_name:[{required: true,message: '最长30个字符',max:30, trigger: 'blur' }],
+        link_man:[{required: true,message: '最长20个字符',max:20, trigger: 'blur' }],
+        phone_number:[{required: true,message: '请输入正确手机号',pattern:/^1[3456789]\d{9}$/, trigger: 'blur' }],
+        bank_name:[{required: true,message: '最长30个字符',max:30, trigger: 'blur' }],
+        bank_account:[{required: true,message: '16或19位数字',pattern:/^(\d{16}|\d{19})$/, trigger: 'blur' }],
+        address:[{required: true,message: '最长50个字符',max:50, trigger: 'blur' }],
       }
     }
   },
@@ -205,17 +234,23 @@ export default {
   },
   methods:{
     // 提交修改
-    submitUpdate(){
-      req('put','/api/supplier/update/'+this.detailsData.supplier_code,this.detailsData)
-        .then(res=>{
-          if (res.resCode == '0000') {
-            this.$message.success('修改成功')
+    submitUpdate(updateForm){
+      this.$refs[updateForm].validate((valid)=>{
+        if (valid) {
+          req('put','/api/supplier/update/'+this.detailsData.supplier_code,this.detailsData)
+          .then(res=>{
+            if (res.resCode == '0000') {
+              this.$message.success('修改成功')
+              this.closeDialog()
+            }else{
+              this.$message.error('修改失败')
+            }
             this.closeDialog()
-          }else{
-            this.$message.error('修改失败')
-          }
-          this.closeDialog()
-        })
+          })
+        }else{
+          this.$message.error('表单填写有误！')
+        }
+      })
     },
 
 
@@ -245,6 +280,7 @@ export default {
       this.addFormVisible = false
       this.detailsVisible = false
       this.updateVisible = false
+      this.loadSupplierList()
     },
 
     // 刷新供应商列表数据
@@ -259,18 +295,24 @@ export default {
     },
 
     // 添加供应商逻辑
-    addSupplier(){
-      req('post','/api/supplier/add',this.addSupplierJson)
-      .then(res => {
-          if (res.resCode == '0000') {
-            this.$message.success('添加成功')
-            this.loadSupplierList()
-          }else{
-            this.$message.error('添加失败')
-          }
+    addSupplier(addSupplierForm){
+      this.$refs[addSupplierForm].validate((valid)=>{
+        if (valid) {
+          req('post','/api/supplier/add',this.addSupplierJson)
+          .then(res => {
+              if (res.resCode == '0000') {
+                this.$message.success('添加成功')
+                this.loadSupplierList()
+              }else{
+                this.$message.error('添加失败')
+              }
 
-          this.closeDialog()
-        })
+              this.closeDialog()
+            })
+        }else{
+          this.$message.error('表单填写有误！')
+        }
+      })
     },
 
     // 启用/禁用供应商

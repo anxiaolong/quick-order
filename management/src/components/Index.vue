@@ -72,6 +72,7 @@ export default {
 .index-header {
     padding: 0px;
     border-left: 2px solid #333;
+    background-color: #334157;
 }
 .index-main {
   padding: 0px;

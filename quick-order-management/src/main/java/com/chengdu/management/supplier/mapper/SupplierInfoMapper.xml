@@ -18,9 +18,9 @@
 
     <insert id="insertSupplier">
         insert into qo_supplier_info
-            (supplier_code,supplier_name,link_man,phone_number,bank_name,bank_account,address,modified_time)
+            (supplier_code,supplier_name,link_man,phone_number,bank_name,bank_account,address,supplier_type,modified_time)
             value
-            (#{supplier_code},#{supplier_name},#{link_man},#{phone_number},#{bank_name},#{bank_account},#{address},current_timestamp);
+            (#{supplier_code},#{supplier_name},#{link_man},#{phone_number},#{bank_name},#{bank_account},#{address},#{supplier_type},current_timestamp);
     </insert>
 
     <update id="updateSupplier" parameterType="com.chengdu.management.pojo.SupplierInfo">

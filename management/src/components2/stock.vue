@@ -90,9 +90,9 @@
           <el-input size="small" v-model="addGoodsStockOBJ.goods_sale_date=today" auto-complete="off" disabled></el-input>
         </el-form-item>
 
-        <el-form-item label="商品" prop="goods_name">
+        <el-form-item label="商品" prop="goods_id">
           <el-select
-            v-model="addGoodsStockOBJ.goods_name"
+            v-model="addGoodsStockOBJ.goods_id"
             size="small"
             :multiple="false"
             filterable
@@ -105,7 +105,7 @@
               v-for="item in goodsList"
               :key="item.goods_id"
               :label="item.goods_id+'-'+item.goods_name"
-              :value="item.goods_id+'-'+item.goods_name">
+              :value="item.goods_id">
             </el-option>
           </el-select>
         </el-form-item>
@@ -144,6 +144,7 @@ export default {
                 pageSize:5
             },
             addGoodsStockOBJ:{
+              goods_id:"",
               goods_name:"",
               goods_price:"",
               goods_count:"",
@@ -151,7 +152,7 @@ export default {
             },
             goodsList:{},//商品列表数据
             rules:{
-              goods_name:[{required: true, message: '请选择需要添加库存的商品'}],
+              goods_id:[{required: true, message: '请选择需要添加库存的商品'}],
               goods_price:[{required: true, message: '商品单价为整数(分)',pattern:/^[1-9]\d*$/}], //商品单价为正整数
               goods_count:[{required: true, message: '库存为整数',pattern:/^[1-9]\d*$/}], //库存为正整数
               }
@@ -248,9 +249,7 @@ export default {
         addGoodsStockInfoSubmit(addGoodsStockOBJ,addForm){
           this.$refs[addForm].validate((valid)=>{
             if (valid) {
-              const goods_id = addGoodsStockOBJ.goods_name.split('-')[0]
-              // alert(goods_id)
-              req('post','/api2/goods/stock/add/'+goods_id,addGoodsStockOBJ)
+              req('post','/api2/goods/stock/add/'+addGoodsStockOBJ.goods_id,addGoodsStockOBJ)
                 .then((res)=>{
                   if (res.resCode == '0000') {
                     this.$message.success('添加成功！')

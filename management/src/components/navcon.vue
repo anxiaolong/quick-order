@@ -1,6 +1,6 @@
 <template>
-  <el-menu mode="horizontal" background-color="#334157" text-color="#fff" active-text-color="#fff">
-    <el-submenu index='1' class="submenu2">
+  <el-menu mode="horizontal" background-color="#334157" text-color="#fff" active-text-color="#fff" class="submenu2">
+    <el-submenu index='1' >
       <template slot="title">{{uname}}</template>
       <el-menu-item @click="exit">退出</el-menu-item>
     </el-submenu>
@@ -57,10 +57,5 @@ export default {
 <style scoped>
 .submenu2 {
   float: right;
-}
-.buttonimg {
-  height: 60px;
-  background-color: transparent;
-  border: none;
 }
 </style>
