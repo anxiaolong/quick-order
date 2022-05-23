@@ -81,5 +81,12 @@ public class GoodsController {
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
 
+    @ApiOperation(value = "商品id查询商品",notes = "商品id查询商品")
+    @SysLog
+    @RequestMapping(value = "/goods/get/{goodsId}",method = RequestMethod.GET)
+    public CommonResponse updateGoodsStatus(@PathVariable("goodsId") int goodsId){
+        return new CommonResponse(CommonResponseEnum.Success,goodsService.selGoodsById(goodsId));
+    }
+
 
 }

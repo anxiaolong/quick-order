@@ -1,22 +1,35 @@
 <template>
     <div class="login-wrap">
-    <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="login-container">
+      <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="login-container">
 
-      <h3 class="title">管理员-登录</h3>
+        <h3 class="title">管理员-登录</h3>
 
-      <el-form-item prop="uname"> 
-        <el-input type="text" v-model="ruleForm.uname" auto-complete="off" placeholder="账号"></el-input>
-      </el-form-item>
+        <el-form-item prop="uname"> 
+          <el-input type="text" v-model="ruleForm.uname" auto-complete="off" placeholder="账号"></el-input>
+        </el-form-item>
 
-      <el-form-item prop="pwd">
-        <el-input type="password" v-model="ruleForm.pwd" auto-complete="off" placeholder="密码"></el-input>
-      </el-form-item>
+        <el-form-item prop="pwd">
+          <el-input type="password" v-model="ruleForm.pwd" auto-complete="off" placeholder="密码"></el-input>
+        </el-form-item>
 
-      <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('ruleForm')" :loading="loading">登录</el-button>
-      </el-form-item>
+        <slide-verify
+          :l="42"
+          :r="10"
+          :w="310"
+          :h="155"
+          :imgs="picArray"
+          :show="true"
+          slider-text="向右滑动完成验证"
+          ref="slideverify"
+          @success="verifySuccess"
+        ></slide-verify>
+        <br>
 
-    </el-form>
+        <el-form-item style="width:100%;">
+          <el-button v-show="loginButtonShow" type="primary" style="width:100%;" @click="submitForm('ruleForm','slideverify')" :loading="loading">登录</el-button>
+        </el-form-item>
+
+      </el-form>
     </div>
 </template>
 
@@ -28,6 +41,7 @@ export default {
 
     data() {
         return {
+        loginButtonShow:false,//登录按钮显示
         loading:false, // 登录加载动效
         logining: false,
         ruleForm: {
@@ -38,7 +52,14 @@ export default {
         rules: {
             uname: [{ required: true, message: '请输入6~18位账号', trigger: 'blur',min:6,max:18 }],
             pwd: [{ required: true, message: '请输入6~18位密码', trigger: 'blur',min:6,max:18,pattern:/^[0-9A-Za-z]{6,18}$/ }]
-            }
+            },
+        picArray: [
+        require("@/assets/verify/1.png"),
+        require("@/assets/verify/2.png"),
+        require("@/assets/verify/3.png"),
+        require("@/assets/verify/4.png"),
+        require("@/assets/verify/5.png")
+      ],
         }
     },
 
@@ -48,8 +69,14 @@ export default {
     },
 
     methods: {
+        //滑动验证成功
+        verifySuccess(){
+          // 验证成功显示登录按钮
+          this.loginButtonShow = true
+        },
+
         // 提交表单方法
-        submitForm(formName){
+        submitForm(formName,slideverify){
           this.$refs[formName].validate((valid)=>{
             if (valid) {
               this.loading=true
@@ -77,6 +104,10 @@ export default {
               this.$message.error('表单填写有误！');
             }
           })
+
+          //点击一次登录 重置一次验证码
+          this.$refs[slideverify].reset()
+          this.loginButtonShow = false
         }
     }
 

@@ -258,17 +258,17 @@ values (&apos;酥肉冒菜&apos;,
 values
 (1,
 1800,
-15,
+999,
 curdate(),
 now()),
 (2,
 2390,
-33,
+999,
 curdate(),
 now()),
 (3,
 1990,
-28,
+999,
 curdate(),
 now());</stringProp>
             <stringProp name="queryArguments"></stringProp>
@@ -1311,6 +1311,41 @@ current_timestamp);</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="supplier-用例11:商品id查商品" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="商品id查商品" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">/api2/supplier/goods/get/1</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+              <stringProp name="JSON_PATH">$.resCode</stringProp>
+              <stringProp name="EXPECTED_VALUE">0000</stringProp>
+              <boolProp name="JSONVALIDATION">true</boolProp>
+              <boolProp name="EXPECT_NULL">false</boolProp>
+              <boolProp name="INVERT">false</boolProp>
+              <boolProp name="ISREGEX">true</boolProp>
+            </JSONPathAssertion>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
       </hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="下单接口前台-线程组" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -1565,6 +1600,141 @@ current_timestamp);</stringProp>
               <boolProp name="ISREGEX">true</boolProp>
             </JSONPathAssertion>
             <hashTree/>
+          </hashTree>
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+            <boolProp name="LoopController.continue_forever">true</boolProp>
+            <stringProp name="LoopController.loops">10</stringProp>
+          </LoopController>
+          <hashTree>
+            <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+              <stringProp name="CounterConfig.start">10</stringProp>
+              <stringProp name="CounterConfig.end">99</stringProp>
+              <stringProp name="CounterConfig.incr">1</stringProp>
+              <stringProp name="CounterConfig.name">count</stringProp>
+              <stringProp name="CounterConfig.format"></stringProp>
+              <boolProp name="CounterConfig.per_user">false</boolProp>
+            </CounterConfig>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="用户下单-1" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;data&quot;: {&quot;order_id&quot;:&quot;10011${__time(YYYYMMddHHMMss,)}0${count}&quot;,&quot;goods_id&quot;:&quot;1&quot;,&quot;goods_count&quot;:&quot;3&quot;,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;,&quot;total_price&quot;:&quot;3600&quot;,&quot;uid&quot;:&quot;wxcvzokok&quot;,&quot;phone&quot;:&quot;13566787732&quot;},&#xd;
+    &quot;partner&quot;: &quot;10011&quot;,&#xd;
+    &quot;sign&quot;: &quot;${__digest(md5,{&quot;order_id&quot;:&quot;10011${__time(YYYYMMddHHMMss,)}0${count}&quot;\,&quot;goods_id&quot;:&quot;1&quot;\,&quot;goods_count&quot;:&quot;3&quot;\,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;\,&quot;total_price&quot;:&quot;3600&quot;\,&quot;uid&quot;:&quot;wxcvzokok&quot;\,&quot;phone&quot;:&quot;13566787732&quot;}&amp;key=817d285681a34b3794461ab4b0396d73,,,)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/order/create</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+                <stringProp name="JSON_PATH">$.resCode</stringProp>
+                <stringProp name="EXPECTED_VALUE">0000</stringProp>
+                <boolProp name="JSONVALIDATION">true</boolProp>
+                <boolProp name="EXPECT_NULL">false</boolProp>
+                <boolProp name="INVERT">false</boolProp>
+                <boolProp name="ISREGEX">true</boolProp>
+              </JSONPathAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="用户下单-2" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;data&quot;: {&quot;order_id&quot;:&quot;10010${__time(YYYYMMddHHMMss,)}1${count}&quot;,&quot;goods_id&quot;:&quot;2&quot;,&quot;goods_count&quot;:&quot;1&quot;,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;,&quot;total_price&quot;:&quot;1990&quot;,&quot;uid&quot;:&quot;c28387fa-5c7b-4c71-845d-58b568538063&quot;,&quot;phone&quot;:&quot;13796841906&quot;},&#xd;
+    &quot;partner&quot;: &quot;10010&quot;,&#xd;
+    &quot;sign&quot;: &quot;${__digest(md5,{&quot;order_id&quot;:&quot;10010${__time(YYYYMMddHHMMss,)}1${count}&quot;\,&quot;goods_id&quot;:&quot;2&quot;\,&quot;goods_count&quot;:&quot;1&quot;\,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;\,&quot;total_price&quot;:&quot;1990&quot;\,&quot;uid&quot;:&quot;c28387fa-5c7b-4c71-845d-58b568538063&quot;\,&quot;phone&quot;:&quot;13796841906&quot;}&amp;key=fadc482e555f44fe8675aaa8052bab3f,,,)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/order/create</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+                <stringProp name="JSON_PATH">$.resCode</stringProp>
+                <stringProp name="EXPECTED_VALUE">0000</stringProp>
+                <boolProp name="JSONVALIDATION">true</boolProp>
+                <boolProp name="EXPECT_NULL">false</boolProp>
+                <boolProp name="INVERT">false</boolProp>
+                <boolProp name="ISREGEX">true</boolProp>
+              </JSONPathAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="用户下单-3" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;data&quot;: {&quot;order_id&quot;:&quot;10011${__time(YYYYMMddHHMMss,)}2${count}&quot;,&quot;goods_id&quot;:&quot;3&quot;,&quot;goods_count&quot;:&quot;2&quot;,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;,&quot;total_price&quot;:&quot;2200&quot;,&quot;uid&quot;:&quot;c28387fa-5c7b-4c71-845d-58b554077806&quot;,&quot;phone&quot;:&quot;13704416992&quot;},&#xd;
+    &quot;partner&quot;: &quot;10011&quot;,&#xd;
+    &quot;sign&quot;: &quot;${__digest(md5,{&quot;order_id&quot;:&quot;10011${__time(YYYYMMddHHMMss,)}2${count}&quot;\,&quot;goods_id&quot;:&quot;3&quot;\,&quot;goods_count&quot;:&quot;2&quot;\,&quot;saleDate&quot;:&quot;${__time(YYYY-MM-dd,)}&quot;\,&quot;total_price&quot;:&quot;2200&quot;\,&quot;uid&quot;:&quot;c28387fa-5c7b-4c71-845d-58b554077806&quot;\,&quot;phone&quot;:&quot;13704416992&quot;}&amp;key=817d285681a34b3794461ab4b0396d73,,,)}&quot;&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/order/create</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="JSON Assertion" enabled="true">
+                <stringProp name="JSON_PATH">$.resCode</stringProp>
+                <stringProp name="EXPECTED_VALUE">0000</stringProp>
+                <boolProp name="JSONVALIDATION">true</boolProp>
+                <boolProp name="EXPECT_NULL">false</boolProp>
+                <boolProp name="INVERT">false</boolProp>
+                <boolProp name="ISREGEX">true</boolProp>
+              </JSONPathAssertion>
+              <hashTree/>
+            </hashTree>
           </hashTree>
         </hashTree>
         <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="order-rest-用例04:订单通知接口" enabled="true">

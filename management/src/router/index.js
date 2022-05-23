@@ -11,6 +11,8 @@ import SupplierLogin from '@/components2/SupplierLogin'
 import Index2 from '@/components2/index2'
 import Goods from '@/components2/goods'
 import Stock from '@/components2/stock'
+import Order from '@/components2/order'
+
 
 
 Vue.use(Router)
@@ -107,6 +109,14 @@ export default new Router({
           component: Stock,
           meta:{
            title:'库存管理'
+          }
+        },
+        {
+          path: '/index2/order',
+          name: 'order',
+          component: Order,
+          meta:{
+           title:'订单管理'
           }
         }
       ]

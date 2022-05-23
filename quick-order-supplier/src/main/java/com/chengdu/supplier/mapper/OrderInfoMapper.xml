@@ -9,9 +9,9 @@
             qoi.*
         from
             qo_supplier_info qsi
-                left join qo_supplier_goods qsg on
+                right join qo_supplier_goods qsg on
                 qsi.supplier_id = qsg.goods_supplier_id
-                left join qo_order_info qoi on
+                right join qo_order_info qoi on
                 qoi.goods_id = qsg.goods_id
         <where>
             <if test="saleDate!=null and saleDate!=''">qoi.saleDate = #{saleDate} and </if>
@@ -27,9 +27,9 @@
             count(*)
         from
         qo_supplier_info qsi
-        left join qo_supplier_goods qsg on
+        right join qo_supplier_goods qsg on
         qsi.supplier_id = qsg.goods_supplier_id
-        left join qo_order_info qoi on
+        right join qo_order_info qoi on
         qoi.goods_id = qsg.goods_id
         <where>
             <if test="saleDate!=null and saleDate!=''">qoi.saleDate = #{saleDate} and </if>

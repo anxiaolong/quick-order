@@ -17,8 +17,21 @@
         <el-button style="margin-left:30px" type="primary" :disabled='isDisableButton' @click="sendMsgCode">{{buttonName}}</el-button>
       </el-row>
 
+      <slide-verify
+          :l="42"
+          :r="10"
+          :w="310"
+          :h="155"
+          :imgs="picArray"
+          :show="true"
+          slider-text="向右滑动完成验证"
+          ref="slideverify"
+          @success="verifySuccess"
+        ></slide-verify>
+        <br>
+
       <el-form-item style="width:100%;">
-        <el-button type="primary" style="width:100%;" @click="submitForm('loginForm')">登录</el-button>
+        <el-button v-show="loginButtonShow" type="primary" style="width:100%;" @click="submitForm('loginForm','slideverify')">登录</el-button>
       </el-form-item>
 
     </el-form>
@@ -33,6 +46,7 @@ export default {
 
     data() {
         return {
+          loginButtonShow:false,//登录按钮显示
           buttonName:'发送短信验证码',
           isDisableButton:false, // 发送验证码按钮状态
           ruleForm:{
@@ -42,7 +56,14 @@ export default {
           rules:{
             phone:[{required: true, message:'请输入手机号码', trigger:'blur',pattern:/^1[3456789]\d{9}$/}], //11位符合规则的手机号
             verificationCode:[{required: true, message:'请输入验证码', trigger: 'blur',pattern:/^\d{6}$/}] //6位数字验证码
-            }
+            },
+          picArray: [
+          require("@/assets/verify/1.png"),
+          require("@/assets/verify/2.png"),
+          require("@/assets/verify/3.png"),
+          require("@/assets/verify/4.png"),
+          require("@/assets/verify/5.png")
+        ],
         }
     },
 
@@ -54,8 +75,12 @@ export default {
     },
 
     methods: {
+        verifySuccess(){
+          this.loginButtonShow = true
+        },
+
         // 提交表单方法
-        submitForm(loginForm){
+        submitForm(loginForm,slideverify){
         this.$refs[loginForm].validate((valid) => {
           if (valid) {
             const res = req('post','/api2/supplier/login',this.ruleForm)
@@ -75,6 +100,10 @@ export default {
             this.$message.error('请核对手机号和验证码！')
           } 
         })
+        
+        this.$refs[slideverify].reset()
+        this.loginButtonShow = false;
+
         },
 
         // 发送短信验证码
@@ -85,7 +114,7 @@ export default {
               if (res.resCode=='0000') {
                 this.$message.success('发送成功！')
               }else{
-                this.$message.error(res.resMsg);
+                this.$message.error(res.data);
               }
 
               this.isDisableButton=true

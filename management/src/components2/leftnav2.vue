@@ -48,6 +48,17 @@ export default {
               url: 'index2/stock'
             },
           ]
+        },
+        {
+          menuid: 2,
+          menuname: '订单管理',
+          menus: [
+            {
+              menuid: 21,
+              menuname: '订单管理',
+              url: 'index2/order'
+            }
+          ]
         }
       ],
       msg: 'success'

@@ -12,4 +12,6 @@ public interface GoodsService {
     Goods_QO listGoods(Goods_QO goods_qo);
 
     int updateGoodsStatus(int goods_id,int goods_status);
+
+    Goods selGoodsById(int goodsId);
 }
