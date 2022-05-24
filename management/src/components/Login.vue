@@ -12,6 +12,17 @@
           <el-input type="password" v-model="ruleForm.pwd" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
 
+        <el-form-item style="width:100%;">
+          <el-button type="primary" style="width:100%;" @click="loginButtonMethod('ruleForm')" :loading="loading">登录</el-button>
+        </el-form-item>
+
+      </el-form>
+
+      <el-dialog
+        title="滑动验证"
+        :visible.sync="dialogVisible"
+        width="350px">
+        
         <slide-verify
           :l="42"
           :r="10"
@@ -21,15 +32,9 @@
           :show="true"
           slider-text="向右滑动完成验证"
           ref="slideverify"
-          @success="verifySuccess"
+          @success="submitForm('slideverify')"
         ></slide-verify>
-        <br>
-
-        <el-form-item style="width:100%;">
-          <el-button v-show="loginButtonShow" type="primary" style="width:100%;" @click="submitForm('ruleForm','slideverify')" :loading="loading">登录</el-button>
-        </el-form-item>
-
-      </el-form>
+      </el-dialog>
     </div>
 </template>
 
@@ -41,7 +46,7 @@ export default {
 
     data() {
         return {
-        loginButtonShow:false,//登录按钮显示
+        dialogVisible:false,
         loading:false, // 登录加载动效
         logining: false,
         ruleForm: {
@@ -69,45 +74,35 @@ export default {
     },
 
     methods: {
-        //滑动验证成功
-        verifySuccess(){
-          // 验证成功显示登录按钮
-          this.loginButtonShow = true
-        },
-
-        // 提交表单方法
-        submitForm(formName,slideverify){
-          this.$refs[formName].validate((valid)=>{
+        loginButtonMethod(ruleForm){
+          this.$refs[ruleForm].validate((valid)=>{
             if (valid) {
-              this.loading=true
-              this.$refs[formName].validate(valid => {
-                  const res = req('post','/api/admin/login',this.ruleForm)
-
-                  //console.log(res)
-
-                  res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
-                  //console.log(res.resCode)
-
-                  if (res.resCode=='0000') {
-                    localStorage.setItem('uname',this.ruleForm.uname)
-                    setTimeout(()=>{
-                      this.$message({type:'success',message:'登录成功'})
-                        this.$router.push('/index/supplier')
-                    },1000)
-                  }else{
-                      this.$message({type:'error',message:'登录失败'})
-                      this.loading = false
-                  }
-                  })
-              })
+              this.dialogVisible = true
             }else{
-              this.$message.error('表单填写有误！');
+              this.$message.error('表单填写有误！')
             }
           })
 
-          //点击一次登录 重置一次验证码
+        },
+        // 提交表单方法
+        submitForm(slideverify){
+          const res = req('post','/api/admin/login',this.ruleForm)
+
+            res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据
+              if (res.resCode=='0000') {
+                localStorage.setItem('uname',this.ruleForm.uname)
+                setTimeout(()=>{
+                  this.$message({type:'success',message:'登录成功'})
+                    this.$router.push('/index/supplier')
+                },1000)
+              }else{
+                  this.$message({type:'error',message:'登录失败'})
+                  this.loading = false
+              }
+            })
+
           this.$refs[slideverify].reset()
-          this.loginButtonShow = false
+          this.dialogVisible = false
         }
     }
 

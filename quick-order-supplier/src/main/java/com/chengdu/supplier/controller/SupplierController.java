@@ -2,6 +2,7 @@ package com.chengdu.supplier.controller;
 
 import com.chengdu.common.response.CommonResponse;
 import com.chengdu.common.response.CommonResponseEnum;
+import com.chengdu.management.pojo.SupplierInfo;
 import com.chengdu.supplier.aop.SysLog;
 import com.chengdu.supplier.service.SupplierService;
 import io.swagger.annotations.Api;
@@ -49,17 +50,22 @@ public class SupplierController {
         String phone = map.get("phone");
         String verificationCode = map.get("verificationCode");
 
-        // 添加一个万能验证码方便测试
-        if ("000000".equals(verificationCode)) {
-            session.setAttribute("phone",phone);
-            return new CommonResponse(CommonResponseEnum.Success,supplierService.getSullpierInfoByPhone(phone));
+        SupplierInfo sullpierInfo = supplierService.getSullpierInfoByPhone(phone);
+
+        if (sullpierInfo != null) {
+            // 添加一个万能验证码方便测试
+            if ("000000".equals(verificationCode)) {
+                session.setAttribute("phone",phone);
+                return new CommonResponse(CommonResponseEnum.Success,sullpierInfo);
+            }
+
+            if (supplierService.supplierLoginService(phone,verificationCode)) {
+                session.setAttribute("phone",phone);
+                return new CommonResponse(CommonResponseEnum.Success,sullpierInfo);
+            }
         }
 
-        if (supplierService.supplierLoginService(phone,verificationCode)) {
-            session.setAttribute("phone",phone);
-            return new CommonResponse(CommonResponseEnum.Success,supplierService.getSullpierInfoByPhone(phone));
-        }
-        return new CommonResponse(CommonResponseEnum.Fail,"验证码校验失败");
+        return new CommonResponse(CommonResponseEnum.Fail,"没有找到对应的供应商！");
     }
 
 

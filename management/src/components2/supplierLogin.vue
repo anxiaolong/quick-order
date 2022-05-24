@@ -17,6 +17,17 @@
         <el-button style="margin-left:30px" type="primary" :disabled='isDisableButton' @click="sendMsgCode">{{buttonName}}</el-button>
       </el-row>
 
+      <el-form-item style="width:100%;">
+        <el-button type="primary" style="width:100%;" @click="loginButtonMethod('loginForm','slideverify')">登录</el-button>
+      </el-form-item>
+
+    </el-form>
+
+    <el-dialog
+      title="滑动验证"
+      :visible.sync="dialogVisible"
+      width="350px">
+      
       <slide-verify
           :l="42"
           :r="10"
@@ -26,15 +37,10 @@
           :show="true"
           slider-text="向右滑动完成验证"
           ref="slideverify"
-          @success="verifySuccess"
+          @success="submitForm('slideverify')"
         ></slide-verify>
-        <br>
+    </el-dialog>
 
-      <el-form-item style="width:100%;">
-        <el-button v-show="loginButtonShow" type="primary" style="width:100%;" @click="submitForm('loginForm','slideverify')">登录</el-button>
-      </el-form-item>
-
-    </el-form>
     </div>
 </template>
 
@@ -46,7 +52,7 @@ export default {
 
     data() {
         return {
-          loginButtonShow:false,//登录按钮显示
+          dialogVisible:false,
           buttonName:'发送短信验证码',
           isDisableButton:false, // 发送验证码按钮状态
           ruleForm:{
@@ -75,34 +81,35 @@ export default {
     },
 
     methods: {
-        verifySuccess(){
-          this.loginButtonShow = true
+        loginButtonMethod(loginForm){
+          // 滑动验证前进行表单验证
+          this.$refs[loginForm].validate((valid)=>{
+            if (valid) {
+              this.dialogVisible = true
+            }else{
+              this.$message.error('表单填写有误！')
+            }
+          })
         },
 
         // 提交表单方法
-        submitForm(loginForm,slideverify){
-        this.$refs[loginForm].validate((valid) => {
-          if (valid) {
-            const res = req('post','/api2/supplier/login',this.ruleForm)
-            res.then(res=>{ 
-            if (res.resCode=='0000') {
-              localStorage.setItem('uname',this.ruleForm.phone)
-              localStorage.setItem('supplierInfo',JSON.stringify(res.data))
-                setTimeout(()=>{
-                  this.$message({type:'success',message:'登录成功'})
-                    this.$router.push('index2/goods')
-                },1000)
-            }else{
-                this.$message({type:'error',message:'登录失败'})
-            }
-            })
-          }else{
-            this.$message.error('请核对手机号和验证码！')
-          } 
-        })
+        submitForm(slideverify){
+          const res = req('post','/api2/supplier/login',this.ruleForm)
+              res.then(res=>{ 
+              if (res.resCode=='0000') {
+                localStorage.setItem('uname',this.ruleForm.phone)
+                localStorage.setItem('supplierInfo',JSON.stringify(res.data))
+                  setTimeout(()=>{
+                    this.$message({type:'success',message:'登录成功'})
+                      this.$router.push('index2/goods')
+                  },1000)
+              }else{
+                  this.$message({type:'error',message:'登录失败'})
+              }
+              })
         
-        this.$refs[slideverify].reset()
-        this.loginButtonShow = false;
+              this.dialogVisible = false;
+              this.$refs[slideverify].reset()
 
         },
 
@@ -115,6 +122,7 @@ export default {
                 this.$message.success('发送成功！')
               }else{
                 this.$message.error(res.data);
+                return // 发送验证码失败 方法直接结束
               }
 
               this.isDisableButton=true
