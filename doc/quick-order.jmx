@@ -67,8 +67,8 @@
             <stringProp name="dataSource">quick_order</stringProp>
             <stringProp name="queryType">Callable Statement</stringProp>
             <stringProp name="query">insert into management_admin (uname,pwd) values
-(&apos;anxiaolong&apos;,&apos;123456&apos;),
-(&apos;zhongwei&apos;,&apos;654321&apos;);</stringProp>
+(&apos;anxiaolong&apos;,&apos;${__digest(md5,111111,,,)}&apos;),
+(&apos;zhongwei&apos;,&apos;${__digest(md5,111111,,,)}&apos;);</stringProp>
             <stringProp name="queryArguments"></stringProp>
             <stringProp name="queryArgumentsTypes"></stringProp>
             <stringProp name="variableNames"></stringProp>
@@ -431,7 +431,7 @@ current_timestamp);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;uname&quot;:&quot;anxiaolong&quot;,&quot;pwd&quot;:&quot;123456&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;uname&quot;:&quot;anxiaolong&quot;,&quot;pwd&quot;:&quot;${__digest(md5,111111,,,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -473,7 +473,7 @@ current_timestamp);</stringProp>
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">{&quot;pwd&quot;:&quot;123456&quot;}</stringProp>
+                  <stringProp name="Argument.value">{&quot;pwd&quot;:&quot;${__digest(md5,111111,,,)}&quot;}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>

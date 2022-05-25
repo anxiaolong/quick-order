@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import md5 from 'js-md5'
 import {req} from '../api/axiosFun'
 export default {
     name:'managementadmin',
@@ -84,6 +85,7 @@ export default {
                     })
                     .then(() => {
                     setTimeout(() => {
+                        this.editForm.pwd = md5(this.editForm.pwd)
                         req('put','/api/admin/'+this.editForm.id+'/update',{'pwd':this.editForm.pwd}).then(res => {
                             // console.log(res)
                             this.$message({

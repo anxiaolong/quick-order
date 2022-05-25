@@ -40,6 +40,7 @@
 
 <script>
 // 引入axios发送请求
+import md5 from 'js-md5'
 import {req} from '../api/axiosFun'
 export default {
     name:'login',
@@ -86,6 +87,9 @@ export default {
         },
         // 提交表单方法
         submitForm(slideverify){
+          
+          this.ruleForm.pwd = md5(this.ruleForm.pwd) //密码用md5传
+
           const res = req('post','/api/admin/login',this.ruleForm)
 
             res.then(res=>{ // 通过.then才能获取到Promise对象中的具体数据

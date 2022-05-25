@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class ManagementController {
 
     @ApiOperation(value = "超级管理员登录",notes = "使用用户名和密码登录")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public CommonResponse managementAdminLogin(@RequestBody ManagementAdmin admin, HttpSession session){
+    public CommonResponse managementAdminLogin(@RequestBody ManagementAdmin admin,
+                                               HttpSession session) {
         String uname = admin.getUname();
         String pwd = admin.getPwd();
         if (StringUtils.isNotBlank(uname) && StringUtils.isNotBlank(pwd)){
