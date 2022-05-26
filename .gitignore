@@ -33,3 +33,17 @@ management/*.suo
 management/*.ntvs*
 management/*.njsproj
 management/*.sln
+
+# quick-order-mobile ignore
+quick-order-mobile/.DS_Store
+quick-order-mobile/node_modules/
+quick-order-mobile/dist/
+quick-order-mobile/npm-debug.log*
+quick-order-mobile/yarn-debug.log*
+quick-order-mobile/yarn-error.log*
+quick-order-mobile/.idea
+quick-order-mobile/.vscode
+quick-order-mobile/*.suo
+quick-order-mobile/*.ntvs*
+quick-order-mobile/*.njsproj
+quick-order-mobile/*.sln
