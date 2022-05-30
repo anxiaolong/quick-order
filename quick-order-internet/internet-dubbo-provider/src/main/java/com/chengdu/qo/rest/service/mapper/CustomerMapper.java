@@ -8,4 +8,6 @@ public interface CustomerMapper {
 
     Customer selCustomerByUidAndPhone(
             @Param("uid") String uid, @Param("phone") String phone);
+
+    Integer selCountByPhone(@Param("phone") String phone);
 }

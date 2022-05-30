@@ -18,6 +18,10 @@ public class CustomerServiceImpl implements CustomerService {
     @SysLog
     @Override
     public int customerRegister(Customer customer) {
+        Integer integer = customerMapper.selCountByPhone(customer.getPhone());
+        if (integer != 0) {
+            return integer; // 已经存在的手机号不用再重新加数据
+        }
         return customerMapper.insertCustomer(customer);
     }
 

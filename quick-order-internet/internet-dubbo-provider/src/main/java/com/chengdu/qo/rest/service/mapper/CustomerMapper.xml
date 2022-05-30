@@ -13,4 +13,7 @@
     <select id="selCustomerByUidAndPhone" resultType="com.chengdu.management.pojo.Customer">
         select * from qo_internet_customer qic where qic.uid = #{uid} and qic.phone = #{phone};
     </select>
+    <select id="selCountByPhone" resultType="java.lang.Integer">
+        select count(*) from qo_internet_customer qic where qic.phone = #{phone};
+    </select>
 </mapper>
