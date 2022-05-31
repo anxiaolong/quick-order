@@ -10,6 +10,8 @@ Vue.use(Vant);
 
 Vue.config.productionTip = false
 
+document.title = 'QUICK闪购'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

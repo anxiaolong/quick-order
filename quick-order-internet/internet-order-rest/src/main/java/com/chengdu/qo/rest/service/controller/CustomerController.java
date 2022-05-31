@@ -23,9 +23,9 @@ public class CustomerController {
     @SysLog
     @RequestMapping(value = "/sync/user",method = RequestMethod.POST)
     public CommonResponse syncUser(@RequestBody JSONObject requestJson){
-
-        if (customerService.customerRegister(requestJson.getObject("data", Customer.class)) == 1){
-            return new CommonResponse(CommonResponseEnum.Success,null);
+        Customer customer = customerService.customerRegister(requestJson.getObject("data", Customer.class));
+        if (customer != null){
+            return new CommonResponse(CommonResponseEnum.Success,customer);
         }
         return new CommonResponse(CommonResponseEnum.Fail,null);
     }
