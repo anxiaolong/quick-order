@@ -13,6 +13,7 @@
         <result column="goodsCount" property="goodsCount"></result>
         <result column="saleDate" property="saleDate"></result>
         <result column="createTime" property="createTime"></result>
+        <result column="goods_intro" property="goods_intro"></result>
     </resultMap>
 
     <select id="selStockByDate" resultMap="GoodsStockMap">
@@ -21,6 +22,7 @@
             qsi.supplier_name supplierName,
             qsg.goods_id goodsId,
             qsg.goods_name goodsName,
+            qsg.goods_intro goods_intro,
             qsgs.id stockId,
             qsgs.goods_price price,
             qsgs.goods_count goodsCount,

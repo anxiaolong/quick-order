@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import DEBUG from '@/components/DEBUG'
 import index from '@/components/index'
 import Sync from '@/components/sync'
-import SupplierInfo from '@/components/SupplierInfo'
+import SupplierInfo from '@/components/supplier'
 import My from '@/components/my'
+import Goods from '@/components/goods'
 
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
           path: '/index/shopping',
           name: 'SupplierInfo',
           component: SupplierInfo
+        },
+        {
+          path: '/index/goods',
+          name: 'goods',
+          component: Goods
         },
         {
           path: '/index/my',

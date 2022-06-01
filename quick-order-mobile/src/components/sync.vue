@@ -9,7 +9,7 @@
       title="登录授权"
       v-model='dialogShow'
       :showConfirmButton='false'
-      width="250px"
+      width="280px"
       >
       <van-form v-model="user" ref="userForm" @submit="syncUser(user)">
         <van-field style="width:150px;margin:auto" name="phone" v-model="user.phone" type="tel" placeholder="请输入手机号码" :rules="rules.phone" />

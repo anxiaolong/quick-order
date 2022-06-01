@@ -16,7 +16,7 @@ import { Toast } from 'vant'
 import Cookies from 'js-cookie'
 import {req} from '../api/fun'
 export default {
-    name:'supplierInfo',
+    name:'supplier',
     data(){
         return {
             supplierInfoList:[],
@@ -39,7 +39,8 @@ export default {
                 })  
         },
         onConfirm(val){
-            console.log(val)
+            // console.log(val)
+            this.$router.push({path: '/index/goods', query:{supplier : val}})
         },
         onCancel(){
             Toast('请选择您当前所在门店！')
