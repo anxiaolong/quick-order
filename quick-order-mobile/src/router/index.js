@@ -16,6 +16,7 @@ Router.prototype.push = function push(location) {
 }//解决路由重复报错问题
 
 export default new Router({
+  base:'/quickorder/',
   routes: [
     {
       path: '/debug',

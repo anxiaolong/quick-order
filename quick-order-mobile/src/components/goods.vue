@@ -11,27 +11,43 @@
           <van-card
             @click="onClickCard(item)"
             style="text-align:left"
-            :tag="Math.random()*10>4?'热卖':'限量'"
-            :origin-price="parseFloat(item.price*(Math.random()+1)/100).toFixed(2)"
+            tag="招牌"
+            :origin-price="item.price*1.2/100"
             :num='item.goodsCount'
             :price='item.price/100'
-            :desc='item.goods_intro'
             :title='item.goodsName'
-            :thumb="imgArr[Math.ceil(Math.random()*8)].defaultImg">
+            :thumb="imgArr[0].defaultImg">
+
+            <!-- 用自定义描述把商品简介展示完整 -->
+            <template #desc>
+                <p>{{item.goods_intro}}</p>
+            </template>
 
             <template #tags>
-                <van-tag plain type="danger">{{Math.random()*10>4?'抢购中': '再售'+(Math.ceil(Math.random()*10+1))+'份恢复原价' }}</van-tag>
+                <van-tag plain type="danger">热销</van-tag>
             </template>
+            
           </van-card>
       </div>
 
+        <van-sku
+        v-model="vantsku.show"
+        :sku="vantsku.sku"
+        :goods="vantsku.goods"
+        :goods-id="skugoods.goodsId"
+        :quota="10"
+        :quota-used="0"
+        :hide-stock="false"
+        :show-add-cart-btn='false'
+        @buy-clicked="onBuyClicked"
+        />
 
   </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
-import {req} from '../api/fun'
+import {req,today,getOrderId} from '../api/fun'
 import Cookies from 'js-cookie'
 export default {
     name:'goods',
@@ -39,21 +55,46 @@ export default {
         return{
             supplierName:'',
             imgArr:[
-                {defaultImg:require('../img/default00.png')},
-                {defaultImg:require('../img/default01.png')},
-                {defaultImg:require('../img/default02.png')},
-                {defaultImg:require('../img/default03.png')},
-                {defaultImg:require('../img/default04.png')},
-                {defaultImg:require('../img/default05.png')},
-                {defaultImg:require('../img/default06.png')},
-                {defaultImg:require('../img/default07.png')},
-                {defaultImg:require('../img/default08.png')}
+                {defaultImg:require('../img/default00.png')}
                 ],
             reqJson:{
                 date:'',
                 supplierId:''
             },
-            goodsList:{}
+            goodsList:{},
+            skugoods:{},
+            vantsku:{
+                show:false,
+                goods: {
+                    // 默认商品 sku 缩略图
+                    picture:require('../img/default00.png')
+                    },
+                sku: {
+                    tree: [],
+                    price: 0, // 默认价格（单位元）
+                    stock_num: 0, // 商品总库存
+                    messages: [
+                        {
+                        // 商品留言
+                        multiple: '0', // 留言类型为 text 时，是否多行文本。'1' 表示多行
+                        name: '备注', // 留言名称
+                        type: 'text', // 留言类型，可选: id_no（身份证）, text, tel, date, time, email
+                        required: '0', // 是否必填 '1' 表示必填
+                        placeholder: '可留言给商家', // 可选值，占位文本
+                        extraDesc: ''  // 可选值，附加描述文案
+                        }
+                    ]
+                    }
+            },
+            orderReqData:{//下单参数
+                order_id:"",
+                goods_id:"",
+                goods_count:"",
+                saleDate:"",
+                total_price:"",
+                uid:"",
+                phone:""
+            }
         }
     },
     mounted(){
@@ -62,24 +103,12 @@ export default {
         const supplierArr  = supplier.toString().split('-') 
         this.reqJson.supplierId = supplierArr[0]
         this.supplierName = supplierArr[1]
-        this.reqJson.date = this.dateFormat()
+        this.reqJson.date = today()
         this.loadGoodsList()
     },
     methods:{
         onClickLeft(){
             this.$router.push('/index/shopping')
-        },
-        //当前日期格式化
-        dateFormat(){
-            var date = new Date()
-            var year = date.getFullYear()
-            var month = date.getMonth() + 1 < 10 ? 
-                            '0' + (date.getMonth() + 1) : date.getMonth()+ 1
-            var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-            // var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
-            // var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
-            // var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
-            return year + '-' +month + '-' + day
         },
         loadGoodsList(){
             req('post','/api3/stock/query/today',this.reqJson,JSON.parse(Cookies.get('channel')))
@@ -93,8 +122,34 @@ export default {
                     }
                 })
         },
-        onClickCard(goods){
-            console.log(goods)
+        onClickCard(item){
+            console.log(item)
+            this.skugoods = item
+            this.vantsku.sku.stock_num = item.goodsCount
+            this.vantsku.sku.price = item.price/100
+            this.vantsku.show = true
+            
+        },
+        onBuyClicked(val){
+            console.log(JSON.stringify(val))
+
+            const channel = JSON.parse(Cookies.get('channel'))
+
+            const user = JSON.parse(Cookies.get('user'))
+
+            this.orderReqData.order_id = getOrderId(JSON.parse(Cookies.get('channel')))
+            this.orderReqData.goods_id = this.skugoods.goodsId
+            this.orderReqData.goods_count = val.selectedNum
+            this.orderReqData.saleDate = today()
+            this.orderReqData.total_price = val.selectedNum*this.skugoods.price
+            this.orderReqData.uid = user.uid
+            this.orderReqData.phone = user.phone
+
+            req('post','/api3/order/create',this.orderReqData,channel)
+                .then((res)=>{
+                    console.log(res.data)
+                })
+
         }
     }
 }
