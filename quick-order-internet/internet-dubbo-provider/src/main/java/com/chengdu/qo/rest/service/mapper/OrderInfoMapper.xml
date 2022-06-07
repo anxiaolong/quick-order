@@ -13,10 +13,11 @@
                            total_price,
                            uid,
                            phone,
+                           tips,
                            status,
                            create_time,
                            modified_time)
-        values (#{order_id},#{saleDate},#{goods_id},#{goods_count},#{total_price},#{uid},#{phone},#{status},#{create_time},#{modified_time});
+        values (#{order_id},#{saleDate},#{goods_id},#{goods_count},#{total_price},#{uid},#{phone},#{tips},#{status},#{create_time},#{modified_time});
     </insert>
 
     <select id="selTimeOutOrder" resultType="com.chengdu.management.pojo.OrderInfo">

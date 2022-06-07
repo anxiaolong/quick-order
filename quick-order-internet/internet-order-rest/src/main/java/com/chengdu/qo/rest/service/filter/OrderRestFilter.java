@@ -22,13 +22,13 @@ public class OrderRestFilter implements Filter {
         // 释放特定接口
         String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
         // System.out.println(requestURI);
-        if ("/order/notify".equals(requestURI)
-                || requestURI.startsWith("/swagger-resources")
-                || requestURI.startsWith("/webjars")
-                || requestURI.startsWith("/v2")
-                || requestURI.startsWith("/swagger-ui.html")
-                || requestURI.equals("/")
-                || requestURI.equals("/csrf")
+        if ("/api3/order/notify".equals(requestURI)
+                || requestURI.startsWith("/api3/swagger-resources")
+                || requestURI.startsWith("/api3/webjars")
+                || requestURI.startsWith("/api3/v2")
+                || requestURI.startsWith("/api3/swagger-ui.html")
+                || requestURI.equals("/api3")
+                || requestURI.equals("/api3/csrf")
         ){
             filterChain.doFilter(servletRequest,servletResponse);
             return;

@@ -22,7 +22,7 @@ module.exports = {
 
     // Various Dev Server settings
     //host: 'localhost', // can be overwritten by process.env.HOST
-    host: '192.168.101.46', // 手机连热点访问本地调试页面
+    host: '192.168.101.24', // 手机连热点访问本地调试页面
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

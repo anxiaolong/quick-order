@@ -6,6 +6,7 @@ import Sync from '@/components/sync'
 import SupplierInfo from '@/components/supplier'
 import My from '@/components/my'
 import Goods from '@/components/goods'
+import Order from '@/components/order'
 
 
 Vue.use(Router)
@@ -49,6 +50,11 @@ export default new Router({
           component: My
         }
       ]
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order
     }
   ]
 })

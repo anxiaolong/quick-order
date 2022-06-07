@@ -13,6 +13,7 @@ public class OrderInfo implements Serializable {
     private int total_price;
     private String uid;
     private String phone;
+    private String tips;
     private int status;
     private String saleDate;
     private String create_time;

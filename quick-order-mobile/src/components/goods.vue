@@ -26,7 +26,7 @@
             <template #tags>
                 <van-tag plain type="danger">热销</van-tag>
             </template>
-            
+    
           </van-card>
       </div>
 
@@ -93,7 +93,8 @@ export default {
                 saleDate:"",
                 total_price:"",
                 uid:"",
-                phone:""
+                phone:"",
+                tips:''
             }
         }
     },
@@ -123,7 +124,7 @@ export default {
                 })
         },
         onClickCard(item){
-            console.log(item)
+            //console.log(item)
             this.skugoods = item
             this.vantsku.sku.stock_num = item.goodsCount
             this.vantsku.sku.price = item.price/100
@@ -131,7 +132,7 @@ export default {
             
         },
         onBuyClicked(val){
-            console.log(JSON.stringify(val))
+            //console.log(JSON.stringify(val))
 
             const channel = JSON.parse(Cookies.get('channel'))
 
@@ -144,10 +145,21 @@ export default {
             this.orderReqData.total_price = val.selectedNum*this.skugoods.price
             this.orderReqData.uid = user.uid
             this.orderReqData.phone = user.phone
+            this.orderReqData.tips = val.messages.message_0
 
             req('post','/api3/order/create',this.orderReqData,channel)
                 .then((res)=>{
-                    console.log(res.data)
+                    //console.log(res.data)
+
+                    if (res.data.resCode == '0000') {
+                        Toast.loading({
+                                message: '下单中...',
+                                forbidClick: false,
+                                })
+                        setTimeout(()=>{
+                            this.$router.push({name:'order',params:{orderinfo:this.orderReqData,goodsInfo:this.skugoods}})
+                        },1000)
+                    }
                 })
 
         }

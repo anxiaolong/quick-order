@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
 --
 -- Host: localhost    Database: quick_order
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	5.7.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,11 +21,11 @@
 
 DROP TABLE IF EXISTS `management_admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `management_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '超管id',
-  `uname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '超管用户名',
-  `pwd` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '超管密码',
+  `uname` varchar(100) DEFAULT NULL COMMENT '超管用户名',
+  `pwd` varchar(100) DEFAULT NULL COMMENT '超管密码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,7 +36,7 @@ CREATE TABLE `management_admin` (
 
 LOCK TABLES `management_admin` WRITE;
 /*!40000 ALTER TABLE `management_admin` DISABLE KEYS */;
-INSERT INTO `management_admin` VALUES (1,'anxiaolong','123456'),(2,'zhongwei','654321');
+INSERT INTO `management_admin` VALUES (1,'anxiaolong','96e79218965eb72c92a549dd5a330112'),(2,'zhongwei','96e79218965eb72c92a549dd5a330112');
 /*!40000 ALTER TABLE `management_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -46,7 +46,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_internet_customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_internet_customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` varchar(100) NOT NULL COMMENT '平台侧用户id',
@@ -63,7 +63,7 @@ CREATE TABLE `qo_internet_customer` (
 
 LOCK TABLES `qo_internet_customer` WRITE;
 /*!40000 ALTER TABLE `qo_internet_customer` DISABLE KEYS */;
-INSERT INTO `qo_internet_customer` VALUES (1,'c28387fa-5c7b-4c71-845d-58b568538063','13796841906','2021-12-01 10:28:21'),(2,'c28387fa-5c7b-4c71-845d-58b554077806','13704416992','2021-12-01 10:28:21'),(3,'c28387fa-5c7b-4c71-845d-58b504416992','13719544798','2021-12-01 10:28:21'),(4,'wxcvzokok','13566787732','2021-12-01 10:28:22');
+INSERT INTO `qo_internet_customer` VALUES (1,'c28387fa-5c7b-4c71-845d-58b568538063','13796841906','2022-06-07 02:25:13'),(2,'c28387fa-5c7b-4c71-845d-58b554077806','13704416992','2022-06-07 02:25:13'),(3,'c28387fa-5c7b-4c71-845d-58b504416992','13719544798','2022-06-07 02:25:13'),(4,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','2022-06-07 02:49:35');
 /*!40000 ALTER TABLE `qo_internet_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,22 +73,23 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_order_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_order_info` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单号',
+  `order_id` varchar(100) NOT NULL COMMENT '订单号',
   `goods_id` int(11) NOT NULL COMMENT '商品id',
   `goods_count` int(11) NOT NULL COMMENT '商品数量',
   `saleDate` date NOT NULL COMMENT '商品销售日期',
   `total_price` int(11) NOT NULL COMMENT '订单总价',
   `uid` varchar(100) NOT NULL COMMENT '用户id',
   `phone` varchar(100) NOT NULL COMMENT '用户手机',
+  `tips` varchar(250) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0：新增，1：过期，2：已支付，3：已取消，4：退款中，5：已退款',
   `create_time` datetime NOT NULL COMMENT '订单创建时间',
   `modified_time` datetime NOT NULL COMMENT '最后操作时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `qo_order_info_un` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +98,7 @@ CREATE TABLE `qo_order_info` (
 
 LOCK TABLES `qo_order_info` WRITE;
 /*!40000 ALTER TABLE `qo_order_info` DISABLE KEYS */;
-INSERT INTO `qo_order_info` VALUES (1,'1001120211201101222001',1,3,'2021-12-01',3600,'wxcvzokok','13566787732',4,'2021-12-01 10:28:22','2021-12-01 10:28:22'),(2,'1001020211201101222002',2,1,'2021-12-01',1990,'c28387fa-5c7b-4c71-845d-58b568538063','13796841906',0,'2021-12-01 10:28:22','2021-12-01 10:28:22'),(3,'1001120211201101222003',3,2,'2021-12-01',2200,'c28387fa-5c7b-4c71-845d-58b554077806','13704416992',3,'2021-12-01 10:28:22','2021-12-01 10:28:22');
+INSERT INTO `qo_order_info` VALUES (1,'1001120220607104947414',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','',0,'2022-06-07 10:49:47','2022-06-07 10:49:47'),(2,'1001120220607105002588',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','',0,'2022-06-07 10:50:02','2022-06-07 10:50:02'),(3,'1001120220607105101679',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','测试下留言动能',0,'2022-06-07 10:51:01','2022-06-07 10:51:01'),(4,'1001120220607105129637',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','多加米饭和辣椒',0,'2022-06-07 10:51:29','2022-06-07 10:51:29');
 /*!40000 ALTER TABLE `qo_order_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,11 +108,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_order_notify`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_order_notify` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `transaction_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '渠道支付订单号',
-  `order_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '被支付订单id',
+  `transaction_id` varchar(100) NOT NULL COMMENT '渠道支付订单号',
+  `order_id` varchar(100) NOT NULL COMMENT '被支付订单id',
   `pay_date` datetime NOT NULL COMMENT '支付时间',
   `pay_amount` int(11) NOT NULL COMMENT '支付金额 单位分',
   `pay_status` int(11) NOT NULL COMMENT '支付状态 0：支付成功 1：支付失败 2：已退款',
@@ -126,7 +127,6 @@ CREATE TABLE `qo_order_notify` (
 
 LOCK TABLES `qo_order_notify` WRITE;
 /*!40000 ALTER TABLE `qo_order_notify` DISABLE KEYS */;
-INSERT INTO `qo_order_notify` VALUES (1,'2021112422001436195701313002','1001120211201101222001','2021-11-24 10:22:34',1800,0,'2021-12-01 10:28:22'),(2,'2021112422001436195701313002','1001120211201101222001','2021-11-24 10:22:34',1800,0,'2021-12-01 10:28:22');
 /*!40000 ALTER TABLE `qo_order_notify` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +136,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_partner_key`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_partner_key` (
   `pid` int(11) NOT NULL COMMENT '渠道id',
   `key` varchar(100) NOT NULL COMMENT '签名key',
@@ -161,7 +161,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_supplier_goods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_supplier_goods` (
   `goods_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品id',
   `goods_name` varchar(100) NOT NULL COMMENT '商品名称',
@@ -170,7 +170,7 @@ CREATE TABLE `qo_supplier_goods` (
   `goods_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1：可售 0：不可售',
   `modified_time` datetime NOT NULL COMMENT '最后操作时间',
   PRIMARY KEY (`goods_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `qo_supplier_goods` (
 
 LOCK TABLES `qo_supplier_goods` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_goods` DISABLE KEYS */;
-INSERT INTO `qo_supplier_goods` VALUES (1,'酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2021-12-01 10:12:21'),(2,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',2,1,'2021-12-01 10:12:21'),(3,'盖浇饭','主要特点是饭菜结合，食用方便，既有主食米饭，又有美味菜肴。其菜汤汁浇于饭上面，使米饭更富有口感而备受青睐',3,1,'2021-12-01 10:12:21');
+INSERT INTO `qo_supplier_goods` VALUES (1,'酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-07 10:06:13'),(2,'2酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-07 10:06:13'),(3,'3酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(4,'一道测试菜','测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(5,'测试道测试菜','test测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(6,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',1,1,'2022-06-07 10:06:13'),(7,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',2,1,'2022-06-07 10:06:13'),(8,'盖浇饭','主要特点是饭菜结合，食用方便，既有主食米饭，又有美味菜肴。其菜汤汁浇于饭上面，使米饭更富有口感而备受青睐',3,1,'2022-06-07 10:06:13');
 /*!40000 ALTER TABLE `qo_supplier_goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +189,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_supplier_goods_stock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_supplier_goods_stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `goods_id` int(11) NOT NULL COMMENT '商品id',
@@ -208,7 +208,7 @@ CREATE TABLE `qo_supplier_goods_stock` (
 
 LOCK TABLES `qo_supplier_goods_stock` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_goods_stock` DISABLE KEYS */;
-INSERT INTO `qo_supplier_goods_stock` VALUES (1,1,1800,12,'2021-12-01','2021-12-01 10:28:22'),(2,2,2390,32,'2021-12-01','2021-12-01 10:28:22'),(3,3,1990,28,'2021-12-01','2021-12-01 10:28:22');
+INSERT INTO `qo_supplier_goods_stock` VALUES (1,1,1800,995,'2022-06-07','2022-06-07 02:51:29'),(2,2,2390,999,'2022-06-07','2022-06-07 02:25:13'),(3,3,1990,999,'2022-06-07','2022-06-07 02:25:13');
 /*!40000 ALTER TABLE `qo_supplier_goods_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,17 +218,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `qo_supplier_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `qo_supplier_info` (
   `supplier_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '供应商id',
-  `supplier_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '供应商编码',
-  `supplier_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '供应商名',
+  `supplier_code` varchar(100) NOT NULL COMMENT '供应商编码',
+  `supplier_name` varchar(100) NOT NULL COMMENT '供应商名',
   `supplier_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '供应商类型（1：三方 0：自营）',
-  `link_man` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系人',
-  `phone_number` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '联系电话',
-  `bank_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行',
-  `bank_account` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '银行账号',
-  `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '供应商地址',
+  `link_man` varchar(100) NOT NULL COMMENT '联系人',
+  `phone_number` varchar(100) NOT NULL COMMENT '联系电话',
+  `bank_name` varchar(100) NOT NULL COMMENT '银行',
+  `bank_account` varchar(100) NOT NULL COMMENT '银行账号',
+  `address` varchar(100) NOT NULL COMMENT '供应商地址',
   `supplier_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '供应商状态（1：正常 0：禁用）',
   `modified_time` datetime NOT NULL COMMENT '最后修改时间',
   PRIMARY KEY (`supplier_id`),
@@ -242,7 +242,7 @@ CREATE TABLE `qo_supplier_info` (
 
 LOCK TABLES `qo_supplier_info` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_info` DISABLE KEYS */;
-INSERT INTO `qo_supplier_info` VALUES (1,'914403007576325798','人民的食堂',1,'张天易','13678767789','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2021-12-01 10:12:21'),(2,'834373007576326541','潮汕牛肉小火锅',1,'刘德军','18767441123','中国工商银行','6789765456667875','成都市锦江区海棠路45号',1,'2021-12-01 10:12:21'),(3,'786543456543267876','万州烤鱼',1,'张逸飞','13677865676','成都银行','3456765451890762','成都市成华区二仙桥西北路17号',1,'2021-12-01 10:12:21');
+INSERT INTO `qo_supplier_info` VALUES (1,'914403007576325798','人民的食堂',1,'张天易','13678767789','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2022-06-07 10:06:12'),(2,'834373007576326541','潮汕牛肉小火锅',1,'刘德军','18767441123','中国工商银行','6789765456667875','成都市锦江区海棠路45号',1,'2022-06-07 10:06:12'),(3,'786543456543267876','万州烤鱼',1,'张逸飞','13677865676','成都银行','3456765451890762','成都市成华区二仙桥西北路17号',1,'2022-06-07 10:06:12');
 /*!40000 ALTER TABLE `qo_supplier_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,4 +259,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-12-01 13:45:55
+-- Dump completed on 2022-06-07 10:52:26
