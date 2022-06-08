@@ -49,4 +49,29 @@
         </where>
     </select>
 
+    <select id="selOrderInfoByPhone" resultType="java.util.Map">
+        SELECT
+            qoi.order_id order_id,
+            qsi.supplier_name supplier_name,
+            qsi.phone_number  supplier_phone,
+            qsg.goods_name goods_name,
+            qoi.goods_count goods_count,
+            qoi.total_price total_price,
+            qoi.tips tips,
+            qoi.phone phone,
+            qoi.status status,
+            qoi.create_time create_time
+        FROM
+            qo_order_info qoi
+                left join qo_supplier_goods qsg on
+                qoi.goods_id = qsg.goods_id
+                left join qo_supplier_info qsi on
+                qsi.supplier_id = qsg.goods_supplier_id
+        where
+            qoi.phone = #{phone}
+        order by
+            create_time desc
+            limit 0,30
+    </select>
+
 </mapper>

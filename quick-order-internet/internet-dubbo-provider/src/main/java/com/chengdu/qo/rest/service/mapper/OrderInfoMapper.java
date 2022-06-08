@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderInfoMapper {
     Integer insertOrderInfo(OrderInfo orderInfo);
@@ -18,5 +19,7 @@ public interface OrderInfoMapper {
     Integer selTotalPriceByOrderId(@Param("orderId") String orderId);
 
     OrderInfo selOrderInfoByOrderInfo(OrderInfo orderInfo);
+
+    List<Map<String,Object>> selOrderInfoByPhone(@Param("phone") String phone);
 
 }

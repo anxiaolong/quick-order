@@ -106,4 +106,17 @@ public class OrderController {
         return new CommonResponse(CommonResponseEnum.Fail,"订单退款失败！");
     }
 
+    @ApiOperation(value = "通过手机号查询订单",notes = "通过手机号查询订单")
+    @SysLog
+    @RequestMapping(value = "/list",method = RequestMethod.POST)
+    public CommonResponse selOrderInfoByPhone(@RequestBody JSONObject requestJson){
+        String phone = requestJson.getJSONObject("data").getString("phone");
+        if (phone != null) {
+            return new CommonResponse(CommonResponseEnum.Success,orderService.selOrderInfoByPhone(phone));
+        }
+        CommonResponse commonResponse = new CommonResponse(CommonResponseEnum.Fail, "");
+        commonResponse.setResMsg("手机号不能为空！");
+        return commonResponse;
+    }
+
 }

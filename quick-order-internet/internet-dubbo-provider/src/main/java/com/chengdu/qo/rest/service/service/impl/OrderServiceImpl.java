@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Service
@@ -82,6 +83,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return false;
+    }
+
+    @SysLog
+    @Transactional
+    @Override
+    public List<Map<String, Object>> selOrderInfoByPhone(String phone) {
+        return orderInfoMapper.selOrderInfoByPhone(phone);
     }
 
 }
