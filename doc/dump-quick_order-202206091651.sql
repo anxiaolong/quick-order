@@ -54,7 +54,7 @@ CREATE TABLE `qo_internet_customer` (
   `modified_time` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `qo_internet_customer_un` (`uid`,`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `qo_internet_customer` (
 
 LOCK TABLES `qo_internet_customer` WRITE;
 /*!40000 ALTER TABLE `qo_internet_customer` DISABLE KEYS */;
-INSERT INTO `qo_internet_customer` VALUES (1,'c28387fa-5c7b-4c71-845d-58b568538063','13796841906','2022-06-07 02:25:13'),(2,'c28387fa-5c7b-4c71-845d-58b554077806','13704416992','2022-06-07 02:25:13'),(3,'c28387fa-5c7b-4c71-845d-58b504416992','13719544798','2022-06-07 02:25:13'),(4,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','2022-06-07 02:49:35');
+INSERT INTO `qo_internet_customer` VALUES (1,'c28387fa-5c7b-4c71-845d-58b568538063','13796841906','2022-06-09 08:50:17'),(2,'c28387fa-5c7b-4c71-845d-58b554077806','13704416992','2022-06-09 08:50:17'),(3,'c28387fa-5c7b-4c71-845d-58b504416992','13719544798','2022-06-09 08:50:17');
 /*!40000 ALTER TABLE `qo_internet_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ CREATE TABLE `qo_order_info` (
   `modified_time` datetime NOT NULL COMMENT '最后操作时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `qo_order_info_un` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,6 @@ CREATE TABLE `qo_order_info` (
 
 LOCK TABLES `qo_order_info` WRITE;
 /*!40000 ALTER TABLE `qo_order_info` DISABLE KEYS */;
-INSERT INTO `qo_order_info` VALUES (1,'1001120220607104947414',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','',0,'2022-06-07 10:49:47','2022-06-07 10:49:47'),(2,'1001120220607105002588',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','',0,'2022-06-07 10:50:02','2022-06-07 10:50:02'),(3,'1001120220607105101679',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','测试下留言动能',0,'2022-06-07 10:51:01','2022-06-07 10:51:01'),(4,'1001120220607105129637',1,1,'2022-06-07',1800,'76bf3040e60c11ecb3bd952515ebcbbe','13222222222','多加米饭和辣椒',0,'2022-06-07 10:51:29','2022-06-07 10:51:29');
 /*!40000 ALTER TABLE `qo_order_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +117,7 @@ CREATE TABLE `qo_order_notify` (
   `pay_status` int(11) NOT NULL COMMENT '支付状态 0：支付成功 1：支付失败 2：已退款',
   `create_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +178,7 @@ CREATE TABLE `qo_supplier_goods` (
 
 LOCK TABLES `qo_supplier_goods` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_goods` DISABLE KEYS */;
-INSERT INTO `qo_supplier_goods` VALUES (1,'酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-07 10:06:13'),(2,'2酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-07 10:06:13'),(3,'3酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(4,'一道测试菜','测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(5,'测试道测试菜','test测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-07 10:06:13'),(6,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',1,1,'2022-06-07 10:06:13'),(7,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',2,1,'2022-06-07 10:06:13'),(8,'盖浇饭','主要特点是饭菜结合，食用方便，既有主食米饭，又有美味菜肴。其菜汤汁浇于饭上面，使米饭更富有口感而备受青睐',3,1,'2022-06-07 10:06:13');
+INSERT INTO `qo_supplier_goods` VALUES (1,'酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-09 16:06:17'),(2,'2酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,1,'2022-06-09 16:06:17'),(3,'3酥肉冒菜','油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-09 16:06:17'),(4,'一道测试菜','测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-09 16:06:17'),(5,'测试道测试菜','test测试的菜油炸过的东西本身都已经有了一种自身的香味，再加上冒菜里面的香味和调料的味道，味道吃起来更加的好吃和多样性',1,0,'2022-06-09 16:06:17'),(6,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',1,1,'2022-06-09 16:06:17'),(7,'红烧牛肉面','堪称最经典的面了，不再好说是哪个地方的面条了，因为全国的面馆都有它，要不，某牌的红烧牛肉方便面为什么经久不息呐',2,1,'2022-06-09 16:06:17'),(8,'盖浇饭','主要特点是饭菜结合，食用方便，既有主食米饭，又有美味菜肴。其菜汤汁浇于饭上面，使米饭更富有口感而备受青睐',3,1,'2022-06-09 16:06:17');
 /*!40000 ALTER TABLE `qo_supplier_goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,7 +207,7 @@ CREATE TABLE `qo_supplier_goods_stock` (
 
 LOCK TABLES `qo_supplier_goods_stock` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_goods_stock` DISABLE KEYS */;
-INSERT INTO `qo_supplier_goods_stock` VALUES (1,1,1800,995,'2022-06-07','2022-06-07 02:51:29'),(2,2,2390,999,'2022-06-07','2022-06-07 02:25:13'),(3,3,1990,999,'2022-06-07','2022-06-07 02:25:13');
+INSERT INTO `qo_supplier_goods_stock` VALUES (1,1,1800,999,'2022-06-09','2022-06-09 08:50:17'),(2,2,2390,999,'2022-06-09','2022-06-09 08:50:17'),(3,3,1990,999,'2022-06-09','2022-06-09 08:50:17');
 /*!40000 ALTER TABLE `qo_supplier_goods_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +228,7 @@ CREATE TABLE `qo_supplier_info` (
   `bank_name` varchar(100) NOT NULL COMMENT '银行',
   `bank_account` varchar(100) NOT NULL COMMENT '银行账号',
   `address` varchar(100) NOT NULL COMMENT '供应商地址',
-  `supplier_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '供应商状态（1：正常 0：禁用）',
+  `supplier_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '供应商状态（1：正常 0：禁用）',
   `modified_time` datetime NOT NULL COMMENT '最后修改时间',
   PRIMARY KEY (`supplier_id`),
   UNIQUE KEY `supplier_code_unique` (`supplier_code`)
@@ -242,7 +241,7 @@ CREATE TABLE `qo_supplier_info` (
 
 LOCK TABLES `qo_supplier_info` WRITE;
 /*!40000 ALTER TABLE `qo_supplier_info` DISABLE KEYS */;
-INSERT INTO `qo_supplier_info` VALUES (1,'914403007576325798','人民的食堂',1,'张天易','13678767789','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2022-06-07 10:06:12'),(2,'834373007576326541','潮汕牛肉小火锅',1,'刘德军','18767441123','中国工商银行','6789765456667875','成都市锦江区海棠路45号',1,'2022-06-07 10:06:12'),(3,'786543456543267876','万州烤鱼',1,'张逸飞','13677865676','成都银行','3456765451890762','成都市成华区二仙桥西北路17号',1,'2022-06-07 10:06:12');
+INSERT INTO `qo_supplier_info` VALUES (1,'914403007576325798','人民的食堂',1,'张天易','13678767789','招商银行','6576543234567898','成都市武侯区天华二路219号',1,'2022-06-09 16:06:17'),(2,'834373007576326541','潮汕牛肉小火锅',1,'刘德军','18767441123','中国工商银行','6789765456667875','成都市锦江区海棠路45号',1,'2022-06-09 16:06:17'),(3,'786543456543267876','万州烤鱼',1,'张逸飞','13677865676','成都银行','3456765451890762','成都市成华区二仙桥西北路17号',1,'2022-06-09 16:06:17');
 /*!40000 ALTER TABLE `qo_supplier_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,4 +258,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-07 10:52:26
+-- Dump completed on 2022-06-09 16:51:14

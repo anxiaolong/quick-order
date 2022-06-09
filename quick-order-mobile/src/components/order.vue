@@ -14,10 +14,10 @@
             {{orderinfo.tips}}<br>
         </p>
         
-        <div style="position:fixed; bottom:20px;left: 30%">
-            <van-button size="small" type="danger" :round=true @click="cancel">返回上级</van-button>
+        <div style="position:fixed; bottom:20px;left:25%">
+            <van-button type="danger" :round=true @click="cancel">返回上级</van-button>
             &nbsp&nbsp
-            <van-button size="small" type="danger" :round=true @click="pay">微信支付</van-button>
+            <van-button  type="danger" :round=true @click="pay">微信支付</van-button>
         </div>
     </div>
 </template>
@@ -44,6 +44,10 @@ export default {
         }
     },
     mounted(){
+        if (this.$route.params.orderinfo == null) { //下单信息为空直接跳转我的页面
+            this.$router.push('/index/shopping')
+        }
+
         this.orderinfo = this.$route.params.orderinfo
         this.goodsInfo = this.$route.params.goodsInfo
         //console.log(JSON.stringify(this.$route.params.orderinfo))
@@ -68,7 +72,7 @@ export default {
                     if (res.data.resCode == '0000') {
                         Toast.success('支付成功')
                         setTimeout(()=>{
-                            this.$router.push('/index/my')
+                            this.$router.back()
                         },1000)
                     }else{
                         Toast.fail('支付失败')

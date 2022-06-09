@@ -39,7 +39,7 @@
               <el-link type="primary" @click="showOrderDetailDialog(scope.row)">{{scope.row.order_id}}</el-link>
           </template>
       </el-table-column>
-      <el-table-column sortable prop="saleDate" label="销售日期" width="">
+      <el-table-column sortable prop="create_time" label="下单时间" width="">
       </el-table-column>
       <el-table-column sortable prop="phone" label="下单电话" width="">
       </el-table-column>
@@ -62,6 +62,13 @@
                       scope.row.status==4?'退款中':
                       scope.row.status==5?'已退款':'状态异常'
                   }}</span>
+          </template>
+      </el-table-column>
+      <el-table-column align="center" label="操作" width="200px">
+          <template slot-scope="scope">
+              <div :hidden="scope.row.status==4?false:true">
+                  <el-button plain type="danger" size="mini" @click="refund(scope.row)">同意退款</el-button>
+              </div>
           </template>
       </el-table-column>
  
@@ -102,8 +109,9 @@
         width="40%">
         <el-descriptions title="" direction="horizontal" :column="1" border>
             <el-descriptions-item label="订单序号">{{order.id}}</el-descriptions-item>
-            <el-descriptions-item label="商品信息">{{goodsInfo.goods_name}} <br> {{goodsInfo.goods_intro}}</el-descriptions-item>
+            <el-descriptions-item label="商品信息">{{goodsInfo.goods_name}}</el-descriptions-item>
             <el-descriptions-item label="数量">{{order.goods_count}}</el-descriptions-item>
+            <el-descriptions-item label="备注留言">{{order.tips}}</el-descriptions-item>
             <el-descriptions-item label="下单手机">{{order.phone}}</el-descriptions-item>
             <el-descriptions-item label="UID">{{order.uid}}</el-descriptions-item>
             <el-descriptions-item label="总价">{{order.total_price/100}}元</el-descriptions-item>
@@ -186,6 +194,17 @@ export default {
             // var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
             return year + '-' +month + '-' + day
         },
+        dateFormat2(){
+            var date = new Date()
+            var year = date.getFullYear()
+            var month = date.getMonth() + 1 < 10 ? 
+                            '0' + (date.getMonth() + 1) : date.getMonth()+ 1
+            var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+            var hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours()
+            var minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
+            var seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+            return year + '-' +month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+        },
         cleanSearchData(){
             this.reqJson.phone = ''
             this.reqJson.saleDate = ''
@@ -204,7 +223,40 @@ export default {
                     this.goodsInfo = res.data
                 })
             this.goodsDialogVisible = true
-        }
+        },
+        refund(row){
+            let refundNotify = {}
+            refundNotify.transaction_id = row.order_id
+            refundNotify.order_id = row.order_id
+            refundNotify.pay_date = this.dateFormat2()
+            refundNotify.pay_amount = -(row.total_price)
+            refundNotify.pay_status = '1'
+            
+            this.$confirm('确定执行退款给买家?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                    }).then(() => {
+                        setTimeout(()=>{
+                            req('post','/api3/order/notify',refundNotify)
+                            .then((res)=>{
+                                if (res.resCode == '0000') {
+                                    this.$message.success('退款操作成功！')
+                                    this.loadOrderList()
+                                }else{
+                                    this.$message.error('退款操作失败！');
+                                }
+                            })
+                        },1000)
+                            
+                    }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消'
+                    });          
+                    });
+        },
+        
     }
 }
 </script>

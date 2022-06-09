@@ -5,7 +5,7 @@
 <mapper namespace="com.chengdu.qo.rest.service.mapper.SupplierInfoMapper">
 
     <select id="selSupplierInfoList" resultType="com.chengdu.management.pojo.SupplierInfo">
-        SELECT * FROM qo_supplier_info qsi
+        SELECT * FROM qo_supplier_info qsi where qsi.supplier_status != 0
     </select>
 
 </mapper>

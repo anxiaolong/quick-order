@@ -26,7 +26,7 @@
                phone_number,
                address,
                supplier_status
-        from qo_supplier_info where phone_number = #{phoneNumber}
+        from qo_supplier_info where phone_number = #{phoneNumber} and supplier_status != 0
     </select>
 
 </mapper>

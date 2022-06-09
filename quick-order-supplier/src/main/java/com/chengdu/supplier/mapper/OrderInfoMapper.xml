@@ -18,8 +18,10 @@
             <if test="order_id!=null and order_id!=''">qoi.order_id like concat(#{order_id},'%') and </if>
             <if test="phone!=null and phone!=''">qoi.phone like concat(#{phone},'%') and </if>
             qsi.supplier_id = #{supplierId} and
-            1=1 limit #{pageIndex},#{pageSize}
+            1=1
         </where>
+            order by qoi.create_time desc
+            limit #{pageIndex},#{pageSize}
     </select>
 
     <select id="countSelOrderInfo" resultType="java.lang.Integer">

@@ -12,7 +12,7 @@
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
     </TestPlan>
     <hashTree>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="测试数据准备" enabled="false">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="测试数据准备" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1347,7 +1347,7 @@ current_timestamp);</stringProp>
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="下单接口前台-线程组" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="下单接口前台-线程组" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -1923,7 +1923,7 @@ current_timestamp);</stringProp>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="order-rest-用例07:订单退款通知" enabled="false">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="order-rest-用例07:订单退款通知" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
           <boolProp name="TransactionController.parent">true</boolProp>
         </TransactionController>
@@ -1935,10 +1935,10 @@ current_timestamp);</stringProp>
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-    &quot;transaction_id&quot;:&quot;2021112422001436195701313002&quot;,&#xd;
-    &quot;order_id&quot;:&quot;10011${__time(YYYYMMddHHMMss,)}001&quot;,&#xd;
+    &quot;transaction_id&quot;:&quot;1001120220608161519293&quot;,&#xd;
+    &quot;order_id&quot;:&quot;1001120220608161519293&quot;,&#xd;
     &quot;pay_date&quot;:&quot;2021-11-24 10:22:34&quot;,&#xd;
-    &quot;pay_amount&quot;:&quot;-3800&quot;,&#xd;
+    &quot;pay_amount&quot;:&quot;-1800&quot;,&#xd;
     &quot;pay_status&quot;:&quot;1&quot;&#xd;
 }</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>

@@ -12,9 +12,9 @@
 
     <router-view style="margin-top:50px"></router-view>
 
-    <van-tabbar v-model="active">
-        <van-tabbar-item @click="goIndex" icon="wap-home-o">主页</van-tabbar-item>
-        <van-tabbar-item @click="goMy" icon="user-o">我的</van-tabbar-item>
+    <van-tabbar :toute='true' v-model="active">
+        <van-tabbar-item to="/index/shopping" icon="shop-o">下单</van-tabbar-item>
+        <van-tabbar-item to="/index/my" icon="cart-o">已购</van-tabbar-item>
     </van-tabbar>
 
   </div>
@@ -33,12 +33,6 @@ export default {
       Notify({ type: 'primary',duration: 5000, message: '欢迎使用QUICK闪购！' });      
     },
     methods:{
-      goIndex(){
-        this.$router.push('/index/shopping')
-      },
-      goMy(){
-        this.$router.push('/index/my')
-      },
       onClickLeft(){
         this.$router.push('/')
       }
