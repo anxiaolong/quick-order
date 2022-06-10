@@ -1,7 +1,7 @@
 # QUICK闪购
 ***
 
-##技术栈
+## 技术栈
 - 后端
     - Spring Boot
     - Spring MVC
@@ -25,7 +25,7 @@
     - Vant
 ***
 
-##资料说明
+## 资料说明
 - 数据库
     - doc/dump-quick_order-202206091651.sql
 - maven结构
@@ -44,7 +44,7 @@
     - doc/下单流程压力测试.jmx
 ***
 
-##移动端展示
+## 移动端展示
 ![授权登录](doc/image/m1.png)
 ![选择商家](doc/image/m2.png)
 ![商品列表](doc/image/m3.png)
@@ -52,7 +52,7 @@
 ![订单页面](doc/image/m5.png)
 ![已购页面](doc/image/m6.png)
 ***
-##管理端展示
+## 管理端展示
 ![商家管理](doc/image/a1.png)
 ![商品管理](doc/image/a2.png)
 ![库存管理](doc/image/a3.png)
